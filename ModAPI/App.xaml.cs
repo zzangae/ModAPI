@@ -30,7 +30,7 @@ namespace ModAPI
     /// </summary>
     public partial class App : Application
     {
-        public static string Version = "0.1.9";
+        public static string Version = "2.0.0";
 
         public ResourceDictionary LanguageDictionary;
         public static App Instance;

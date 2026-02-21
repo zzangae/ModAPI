@@ -1,0 +1,675 @@
+<!--  
+    ModAPI v2.0 - Fluent Design Styles
+    Windows 11 Fluent Design override layer
+    Loaded after Dictionary.xaml to override key visual styles
+    -->
+
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ui="http://schemas.modernwpf.com/2019"
+                    xmlns:Components="clr-namespace:ModAPI.Components">
+
+    <!-- ===== Fluent Color Palette ===== -->
+    <Color x:Key="FluentAccentColor">#0078D4</Color>
+    <Color x:Key="FluentAccentLightColor">#429CE3</Color>
+    <Color x:Key="FluentAccentDarkColor">#005A9E</Color>
+    <Color x:Key="FluentBgColor">#202020</Color>
+    <Color x:Key="FluentBgSecondaryColor">#2D2D2D</Color>
+    <Color x:Key="FluentBgTertiaryColor">#383838</Color>
+    <Color x:Key="FluentSurfaceColor">#2D2D2D</Color>
+    <Color x:Key="FluentCardColor">#323232</Color>
+    <Color x:Key="FluentBorderColor">#3D3D3D</Color>
+    <Color x:Key="FluentTextPrimaryColor">#FFFFFF</Color>
+    <Color x:Key="FluentTextSecondaryColor">#C5C5C5</Color>
+    <Color x:Key="FluentTextTertiaryColor">#9A9A9A</Color>
+    <Color x:Key="FluentDangerColor">#E81123</Color>
+    <Color x:Key="FluentSuccessColor">#107C10</Color>
+    <Color x:Key="FluentWarningColor">#FF8C00</Color>
+
+    <SolidColorBrush x:Key="FluentAccentBrush" Color="{StaticResource FluentAccentColor}" />
+    <SolidColorBrush x:Key="FluentAccentLightBrush" Color="{StaticResource FluentAccentLightColor}" />
+    <SolidColorBrush x:Key="FluentAccentDarkBrush" Color="{StaticResource FluentAccentDarkColor}" />
+    <SolidColorBrush x:Key="FluentBgBrush" Color="{StaticResource FluentBgColor}" />
+    <SolidColorBrush x:Key="FluentBgSecondaryBrush" Color="{StaticResource FluentBgSecondaryColor}" />
+    <SolidColorBrush x:Key="FluentBgTertiaryBrush" Color="{StaticResource FluentBgTertiaryColor}" />
+    <SolidColorBrush x:Key="FluentSurfaceBrush" Color="{StaticResource FluentSurfaceColor}" />
+    <SolidColorBrush x:Key="FluentCardBrush" Color="{StaticResource FluentCardColor}" />
+    <SolidColorBrush x:Key="FluentBorderBrush" Color="{StaticResource FluentBorderColor}" />
+    <SolidColorBrush x:Key="FluentTextPrimaryBrush" Color="{StaticResource FluentTextPrimaryColor}" />
+    <SolidColorBrush x:Key="FluentTextSecondaryBrush" Color="{StaticResource FluentTextSecondaryColor}" />
+    <SolidColorBrush x:Key="FluentTextTertiaryBrush" Color="{StaticResource FluentTextTertiaryColor}" />
+    <SolidColorBrush x:Key="FluentDangerBrush" Color="{StaticResource FluentDangerColor}" />
+    <SolidColorBrush x:Key="FluentSuccessBrush" Color="{StaticResource FluentSuccessColor}" />
+    <SolidColorBrush x:Key="FluentWarningBrush" Color="{StaticResource FluentWarningColor}" />
+
+    <!-- ===== Fluent Typography (Override BigFont/NormalFont) ===== -->
+    <FontFamily x:Key="BigFont">Segoe UI Semibold, Segoe UI</FontFamily>
+    <FontFamily x:Key="NormalFont">Segoe UI</FontFamily>
+    <FontFamily x:Key="FluentIconFont">Segoe MDL2 Assets</FontFamily>
+
+    <!-- ===== Override: NormalLabel ===== -->
+    <Style x:Key="NormalLabel" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource NormalFont}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Foreground" Value="{StaticResource FluentTextPrimaryBrush}" />
+    </Style>
+
+    <!-- ===== Override: WhiteLabel ===== -->
+    <Style x:Key="WhiteLabel" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource NormalLabel}">
+        <Setter Property="Foreground" Value="{StaticResource FluentTextPrimaryBrush}" />
+    </Style>
+
+    <!-- ===== Override: HeaderLabel ===== -->
+    <Style x:Key="HeaderLabel" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource NormalLabel}">
+        <Setter Property="FontFamily" Value="{StaticResource BigFont}" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+
+    <!-- ===== Override: Window (Main Window - Fluent Dark) ===== -->
+    <Style TargetType="{x:Type Window}" x:Key="Window">
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+        <Setter Property="Background" Value="{StaticResource FluentBgBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource FluentTextPrimaryBrush}" />
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome GlassFrameThickness="0" CaptionHeight="32" ResizeBorderThickness="6" CornerRadius="8" UseAeroCaptionButtons="False" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="AllowsTransparency" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <Border Background="{StaticResource FluentBgBrush}" 
+                            BorderBrush="{StaticResource FluentBorderBrush}" 
+                            BorderThickness="1" 
+                            CornerRadius="8">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="32" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <!-- Title Bar -->
+                            <Grid Grid.Row="0" Background="Transparent">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="12" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- App Icon -->
+                                <Image Grid.Column="1" Width="16" Height="16" 
+                                       Source="/resources/textures/Icons/IconTop_Mods.png"
+                                       VerticalAlignment="Center" Margin="0,0,8,0"
+                                       RenderOptions.BitmapScalingMode="HighQuality" />
+
+                                <!-- Title -->
+                                <TextBlock Grid.Column="2" 
+                                           Text="ModAPI v2.0" 
+                                           FontFamily="{StaticResource NormalFont}"
+                                           FontSize="12"
+                                           Foreground="{StaticResource FluentTextSecondaryBrush}"
+                                           VerticalAlignment="Center" />
+
+                                <!-- Window Buttons -->
+                                <StackPanel Grid.Column="3" Orientation="Horizontal" 
+                                            WindowChrome.IsHitTestVisibleInChrome="True">
+                                    <Button x:Name="PART_Minimize" Style="{StaticResource FluentCaptionButton}" Content="&#xE921;" ToolTip="Minimize" />
+                                    <Button x:Name="PART_Maximize" Style="{StaticResource FluentCaptionButton}" Content="&#xE922;" ToolTip="Maximize" />
+                                    <Button x:Name="PART_Close" Style="{StaticResource FluentCloseButton}" Content="&#xE8BB;" ToolTip="Close" />
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Content Area -->
+                            <Border Grid.Row="1" Background="Transparent">
+                                <ContentPresenter Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}" />
+                            </Border>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Fluent Caption Button ===== -->
+    <Style x:Key="FluentCaptionButton" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="46" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontFamily" Value="{StaticResource FluentIconFont}" />
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="Foreground" Value="{StaticResource FluentTextSecondaryBrush}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Bg" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="#33FFFFFF" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="#22FFFFFF" />
+                            <Setter Property="Foreground" Value="{StaticResource FluentTextTertiaryBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Fluent Close Button (Red hover) ===== -->
+    <Style x:Key="FluentCloseButton" TargetType="{x:Type Button}" BasedOn="{StaticResource FluentCaptionButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Bg" Background="{TemplateBinding Background}" CornerRadius="0,8,0,0" SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="{StaticResource FluentDangerBrush}" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="#CC1122" />
+                            <Setter Property="Foreground" Value="#CCFFFFFF" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Override: SubWindow (Fluent Dialog) ===== -->
+    <Style TargetType="{x:Type Window}" x:Key="SubWindow">
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome GlassFrameThickness="0" CaptionHeight="0" ResizeBorderThickness="0" CornerRadius="8" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="AllowsTransparency" Value="True" />
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="ResizeMode" Value="NoResize" />
+        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+        <Setter Property="Foreground" Value="{StaticResource FluentTextPrimaryBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <Border Background="{StaticResource FluentSurfaceBrush}" 
+                            BorderBrush="{StaticResource FluentBorderBrush}" 
+                            BorderThickness="1" 
+                            CornerRadius="8"
+                            Margin="16">
+                        <Border.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="24" Opacity="0.6" ShadowDepth="4" Direction="270" />
+                        </Border.Effect>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="48" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <!-- Dialog Title Bar -->
+                            <Border Grid.Row="0" Background="Transparent" CornerRadius="8,8,0,0">
+                                <Grid>
+                                    <TextBlock Margin="20,0,48,0" 
+                                               Text="{TemplateBinding Title}" 
+                                               HorizontalAlignment="Left" 
+                                               Style="{StaticResource HeaderLabel}" 
+                                               VerticalAlignment="Center" />
+                                    <Button x:Name="PART_Close" 
+                                            Width="32" Height="32" 
+                                            Margin="0,0,8,0"
+                                            HorizontalAlignment="Right" 
+                                            VerticalAlignment="Center"
+                                            Style="{StaticResource FluentCaptionButton}"
+                                            Content="&#xE8BB;" />
+                                </Grid>
+                            </Border>
+
+                            <!-- Dialog Content -->
+                            <Border Grid.Row="1" CornerRadius="0,0,8,8">
+                                <ContentPresenter Margin="20,0,20,20" Content="{TemplateBinding Content}" />
+                            </Border>
+
+                            <!-- Drag Handle -->
+                            <Rectangle x:Name="PART_Mover" 
+                                       Grid.Row="0" 
+                                       Margin="0,0,48,0" 
+                                       Fill="Transparent" 
+                                       IsHitTestVisible="True" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Override: SplashScreen ===== -->
+    <Style TargetType="{x:Type Window}" x:Key="SplashScreen">
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome GlassFrameThickness="-1" CaptionHeight="0" ResizeBorderThickness="0" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="AllowsTransparency" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <Border Background="{StaticResource FluentBgBrush}" CornerRadius="12" BorderBrush="{StaticResource FluentBorderBrush}" BorderThickness="1">
+                        <Border.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="32" Opacity="0.5" ShadowDepth="0" />
+                        </Border.Effect>
+                        <Grid>
+                            <AdornerDecorator>
+                                <ContentPresenter Content="{TemplateBinding Content}" Margin="{TemplateBinding Margin}" />
+                            </AdornerDecorator>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Override: NormalButton (Fluent Button) ===== -->
+    <Style TargetType="{x:Type Button}" x:Key="NormalButton">
+        <Setter Property="FontFamily" Value="{StaticResource NormalFont}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{StaticResource FluentTextPrimaryBrush}" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Padding" Value="12,5,12,6" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Bg" 
+                            Background="{StaticResource FluentBgTertiaryBrush}" 
+                            BorderBrush="{StaticResource FluentBorderBrush}" 
+                            BorderThickness="1" 
+                            CornerRadius="4" 
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="#444444" />
+                            <Setter TargetName="Bg" Property="BorderBrush" Value="#505050" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="#333333" />
+                            <Setter Property="Foreground" Value="{StaticResource FluentTextSecondaryBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Bg" Property="Background" Value="#1A1A1A" />
+                            <Setter Property="Foreground" Value="{StaticResource FluentTextTertiaryBrush}" />
+                            <Setter TargetName="Bg" Property="BorderBrush" Value="#2A2A2A" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Fluent Accent Button ===== -->
+    <Style x:Key="AccentButton" TargetType="{x:Type Button}" BasedOn="{StaticResource NormalButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Bg" 
+                            Background="{StaticResource FluentAccentBrush}" 
+                            BorderBrush="{StaticResource FluentAccentBrush}" 
+                            BorderThickness="1" 
+                            CornerRadius="4" 
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="{StaticResource FluentAccentLightBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="{StaticResource FluentAccentDarkBrush}" />
+                            <Setter Property="Foreground" Value="#CCFFFFFF" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Bg" Property="Background" Value="#1A1A1A" />
+                            <Setter Property="Foreground" Value="{StaticResource FluentTextTertiaryBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Override: CloseButton ===== -->
+    <Style TargetType="{x:Type Button}" x:Key="CloseButton">
+        <Setter Property="Width" Value="20" />
+        <Setter Property="Height" Value="20" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Bg" Background="Transparent" CornerRadius="4">
+                        <TextBlock Text="&#xE8BB;" 
+                                   FontFamily="{StaticResource FluentIconFont}" 
+                                   FontSize="10" 
+                                   Foreground="{StaticResource FluentTextSecondaryBrush}" 
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center" 
+                                   x:Name="Icon" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="#33FFFFFF" />
+                            <Setter TargetName="Icon" Property="Foreground" Value="White" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Override: DarkCloseButton ===== -->
+    <Style TargetType="{x:Type Button}" x:Key="DarkCloseButton" BasedOn="{StaticResource CloseButton}" />
+
+    <!-- ===== Override: PanelCenter (Fluent Card) ===== -->
+    <Style TargetType="{x:Type ContentControl}" x:Key="PanelCenter">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Border Background="{StaticResource FluentCardBrush}" 
+                            BorderBrush="{StaticResource FluentBorderBrush}" 
+                            BorderThickness="1" 
+                            CornerRadius="6" 
+                            Padding="1">
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Override: PanelTop ===== -->
+    <Style TargetType="{x:Type ContentControl}" x:Key="PanelTop">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Border Background="{StaticResource FluentCardBrush}" 
+                            BorderBrush="{StaticResource FluentBorderBrush}" 
+                            BorderThickness="1,1,1,0" 
+                            CornerRadius="6,6,0,0" 
+                            Padding="1">
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Override: PanelBottom ===== -->
+    <Style TargetType="{x:Type ContentControl}" x:Key="PanelBottom">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Border Background="{StaticResource FluentCardBrush}" 
+                            BorderBrush="{StaticResource FluentBorderBrush}" 
+                            BorderThickness="1,0,1,1" 
+                            CornerRadius="0,0,6,6" 
+                            Padding="1"
+                            MinHeight="4">
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Override: PanelButtons ===== -->
+    <Style TargetType="{x:Type ContentControl}" x:Key="PanelButtons">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Border Background="{StaticResource FluentSurfaceBrush}" 
+                            BorderBrush="{StaticResource FluentBorderBrush}" 
+                            BorderThickness="1,0,1,1" 
+                            CornerRadius="0,0,6,6" 
+                            Padding="8,6,8,6">
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Override: PanelSplit ===== -->
+    <Style TargetType="{x:Type ContentControl}" x:Key="PanelSplit">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Border Background="{StaticResource FluentCardBrush}" 
+                            BorderBrush="{StaticResource FluentBorderBrush}" 
+                            BorderThickness="1" 
+                            Padding="1">
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Override: TabBox ===== -->
+    <Style TargetType="{x:Type ContentControl}" x:Key="TabBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Border Background="{StaticResource FluentCardBrush}" 
+                            BorderBrush="{StaticResource FluentBorderBrush}" 
+                            BorderThickness="1" 
+                            CornerRadius="0,0,6,6" 
+                            Padding="1">
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Override: RoundLabel ===== -->
+    <Style TargetType="{x:Type ContentControl}" x:Key="RoundLabel">
+        <Setter Property="Height" Value="28" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Border Background="{StaticResource FluentAccentBrush}" 
+                            CornerRadius="14" 
+                            Padding="12,4,12,4">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Override: ListItem (Fluent List Item) ===== -->
+    <Style x:Key="ListItem" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="FontFamily" Value="{StaticResource NormalFont}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Foreground" Value="{StaticResource FluentTextPrimaryBrush}" />
+        <Setter Property="Padding" Value="8,6,8,6" />
+        <Setter Property="Margin" Value="2,1,2,1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="Bg" 
+                            Background="Transparent" 
+                            BorderBrush="Transparent" 
+                            BorderThickness="0" 
+                            CornerRadius="4" 
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="#15FFFFFF" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="#20FFFFFF" />
+                            <Setter TargetName="Bg" Property="BorderBrush" Value="{StaticResource FluentAccentBrush}" />
+                            <Setter TargetName="Bg" Property="BorderThickness" Value="3,0,0,0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Override: List (Fluent ListBox) ===== -->
+    <Style x:Key="List" TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="{StaticResource FluentCardBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource FluentBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="{StaticResource FluentTextPrimaryBrush}" />
+        <Setter Property="Padding" Value="2" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource ListItem}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            CornerRadius="6" 
+                            Padding="{TemplateBinding Padding}">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Override: Minimize/Maximize/Normalize Buttons ===== -->
+    <Style TargetType="{x:Type Button}" x:Key="MinimizeButton" BasedOn="{StaticResource FluentCaptionButton}">
+        <Setter Property="Content" Value="&#xE921;" />
+    </Style>
+
+    <Style TargetType="{x:Type Button}" x:Key="MaximizeButton" BasedOn="{StaticResource FluentCaptionButton}">
+        <Setter Property="Content" Value="&#xE922;" />
+    </Style>
+
+    <Style TargetType="{x:Type Button}" x:Key="NormalizeButton" BasedOn="{StaticResource FluentCaptionButton}">
+        <Setter Property="Content" Value="&#xE923;" />
+    </Style>
+
+    <!-- ===== Override: ChromelessTextBox ===== -->
+    <Style x:Key="ChromelessTextBox" TargetType="{x:Type TextBox}">
+        <Setter Property="FontFamily" Value="{StaticResource NormalFont}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Foreground" Value="{StaticResource FluentTextPrimaryBrush}" />
+        <Setter Property="Background" Value="{StaticResource FluentBgTertiaryBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource FluentBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CaretBrush" Value="{StaticResource FluentTextPrimaryBrush}" />
+        <Setter Property="Padding" Value="8,6,8,6" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border x:Name="Bg" 
+                            Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            CornerRadius="4" 
+                            Padding="{TemplateBinding Padding}">
+                        <ScrollViewer x:Name="PART_ContentHost" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="Bg" Property="BorderBrush" Value="{StaticResource FluentAccentBrush}" />
+                            <Setter TargetName="Bg" Property="BorderThickness" Value="1,1,1,2" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="#404040" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Fluent Tooltip ===== -->
+    <Style TargetType="{x:Type ToolTip}">
+        <Setter Property="Background" Value="{StaticResource FluentSurfaceBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource FluentTextPrimaryBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource FluentBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="10,6,10,8" />
+        <Setter Property="FontFamily" Value="{StaticResource NormalFont}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToolTip}">
+                    <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            CornerRadius="4" 
+                            Padding="{TemplateBinding Padding}">
+                        <Border.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="16" Opacity="0.4" ShadowDepth="2" Direction="270" />
+                        </Border.Effect>
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Fluent ProgressBar ===== -->
+    <Style x:Key="FluentProgressBar" TargetType="{x:Type ProgressBar}">
+        <Setter Property="Height" Value="4" />
+        <Setter Property="Background" Value="{StaticResource FluentBgTertiaryBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource FluentAccentBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Grid>
+                        <Border Background="{TemplateBinding Background}" CornerRadius="2" />
+                        <Border x:Name="PART_Track" />
+                        <Border x:Name="PART_Indicator" 
+                                Background="{TemplateBinding Foreground}" 
+                                CornerRadius="2" 
+                                HorizontalAlignment="Left" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== TreeViewItem Override ===== -->
+    <Style TargetType="{x:Type TreeViewItem}">
+        <Setter Property="FontFamily" Value="{StaticResource NormalFont}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Foreground" Value="{StaticResource FluentTextPrimaryBrush}" />
+        <Setter Property="Padding" Value="4,2,4,2" />
+    </Style>
+
+</ResourceDictionary>

@@ -189,7 +189,7 @@
     <s:String x:Key="Lang.Mods.Welcome.Text0">Zacznij od wybrania modów, których chcesz używać w grze. W tym celu kliknji okrągły przycisk na lewo od nazwy mod. Przypisanie przycisków dla danego moda możesz zmienić w zakładce "Ustawienia".</s:String>
     <s:String x:Key="Lang.Mods.Welcome.Text1">Aby włączyć grę z modami jedyne co musisz zrobić to nacisnąć przycisk "Włącz grę" w prawym dolnym rogu.</s:String>
     <s:String x:Key="Lang.Mods.Welcome.Title1">Błędy?</s:String>
-    <s:String x:Key="Lang.Mods.Welcome.Text2">Jeśli spotkałeś jakiekolwiek błędy poszukaj pomocy na forum na stronie www.modapi.de</s:String>
+    <s:String x:Key="Lang.Mods.Welcome.Text2">Jeśli spotkałeś jakiekolwiek błędy poszukaj pomocy na forum na stronie https://modapi.survivetheforest.net/</s:String>
     <s:String x:Key="Lang.Mods.Welcome.Text3">Proszę nie zapomnji dołączyć pliku z logami gry &quot;ModAPI.log&quot; który znajduje się w folederze logs. Ten plik zawiera niezbędne informacje dla rozwiązania problemu.</s:String>
 
     <s:String x:Key="Lang.Savegames.Tab">Zapisy gry</s:String>

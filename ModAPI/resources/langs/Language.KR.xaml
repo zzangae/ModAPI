@@ -186,10 +186,10 @@
     <s:String x:Key="Lang.Mods.Labels.Compatible">호환성:</s:String>
 
     <s:String x:Key="Lang.Mods.Welcome.Title0">환영합니다!</s:String>
-    <s:String x:Key="Lang.Mods.Welcome.Text0">게임에 mod 를 적용하려면 먼저 modAPI 를 활성화해야 합니다. In order to do so you have to click the round button left to the mod name. To change key bindings you can select a mod in the list and switch to the "Settings" tab.</s:String>
-    <s:String x:Key="Lang.Mods.Welcome.Text1">mod 와 게임을 시작하려면 오른쪽 하단에 있는 "게임 시작" 을 클릭해야 합니다.</s:String>
+    <s:String x:Key="Lang.Mods.Welcome.Text0">게임에 MOD를 적용하려면 먼저 ModAPI를 활성화해야 합니다. 그러려면 MOD명 왼쪽에 있는 동그란 버튼을 클릭해야 합니다. 키 바인딩을 변경하려면 목록에서 모드를 선택하고 "설정" 탭으로 이동하세요.</s:String>
+    <s:String x:Key="Lang.Mods.Welcome.Text1">Mod와 게임을 시작하려면 오른쪽 하단에 있는 "게임 시작" 을 클릭해야 합니다.</s:String>
     <s:String x:Key="Lang.Mods.Welcome.Title1">오류?</s:String>
-    <s:String x:Key="Lang.Mods.Welcome.Text2">오류가 발생하는 경우에 포럼에서 도움을 요청하시기 바랍니다. www.modapi.de</s:String>
+    <s:String x:Key="Lang.Mods.Welcome.Text2">오류가 발생하는 경우에 포럼에서 도움을 요청하시기 바랍니다. https://modapi.survivetheforest.net/</s:String>
     <s:String x:Key="Lang.Mods.Welcome.Text3">log 파일을 첨부하는것을 잊지 마십시오. &quot;ModAPI.log&quot; logs 폴더에서 찾아보십시오. 이 파일은 문제 해결을 위한 중요한 정보가 포함되어 있습니다.</s:String>
 
     <s:String x:Key="Lang.Savegames.Tab">점수</s:String>

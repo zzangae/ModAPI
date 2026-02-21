@@ -192,7 +192,7 @@
     <s:String x:Key="Lang.Mods.Welcome.Text0">To apply mods to your game you have to activate the mods first. In order to do so you have to click the round button left to the mod name. To change key bindings you can select a mod in the list and switch to the "Settings" tab.</s:String>
     <s:String x:Key="Lang.Mods.Welcome.Text1">To start the game with mods you only have to click on the button "Start game" in the bottom right corner</s:String>
     <s:String x:Key="Lang.Mods.Welcome.Title1">Errors?</s:String>
-    <s:String x:Key="Lang.Mods.Welcome.Text2">If you encounter any error please seek help in the forums at www.modapi.cc</s:String>
+    <s:String x:Key="Lang.Mods.Welcome.Text2">If you encounter any error please seek help in the forums at https://modapi.survivetheforest.net/</s:String>
     <s:String x:Key="Lang.Mods.Welcome.Text3">Please dont forget to attach your log file &quot;ModAPI.log&quot; which is in the logs folder. This file includes important information for troubleshooting.</s:String>
 
     <s:String x:Key="Lang.Savegames.Tab">Spielstände</s:String>

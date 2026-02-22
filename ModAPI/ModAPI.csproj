@@ -189,7 +189,6 @@
     <Compile Include="Utils\DragAdorner.cs" />
     <Compile Include="Utils\Language.cs" />
     <Compile Include="Utils\WebService.cs" />
-    <Compile Include="Utils\XMLHelper.cs" />
     <Compile Include="Windows\SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>

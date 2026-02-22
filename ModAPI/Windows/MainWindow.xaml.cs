@@ -18,14 +18,6 @@
  *  To contact me you can e-mail me at info@fluffyfish.de
  */
 
-using Microsoft.Win32;
-using ModAPI.Components;
-using ModAPI.Components.Panels;
-using ModAPI.Configurations;
-using ModAPI.Data;
-using ModAPI.Data.Models;
-using ModAPI.Utils;
-using ModAPI.Windows.SubWindows;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -35,9 +27,17 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using System.Windows.Navigation;
 using System.Windows.Shell;
-using System.Windows.Threading;
+using Microsoft.Win32;
+using ModAPI.Components;
+using ModAPI.Components.Panels;
+using ModAPI.Configurations;
+using ModAPI.Data;
+using ModAPI.Data.Models;
+using ModAPI.Utils;
+using ModAPI.Windows.SubWindows;
 using Path = System.IO.Path;
 
 namespace ModAPI
@@ -895,6 +895,25 @@ namespace ModAPI
                 window.Show();
             }
             thread.Start();
+        }
+
+        // ===== Downloads Tab =====
+
+        private void DownloadSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+        }
+
+        private void DownloadRefresh_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void DownloadModList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DownloadButton.IsEnabled = DownloadModList.SelectedItem != null;
+        }
+
+        private void DownloadMod_Click(object sender, RoutedEventArgs e)
+        {
         }
 
         protected override void OnClosed(EventArgs e)

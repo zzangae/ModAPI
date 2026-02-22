@@ -208,6 +208,20 @@
     <s:String x:Key="Lang.Savegames.Buttons.LoadBackup">Załaduj kopie zapasową</s:String>
     <s:String x:Key="Lang.Savegames.Buttons.DeleteBackup">Usuń kopie zapasową</s:String>
 
+    <s:String x:Key="Lang.Downloads.Tab">Pobieranie</s:String>
+    <s:String x:Key="Lang.Downloads.Title">Pobierz mody</s:String>
+    <s:String x:Key="Lang.Downloads.Buttons.Refresh">Odśwież</s:String>
+    <s:String x:Key="Lang.Downloads.Buttons.Download">Pobierz</s:String>
+    <s:String x:Key="Lang.Downloads.Headers.Name">Nazwa</s:String>
+    <s:String x:Key="Lang.Downloads.Headers.Author">Autor</s:String>
+    <s:String x:Key="Lang.Downloads.Headers.Category">Kategoria</s:String>
+    <s:String x:Key="Lang.Downloads.Headers.Downloads">Pobrania</s:String>
+    <s:String x:Key="Lang.Downloads.Status.Ready">Wybierz mod do pobrania.</s:String>
+    <s:String x:Key="Lang.Downloads.Status.Loading">Ładowanie listy modów...</s:String>
+    <s:String x:Key="Lang.Downloads.Status.Downloading">Pobieranie...</s:String>
+    <s:String x:Key="Lang.Downloads.Status.Complete">Pobieranie zakończone!</s:String>
+    <s:String x:Key="Lang.Downloads.Status.Error">Wystąpił błąd podczas pobierania.</s:String>
+
     <s:String x:Key="Lang.Options.Tab">Ustawienia</s:String>
     <s:String x:Key="Lang.Options.Labels.Language">Język:</s:String>
     <s:String x:Key="Lang.Options.Labels.UpdateVersionsTable">Urzymuj tabelę wersji zawsze aktualną:</s:String>

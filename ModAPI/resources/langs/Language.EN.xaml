@@ -211,6 +211,20 @@
     <s:String x:Key="Lang.Savegames.Buttons.LoadBackup">Sicherung laden</s:String>
     <s:String x:Key="Lang.Savegames.Buttons.DeleteBackup">Sicherlung löschen</s:String>
 
+    <s:String x:Key="Lang.Downloads.Tab">Downloads</s:String>
+    <s:String x:Key="Lang.Downloads.Title">Download mods</s:String>
+    <s:String x:Key="Lang.Downloads.Buttons.Refresh">Refresh</s:String>
+    <s:String x:Key="Lang.Downloads.Buttons.Download">Download</s:String>
+    <s:String x:Key="Lang.Downloads.Headers.Name">Name</s:String>
+    <s:String x:Key="Lang.Downloads.Headers.Author">Author</s:String>
+    <s:String x:Key="Lang.Downloads.Headers.Category">Category</s:String>
+    <s:String x:Key="Lang.Downloads.Headers.Downloads">Downloads</s:String>
+    <s:String x:Key="Lang.Downloads.Status.Ready">Select a mod to download.</s:String>
+    <s:String x:Key="Lang.Downloads.Status.Loading">Loading mod list...</s:String>
+    <s:String x:Key="Lang.Downloads.Status.Downloading">Downloading...</s:String>
+    <s:String x:Key="Lang.Downloads.Status.Complete">Download complete!</s:String>
+    <s:String x:Key="Lang.Downloads.Status.Error">Error occurred while downloading.</s:String>
+
     <s:String x:Key="Lang.Options.Tab">Settings</s:String>
     <s:String x:Key="Lang.Options.Labels.Language">Language:</s:String>
     <s:String x:Key="Lang.Options.Labels.UpdateVersionsTable">Keep VersionsData table up-to-date:</s:String>

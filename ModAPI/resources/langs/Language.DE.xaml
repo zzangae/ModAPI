@@ -355,6 +355,20 @@
     <s:String x:Key="Lang.Savegames.Savegame.Buildings.LogSled">Logsled</s:String>
     <s:String x:Key="Lang.Savegames.Savegame.Buildings.TreeHouse">Treehouse</s:String>
 
+    <s:String x:Key="Lang.Downloads.Tab">Downloads</s:String>
+    <s:String x:Key="Lang.Downloads.Title">Mods herunterladen</s:String>
+    <s:String x:Key="Lang.Downloads.Buttons.Refresh">Aktualisieren</s:String>
+    <s:String x:Key="Lang.Downloads.Buttons.Download">Herunterladen</s:String>
+    <s:String x:Key="Lang.Downloads.Headers.Name">Name</s:String>
+    <s:String x:Key="Lang.Downloads.Headers.Author">Autor</s:String>
+    <s:String x:Key="Lang.Downloads.Headers.Category">Kategorie</s:String>
+    <s:String x:Key="Lang.Downloads.Headers.Downloads">Downloads</s:String>
+    <s:String x:Key="Lang.Downloads.Status.Ready">Wähle einen Mod zum Herunterladen.</s:String>
+    <s:String x:Key="Lang.Downloads.Status.Loading">Modliste wird geladen...</s:String>
+    <s:String x:Key="Lang.Downloads.Status.Downloading">Wird heruntergeladen...</s:String>
+    <s:String x:Key="Lang.Downloads.Status.Complete">Download abgeschlossen!</s:String>
+    <s:String x:Key="Lang.Downloads.Status.Error">Beim Herunterladen ist ein Fehler aufgetreten.</s:String>
+
     <s:String x:Key="Lang.Options.Tab">Einstellungen</s:String>
     <s:String x:Key="Lang.Options.Labels.Language">Sprache:</s:String>
     <s:String x:Key="Lang.Options.Labels.UpdateVersionsTable">Versionstabelle aktuell halten:</s:String>

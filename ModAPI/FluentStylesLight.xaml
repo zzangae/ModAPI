@@ -1,6 +1,6 @@
 <!--  
-    ModAPI v2.0 - Fluent Design Styles
-    Windows 11 Fluent Design override layer
+    ModAPI v2.0 - Fluent Design Styles (Light Theme)
+    Windows 11 Fluent Design override layer - Light variant
     Loaded after Dictionary.xaml to override key visual styles
     -->
 
@@ -8,23 +8,23 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Components="clr-namespace:ModAPI.Components">
 
-    <!-- ===== Fluent Color Palette ===== -->
+    <!-- ===== Fluent Color Palette (Light) ===== -->
     <Color x:Key="FluentAccentColor">#0078D4</Color>
     <Color x:Key="FluentAccentLightColor">#429CE3</Color>
     <Color x:Key="FluentAccentDarkColor">#005A9E</Color>
-    <Color x:Key="FluentBgColor">#1C1C1C</Color>
-    <Color x:Key="FluentBgSecondaryColor">#2D2D2D</Color>
-    <Color x:Key="FluentBgTertiaryColor">#383838</Color>
-    <Color x:Key="FluentSurfaceColor">#2D2D2D</Color>
-    <Color x:Key="FluentCardColor">#282828</Color>
-    <Color x:Key="FluentBorderColor">#3D3D3D</Color>
-    <Color x:Key="FluentTextPrimaryColor">#FFFFFF</Color>
-    <Color x:Key="FluentTextSecondaryColor">#C5C5C5</Color>
-    <Color x:Key="FluentTextTertiaryColor">#9A9A9A</Color>
+    <Color x:Key="FluentBgColor">#F3F3F3</Color>
+    <Color x:Key="FluentBgSecondaryColor">#E8E8E8</Color>
+    <Color x:Key="FluentBgTertiaryColor">#DEDEDE</Color>
+    <Color x:Key="FluentSurfaceColor">#FFFFFF</Color>
+    <Color x:Key="FluentCardColor">#FFFFFF</Color>
+    <Color x:Key="FluentBorderColor">#D1D1D1</Color>
+    <Color x:Key="FluentTextPrimaryColor">#1A1A1A</Color>
+    <Color x:Key="FluentTextSecondaryColor">#444444</Color>
+    <Color x:Key="FluentTextTertiaryColor">#6B6B6B</Color>
     <Color x:Key="FluentDangerColor">#E81123</Color>
     <Color x:Key="FluentSuccessColor">#107C10</Color>
     <Color x:Key="FluentWarningColor">#FF8C00</Color>
-    <Color x:Key="FluentTabBarColor">#1A1A1A</Color>
+    <Color x:Key="FluentTabBarColor">#EBEBEB</Color>
 
     <SolidColorBrush x:Key="FluentAccentBrush" Color="{StaticResource FluentAccentColor}" />
     <SolidColorBrush x:Key="FluentAccentLightBrush" Color="{StaticResource FluentAccentLightColor}" />
@@ -114,10 +114,10 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bg" Property="Background" Value="#1AFFFFFF" />
+                            <Setter TargetName="Bg" Property="Background" Value="#0A000000" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Bg" Property="Background" Value="#12FFFFFF" />
+                            <Setter TargetName="Bg" Property="Background" Value="#08000000" />
                             <Setter Property="Foreground" Value="{StaticResource FluentTextTertiaryBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -222,7 +222,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
-                    <Border Background="#1E1E1E" CornerRadius="12" BorderBrush="#3D3D3D" BorderThickness="1">
+                    <Border Background="#F0F0F0" CornerRadius="12" BorderBrush="#D1D1D1" BorderThickness="1">
                         <Border.Effect>
                             <DropShadowEffect Color="Black" BlurRadius="32" Opacity="0.5" ShadowDepth="0" />
                         </Border.Effect>
@@ -318,7 +318,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bg" Property="Background" Value="#0AFFFFFF" />
+                            <Setter TargetName="Bg" Property="Background" Value="#06000000" />
                             <Setter TargetName="TabLabel" Property="Foreground" Value="{StaticResource FluentTextPrimaryBrush}" />
                             <Setter TargetName="TabIcon" Property="Opacity" Value="0.9" />
                         </Trigger>
@@ -414,7 +414,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bg" Property="Background" Value="#0AFFFFFF" />
+                            <Setter TargetName="Bg" Property="Background" Value="#06000000" />
                             <Setter TargetName="TabLabel" Property="Foreground" Value="{StaticResource FluentTextPrimaryBrush}" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
@@ -475,17 +475,17 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bg" Property="Background" Value="#444444" />
-                            <Setter TargetName="Bg" Property="BorderBrush" Value="#505050" />
+                            <Setter TargetName="Bg" Property="Background" Value="#E8E8E8" />
+                            <Setter TargetName="Bg" Property="BorderBrush" Value="#CCCCCC" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Bg" Property="Background" Value="#333333" />
+                            <Setter TargetName="Bg" Property="Background" Value="#F0F0F0" />
                             <Setter Property="Foreground" Value="{StaticResource FluentTextSecondaryBrush}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="Bg" Property="Background" Value="#1A1A1A" />
+                            <Setter TargetName="Bg" Property="Background" Value="#E0E0E0" />
                             <Setter Property="Foreground" Value="{StaticResource FluentTextTertiaryBrush}" />
-                            <Setter TargetName="Bg" Property="BorderBrush" Value="#2A2A2A" />
+                            <Setter TargetName="Bg" Property="BorderBrush" Value="#D0D0D0" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -512,7 +512,7 @@
                             <Setter Property="Foreground" Value="#CCFFFFFF" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="Bg" Property="Background" Value="#1A1A1A" />
+                            <Setter TargetName="Bg" Property="Background" Value="#E0E0E0" />
                             <Setter Property="Foreground" Value="{StaticResource FluentTextTertiaryBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -536,7 +536,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bg" Property="Background" Value="#33FFFFFF" />
+                            <Setter TargetName="Bg" Property="Background" Value="#1A000000" />
                             <Setter TargetName="Icon" Property="Foreground" Value="White" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -614,10 +614,10 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bg" Property="Background" Value="#15FFFFFF" />
+                            <Setter TargetName="Bg" Property="Background" Value="#0A000000" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="Bg" Property="Background" Value="#20FFFFFF" />
+                            <Setter TargetName="Bg" Property="Background" Value="#10000000" />
                             <Setter TargetName="Bg" Property="BorderBrush" Value="{StaticResource FluentAccentBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -680,7 +680,7 @@
                             <Setter TargetName="Bg" Property="BorderThickness" Value="1,1,1,2" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bg" Property="Background" Value="#404040" />
+                            <Setter TargetName="Bg" Property="Background" Value="#C0C0C0" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -26,14 +26,18 @@
         xmlns:local="clr-namespace:ModAPI" x:Class="ModAPI.MainWindow"
         SnapsToDevicePixels="True"
         Style="{StaticResource Window}"
-        Background="{StaticResource FluentBgBrush}"
+        Background="{DynamicResource FluentBgBrush}"
         MinWidth="800"
         MinHeight="500"
         Width="1420"
         Height="650"
         Title="ModAPI v2.0" Loaded="WindowLoaded" LayoutUpdated="Window_LayoutUpdated" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp" Activated="Window_Activated" Closed="Window_Closed" WindowStartupLocation="CenterScreen">
 
-    <Grid Background="Transparent">
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="0" CaptionHeight="48" ResizeBorderThickness="6" CornerRadius="0" UseAeroCaptionButtons="False" />
+    </WindowChrome.WindowChrome>
+
+    <Grid Background="Transparent" MouseLeftButtonDown="RootGrid_MouseLeftButtonDown">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="36" />
@@ -474,6 +478,7 @@
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <TextBlock Margin="0,0,0,12" Padding="0,0,10,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Text="{DynamicResource Lang.Options.Labels.Language}" Style="{StaticResource NormalLabel}" />
                                     <Grid Margin="0,0,0,12" Grid.Column="1" Grid.Row="0">
@@ -482,16 +487,23 @@
                                                   x:Name="LanguageSelector" Style="{StaticResource ComboBox}" Height="32" 
                                                   HorizontalAlignment="Left" VerticalAlignment="Top" />
                                     </Grid>
-                                    <TextBlock Margin="0,0,0,12" Padding="0,0,10,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Text="{DynamicResource Lang.Options.Labels.UpdateVersionsTable}" Style="{StaticResource NormalLabel}" />
+                                    <TextBlock Margin="0,0,0,12" Padding="0,0,10,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Text="{DynamicResource Lang.Options.Labels.Theme}" Style="{StaticResource NormalLabel}" />
                                     <Grid Margin="0,0,0,12" Grid.Column="1" Grid.Row="1">
+                                        <ComboBox x:Name="ThemeSelector" Style="{StaticResource ComboBox}" Height="32" 
+                                                  Components:ComboBoxWidthFromItemsBehavior.ComboBoxWidthFromItems="True"
+                                                  HorizontalAlignment="Left" VerticalAlignment="Top"
+                                                  SelectionChanged="ThemeSelector_SelectionChanged" />
+                                    </Grid>
+                                    <TextBlock Margin="0,0,0,12" Padding="0,0,10,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" Text="{DynamicResource Lang.Options.Labels.UpdateVersionsTable}" Style="{StaticResource NormalLabel}" />
+                                    <Grid Margin="0,0,0,12" Grid.Column="1" Grid.Row="2">
                                         <CheckBox IsChecked="{Binding UpdateVersionsTable,Mode=TwoWay}" />
                                     </Grid>
-                                    <TextBlock Margin="0,0,0,12" Padding="0,0,10,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" Text="{DynamicResource Lang.Options.Labels.AutoUpdate}" Style="{StaticResource NormalLabel}" />
-                                    <Grid Margin="0,0,0,12" Grid.Column="1" Grid.Row="2">
+                                    <TextBlock Margin="0,0,0,12" Padding="0,0,10,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="3" Text="{DynamicResource Lang.Options.Labels.AutoUpdate}" Style="{StaticResource NormalLabel}" />
+                                    <Grid Margin="0,0,0,12" Grid.Column="1" Grid.Row="3">
                                         <CheckBox IsChecked="{Binding AutoUpdate,Mode=TwoWay}" />
                                     </Grid>
-                                    <TextBlock Margin="0,0,0,12" Padding="0,0,10,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="3" Text="{DynamicResource Lang.Options.Labels.UseSteam}" Style="{StaticResource NormalLabel}" />
-                                    <Grid Margin="0,0,0,12" Grid.Column="1" Grid.Row="3">
+                                    <TextBlock Margin="0,0,0,12" Padding="0,0,10,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="4" Text="{DynamicResource Lang.Options.Labels.UseSteam}" Style="{StaticResource NormalLabel}" />
+                                    <Grid Margin="0,0,0,12" Grid.Column="1" Grid.Row="4">
                                         <CheckBox IsChecked="{Binding UseSteam,Mode=TwoWay}" />
                                     </Grid>
                                 </Grid>
@@ -510,35 +522,35 @@
 
         <!-- Caption Buttons (CaptionHeight=48 handles drag, these are exempt via IsHitTestVisibleInChrome) -->
         <StackPanel Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="48"
-                    Orientation="Horizontal"
+                    Orientation="Horizontal" Margin="0,0,16,0"
                     WindowChrome.IsHitTestVisibleInChrome="True">
-            <Button Style="{StaticResource MinimizeButton}" Click="Minimize" />
-            <Button x:Name="NormalizeButton" Style="{StaticResource NormalizeButton}" Click="Normalize" />
-            <Button x:Name="MaximizeButton" Style="{StaticResource MaximizeButton}" Click="Maximize" />
-            <Button Style="{StaticResource FluentCloseButton}" Content="&#xE8BB;" 
-                    FontFamily="{StaticResource FluentIconFont}" FontSize="10" Click="CloseWindow" />
+            <Button Style="{StaticResource MinimizeButton}" Click="Minimize" Margin="4,0" />
+            <Button x:Name="NormalizeButton" Style="{StaticResource NormalizeButton}" Click="Normalize" Margin="4,0" />
+            <Button x:Name="MaximizeButton" Style="{StaticResource MaximizeButton}" Click="Maximize" Margin="4,0" />
+            <Button Style="{DynamicResource FluentCloseButton}" Content="&#xE8BB;" 
+                    FontFamily="{DynamicResource FluentIconFont}" FontSize="10" Click="CloseWindow" Margin="4,0" />
         </StackPanel>
 
         <!-- ============================================================ -->
         <!-- Status Bar -->
         <!-- ============================================================ -->
-        <Border Grid.Row="1" Background="{StaticResource FluentTabBarBrush}" 
-                BorderBrush="{StaticResource FluentBorderBrush}" BorderThickness="0,1,0,0">
+        <Border Grid.Row="1" Background="{DynamicResource FluentTabBarBrush}" 
+                BorderBrush="{DynamicResource FluentBorderBrush}" BorderThickness="0,1,0,0">
             <Grid Margin="12,0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <TextBlock FontFamily="{StaticResource NormalFont}" FontSize="11" 
-                               Foreground="{StaticResource FluentTextTertiaryBrush}" Text="{DynamicResource Lang.Window.Copyright}" />
+                               Foreground="{DynamicResource FluentTextTertiaryBrush}" Text="{DynamicResource Lang.Window.Copyright}" />
                     <TextBlock FontFamily="{StaticResource NormalFont}" FontSize="11" 
-                               Foreground="{StaticResource FluentTextTertiaryBrush}" Margin="6,0,0,0" Text="·" />
+                               Foreground="{DynamicResource FluentTextTertiaryBrush}" Margin="6,0,0,0" Text="·" />
                     <TextBlock FontFamily="{StaticResource NormalFont}" FontSize="11" 
-                               Foreground="{StaticResource FluentTextTertiaryBrush}" Margin="6,0,0,0" 
+                               Foreground="{DynamicResource FluentTextTertiaryBrush}" Margin="6,0,0,0" 
                                Text="Made with ♥ in Engelskirchen, Germany | upgrade by zzangae, Republic of Korea" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <TextBlock FontFamily="{StaticResource NormalFont}" FontSize="11" 
-                               Foreground="{StaticResource FluentTextTertiaryBrush}" Text="{DynamicResource Lang.Window.Version}" />
+                               Foreground="{DynamicResource FluentTextTertiaryBrush}" Text="{DynamicResource Lang.Window.Version}" />
                     <TextBlock x:Name="VersionLabel" FontFamily="{StaticResource NormalFont}" FontSize="11" 
-                               Foreground="{StaticResource FluentTextTertiaryBrush}" Margin="4,0,0,0" Text="2.0.0" />
+                               Foreground="{DynamicResource FluentTextTertiaryBrush}" Margin="4,0,0,0" Text="2.0.0" />
                 </StackPanel>
             </Grid>
         </Border>

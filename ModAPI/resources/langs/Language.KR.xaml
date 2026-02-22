@@ -214,6 +214,22 @@
     <s:String x:Key="Lang.Options.Labels.AutoUpdate">업데이트 검색:</s:String>
     <s:String x:Key="Lang.Options.Labels.UseSteam">스팀 연결:</s:String>
 
+    <s:String x:Key="Lang.Options.Labels.Theme">테마 선택:</s:String>
+    <s:String x:Key="Lang.Options.Theme.Classic">기본 테마</s:String>
+    <s:String x:Key="Lang.Options.Theme.Light">화이트 테마</s:String>
+    <s:String x:Key="Lang.Options.Theme.Dark">다크 테마</s:String>
+    <s:String x:Key="Lang.Options.Theme.RestartTitle">테마 변경</s:String>
+    <s:String x:Key="Lang.Options.Theme.RestartText">테마를 적용하려면 프로그램을 다시 시작해주세요.</s:String>
+
+    <s:String x:Key="Lang.Windows.ThemeRestartNotice.Title">테마 변경</s:String>
+    <s:String x:Key="Lang.Windows.ThemeRestartNotice.Text">테마를 적용하려면 프로그램을 다시 시작해주세요.</s:String>
+    <s:String x:Key="Lang.Windows.ThemeRestartNotice.Buttons.OK">확인</s:String>
+
+    <s:String x:Key="Lang.Windows.ThemeConfirm.Title">테마 변경</s:String>
+    <s:String x:Key="Lang.Windows.ThemeConfirm.Text">테마 적용을 시작하겠습니까?</s:String>
+    <s:String x:Key="Lang.Windows.ThemeConfirm.Buttons.Yes">예</s:String>
+    <s:String x:Key="Lang.Windows.ThemeConfirm.Buttons.No">아니오</s:String>
+
     <s:String x:Key="Lang.Windows.NoProjectWarning.Title">경고</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Text">새로운 프로젝트가 없습니다. 먼저 프로젝트를 생성해주세요.</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Buttons.OK">확인</s:String>

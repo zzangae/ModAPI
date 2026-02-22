@@ -30,6 +30,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Windows.Navigation;
+using System.Windows.Shell;
 using Microsoft.Win32;
 using ModAPI.Components;
 using ModAPI.Components.Panels;
@@ -99,7 +100,7 @@ namespace ModAPI
         {
             if (PositionWindow)
             {
-                var window = (Window)sender;
+                var window = (Window) sender;
                 if (window.IsVisible)
                 {
                     window.Left = Instance.Left + Instance.ActualWidth / 2.0 - window.ActualWidth / 2.0;
@@ -112,7 +113,7 @@ namespace ModAPI
 
         static void SubWindowClosed(object sender, EventArgs e)
         {
-            WindowQueue.Remove((Window)sender);
+            WindowQueue.Remove((Window) sender);
             if (CurrentWindow == sender)
             {
                 CurrentWindow = null;
@@ -205,10 +206,10 @@ namespace ModAPI
 
         protected string SearchSteam()
         {
-            var steamPath = (string)Registry.GetValue("HKEY_CURRENT_USER\\Software\\Valve\\Steam\\", "SteamPath", "");
+            var steamPath = (string) Registry.GetValue("HKEY_CURRENT_USER\\Software\\Valve\\Steam\\", "SteamPath", "");
             if (!File.Exists(steamPath + Path.DirectorySeparatorChar + "Steam.exe"))
             {
-                steamPath = (string)Registry.GetValue("HKEY_CURRENT_USER\\Software\\Valve\\Steam\\", "SteamExe", "");
+                steamPath = (string) Registry.GetValue("HKEY_CURRENT_USER\\Software\\Valve\\Steam\\", "SteamExe", "");
                 if (File.Exists(steamPath))
                 {
                     steamPath = Path.GetDirectoryName(steamPath);
@@ -302,7 +303,7 @@ namespace ModAPI
             InitializeComponent();
             Instance = this;
             CheckDir();
-
+            
 
             /* TODO: Disabled Login components due to php backend not functioning on modapi.cc
             WebService.OnDoLogin = ShowLoginLoader;
@@ -370,6 +371,8 @@ namespace ModAPI
             Settings.DataContext = SettingsVm;
             //LanguageSelector.SelectedIndex = Configuration.Languages.Values.ToList().IndexOf(Configuration.CurrentLanguage);
 
+            InitializeThemeSelector();
+
             foreach (var tab in GuiConfiguration.Tabs)
             {
                 var newTab = new IconTabItem();
@@ -402,7 +405,7 @@ namespace ModAPI
                 }
 
                 newTab.SetResourceReference(IconTabItem.LabelProperty, tab.LangPath + ".Tab");
-                var newPanel = (IPanel)Activator.CreateInstance(tab.ComponentType);
+                var newPanel = (IPanel) Activator.CreateInstance(tab.ComponentType);
                 newTab.Content = newPanel;
                 Debug.Log("MainWindow", "Added tab of type \"" + tab.TypeName + "\".");
                 newPanel.SetTab(tab);
@@ -412,7 +415,7 @@ namespace ModAPI
 
             Timer = new DispatcherTimer();
             Timer.Tick += GuiTick;
-            Timer.Interval = new TimeSpan((long)(GuiDeltaTime * 10000000));
+            Timer.Interval = new TimeSpan((long) (GuiDeltaTime * 10000000));
             Timer.Start();
             LanguageChanged();
             SettingsVm.Changed();
@@ -435,7 +438,7 @@ namespace ModAPI
             }
             else
             {
-
+                
             }
 
         }
@@ -559,6 +562,119 @@ namespace ModAPI
             UpdateModlibVersion();
         }
 
+        private bool _themeInitializing;
+
+        private void InitializeThemeSelector()
+        {
+            _themeInitializing = true;
+
+            var classicItem = new ComboBoxItem
+            {
+                Style = Application.Current.FindResource("ComboBoxItem") as Style
+            };
+            var classicText = new TextBlock { VerticalAlignment = VerticalAlignment.Center, FontSize = 16 };
+            classicText.SetResourceReference(TextBlock.TextProperty, "Lang.Options.Theme.Classic");
+            classicItem.Content = classicText;
+            ThemeSelector.Items.Add(classicItem);
+
+            var lightItem = new ComboBoxItem
+            {
+                Style = Application.Current.FindResource("ComboBoxItem") as Style
+            };
+            var lightText = new TextBlock { VerticalAlignment = VerticalAlignment.Center, FontSize = 16 };
+            lightText.SetResourceReference(TextBlock.TextProperty, "Lang.Options.Theme.Light");
+            lightItem.Content = lightText;
+            ThemeSelector.Items.Add(lightItem);
+
+            var darkItem = new ComboBoxItem
+            {
+                Style = Application.Current.FindResource("ComboBoxItem") as Style
+            };
+            var darkText = new TextBlock { VerticalAlignment = VerticalAlignment.Center, FontSize = 16 };
+            darkText.SetResourceReference(TextBlock.TextProperty, "Lang.Options.Theme.Dark");
+            darkItem.Content = darkText;
+            ThemeSelector.Items.Add(darkItem);
+
+            var currentTheme = App.GetCurrentTheme();
+            switch (currentTheme)
+            {
+                case "light":
+                    ThemeSelector.SelectedIndex = 1;
+                    break;
+                case "dark":
+                    ThemeSelector.SelectedIndex = 2;
+                    break;
+                default: // classic
+                    ThemeSelector.SelectedIndex = 0;
+                    break;
+            }
+
+            _themeInitializing = false;
+        }
+
+        private void ThemeSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_themeInitializing) return;
+
+            string theme;
+            switch (ThemeSelector.SelectedIndex)
+            {
+                case 1:
+                    theme = "light";
+                    break;
+                case 2:
+                    theme = "dark";
+                    break;
+                default:
+                    theme = "classic";
+                    break;
+            }
+
+            // If same theme, do nothing
+            if (theme == App.GetCurrentTheme()) return;
+
+            var selectedTheme = theme;
+            var win = new Windows.SubWindows.ThemeConfirm("Lang.Windows.ThemeConfirm");
+            win.Closed += (s, args) =>
+            {
+                if (win.Confirmed)
+                {
+                    App.SaveTheme(selectedTheme);
+
+                    // Auto restart
+                    var exePath = System.IO.Path.Combine(App.RootPath, "ModAPI.exe");
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = exePath,
+                        UseShellExecute = true,
+                        WorkingDirectory = App.RootPath
+                    });
+                    Process.GetCurrentProcess().Kill();
+                }
+                else
+                {
+                    // Revert selection
+                    _themeInitializing = true;
+                    var currentTheme = App.GetCurrentTheme();
+                    switch (currentTheme)
+                    {
+                        case "light":
+                            ThemeSelector.SelectedIndex = 1;
+                            break;
+                        case "dark":
+                            ThemeSelector.SelectedIndex = 2;
+                            break;
+                        default:
+                            ThemeSelector.SelectedIndex = 0;
+                            break;
+                    }
+                    _themeInitializing = false;
+                }
+            };
+            win.ShowSubWindow();
+            win.Show();
+        }
+
         void AddLanguage(Configuration.Language language)
         {
             var c = new ComboBoxItem
@@ -600,17 +716,28 @@ namespace ModAPI
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
-            ((FrameworkElement)FindName("Mover")).MouseLeftButtonDown += MoveWindow;
+            ((FrameworkElement) FindName("Mover")).MouseLeftButtonDown += MoveWindow;
+
+            // Force WindowChrome after all styles are applied - guarantees drag for all themes
+            var chrome = new WindowChrome
+            {
+                GlassFrameThickness = new Thickness(0),
+                CaptionHeight = 48,
+                ResizeBorderThickness = new Thickness(6),
+                CornerRadius = new CornerRadius(0),
+                UseAeroCaptionButtons = false
+            };
+            WindowChrome.SetWindowChrome(this, chrome);
 
             if (WindowState == WindowState.Maximized)
             {
-                ((Button)FindName("MaximizeButton")).Visibility = Visibility.Hidden;
-                ((Button)FindName("MaximizeButton")).Width = 0;
+                ((Button) FindName("MaximizeButton")).Visibility = Visibility.Hidden;
+                ((Button) FindName("MaximizeButton")).Width = 0;
             }
             else
             {
-                ((Button)FindName("NormalizeButton")).Visibility = Visibility.Hidden;
-                ((Button)FindName("NormalizeButton")).Width = 0;
+                ((Button) FindName("NormalizeButton")).Visibility = Visibility.Hidden;
+                ((Button) FindName("NormalizeButton")).Width = 0;
             }
 
             VersionLabel.Text = Version.Descriptor + " [" + Version.BuildDate + "]";
@@ -623,6 +750,14 @@ namespace ModAPI
             DragMove();
         }
 
+        private void RootGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.GetPosition(this).Y <= 48)
+            {
+                DragMove();
+            }
+        }
+
         private void Minimize(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
@@ -631,19 +766,19 @@ namespace ModAPI
         private void Normalize(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Normal;
-            ((Button)FindName("MaximizeButton")).Visibility = Visibility.Visible;
-            ((Button)FindName("MaximizeButton")).Width = 24;
-            ((Button)FindName("NormalizeButton")).Visibility = Visibility.Hidden;
-            ((Button)FindName("NormalizeButton")).Width = 0;
+            ((Button) FindName("MaximizeButton")).Visibility = Visibility.Visible;
+            ((Button) FindName("MaximizeButton")).Width = 24;
+            ((Button) FindName("NormalizeButton")).Visibility = Visibility.Hidden;
+            ((Button) FindName("NormalizeButton")).Width = 0;
         }
 
         private void Maximize(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Maximized;
-            ((Button)FindName("MaximizeButton")).Visibility = Visibility.Hidden;
-            ((Button)FindName("MaximizeButton")).Width = 0;
-            ((Button)FindName("NormalizeButton")).Visibility = Visibility.Visible;
-            ((Button)FindName("NormalizeButton")).Width = 24;
+            ((Button) FindName("MaximizeButton")).Visibility = Visibility.Hidden;
+            ((Button) FindName("MaximizeButton")).Width = 0;
+            ((Button) FindName("NormalizeButton")).Visibility = Visibility.Visible;
+            ((Button) FindName("NormalizeButton")).Width = 24;
         }
 
         private void CloseWindow(object sender, RoutedEventArgs e)
@@ -659,7 +794,7 @@ namespace ModAPI
 
         private void Building_Click(object sender, RoutedEventArgs e)
         {
-            var button = (ToggleButton)sender;
+            var button = (ToggleButton) sender;
             /*BuildingSelect.SelectedIndex = BuildingToIndex[(int) button.DataContext];
 
             BuildingSelect.IsDropDownOpen = false;*/
@@ -852,7 +987,7 @@ namespace ModAPI
         {
             if (CurrentModProjectViewModel != null)
             {
-                CurrentModProjectViewModel.AddProjectLanguage((string)(((ComboBoxItem)DevelopmentLanguageSelector.SelectedItem).DataContext));
+                CurrentModProjectViewModel.AddProjectLanguage((string) (((ComboBoxItem) DevelopmentLanguageSelector.SelectedItem).DataContext));
                 DevelopmentLanguageSelector.SelectedIndex = -1;
                 foreach (var kv in LanguageItems)
                 {
@@ -878,13 +1013,13 @@ namespace ModAPI
                 var win =
                     new RemoveModProject("Lang.Windows.RemoveModProject", CurrentModProjectViewModel.Project.Id, CurrentModProjectViewModel.Project)
                     {
-                        Confirm = delegate (object obj)
+                        Confirm = delegate(object obj)
                         {
                             ProjectList.SelectedIndex = -1;
                             NoProjectSelected.Visibility = Visibility.Visible;
                             SelectedProject.DataContext = null;
                             SelectedProject.Visibility = Visibility.Collapsed;
-                            ModProjects.Remove((ModProject)obj);
+                            ModProjects.Remove((ModProject) obj);
                         }
                     };
                 win.ShowSubWindow();
@@ -897,7 +1032,7 @@ namespace ModAPI
             if (CurrentModProjectViewModel != null)
             {
                 var progressHandler = new ProgressHandler();
-                var thread = new Thread(delegate () { CurrentModProjectViewModel.Project.Create(progressHandler); });
+                var thread = new Thread(delegate() { CurrentModProjectViewModel.Project.Create(progressHandler); });
                 var window = new OperationPending("Lang.Windows.OperationPending", "CreateMod", progressHandler);
                 if (!window.Completed)
                 {
@@ -913,10 +1048,10 @@ namespace ModAPI
             var mods = new List<Mod>();
             foreach (var i in Mods.Mods)
             {
-                var vm = (ModViewModel)i.DataContext;
+                var vm = (ModViewModel) i.DataContext;
                 if (vm != null && vm.Selected)
                 {
-                    var vm2 = (ModVersionViewModel)vm.SelectedVersion.DataContext;
+                    var vm2 = (ModVersionViewModel) vm.SelectedVersion.DataContext;
                     if (vm2 != null)
                     {
                         mods.Add(vm2.Mod);
@@ -941,7 +1076,7 @@ namespace ModAPI
                 }
             };
 
-            var thread = new Thread(delegate () { App.Game.ApplyMods(mods, progressHandler); });
+            var thread = new Thread(delegate() { App.Game.ApplyMods(mods, progressHandler); });
             var window = new OperationPending("Lang.Windows.OperationPending", "ApplyMods", progressHandler, null, true);
             if (!window.Completed)
             {

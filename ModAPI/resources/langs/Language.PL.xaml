@@ -214,6 +214,22 @@
     <s:String x:Key="Lang.Options.Labels.AutoUpdate">Sprawdzanie aktualizacji:</s:String>
     <s:String x:Key="Lang.Options.Labels.UseSteam">Połączenie ze Steam:</s:String>
 
+    <s:String x:Key="Lang.Options.Labels.Theme">Motyw:</s:String>
+    <s:String x:Key="Lang.Options.Theme.Classic">Motyw klasyczny</s:String>
+    <s:String x:Key="Lang.Options.Theme.Light">Motyw jasny</s:String>
+    <s:String x:Key="Lang.Options.Theme.Dark">Motyw ciemny</s:String>
+    <s:String x:Key="Lang.Options.Theme.RestartTitle">Motyw zmieniony</s:String>
+    <s:String x:Key="Lang.Options.Theme.RestartText">Uruchom ponownie aplikację, aby zastosować motyw.</s:String>
+
+    <s:String x:Key="Lang.Windows.ThemeRestartNotice.Title">Motyw zmieniony</s:String>
+    <s:String x:Key="Lang.Windows.ThemeRestartNotice.Text">Uruchom ponownie aplikację, aby zastosować motyw.</s:String>
+    <s:String x:Key="Lang.Windows.ThemeRestartNotice.Buttons.OK">OK</s:String>
+
+    <s:String x:Key="Lang.Windows.ThemeConfirm.Title">Zmiana motywu</s:String>
+    <s:String x:Key="Lang.Windows.ThemeConfirm.Text">Czy chcesz zastosować motyw?</s:String>
+    <s:String x:Key="Lang.Windows.ThemeConfirm.Buttons.Yes">Tak</s:String>
+    <s:String x:Key="Lang.Windows.ThemeConfirm.Buttons.No">Nie</s:String>
+
     <s:String x:Key="Lang.Windows.NoProjectWarning.Title">Ostrzeżenie</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Text">Nie znaleziono projektów. Proszę najpierw utworzyć projekt.</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Buttons.OK">OK</s:String>

@@ -361,6 +361,22 @@
     <s:String x:Key="Lang.Options.Labels.AutoUpdate">Nach Updates suchen:</s:String>
     <s:String x:Key="Lang.Options.Labels.UseSteam">Steamanbindung:</s:String>
 
+    <s:String x:Key="Lang.Options.Labels.Theme">Design:</s:String>
+    <s:String x:Key="Lang.Options.Theme.Classic">Klassisches Design</s:String>
+    <s:String x:Key="Lang.Options.Theme.Light">Helles Design</s:String>
+    <s:String x:Key="Lang.Options.Theme.Dark">Dunkles Design</s:String>
+    <s:String x:Key="Lang.Options.Theme.RestartTitle">Design geändert</s:String>
+    <s:String x:Key="Lang.Options.Theme.RestartText">Bitte starten Sie die Anwendung neu, um das Design anzuwenden.</s:String>
+
+    <s:String x:Key="Lang.Windows.ThemeRestartNotice.Title">Design geändert</s:String>
+    <s:String x:Key="Lang.Windows.ThemeRestartNotice.Text">Bitte starten Sie die Anwendung neu, um das Design anzuwenden.</s:String>
+    <s:String x:Key="Lang.Windows.ThemeRestartNotice.Buttons.OK">OK</s:String>
+
+    <s:String x:Key="Lang.Windows.ThemeConfirm.Title">Design ändern</s:String>
+    <s:String x:Key="Lang.Windows.ThemeConfirm.Text">Möchten Sie das Design anwenden?</s:String>
+    <s:String x:Key="Lang.Windows.ThemeConfirm.Buttons.Yes">Ja</s:String>
+    <s:String x:Key="Lang.Windows.ThemeConfirm.Buttons.No">Nein</s:String>
+
     <s:String x:Key="Lang.Windows.NoProjectWarning.Title">Warnung</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Text">Keine Projekte gefunden. Bitte erstellen Sie zuerst ein Projekt.</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Buttons.OK">OK</s:String>

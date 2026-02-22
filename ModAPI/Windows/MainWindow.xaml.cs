@@ -145,6 +145,7 @@ namespace ModAPI
 
         public bool CheckSteamPath()
         {
+            if (App.DevMode) return true;
             if (Configuration.GetString("UseSteam").ToLower() == "true")
             {
                 if (!CheckSteam())

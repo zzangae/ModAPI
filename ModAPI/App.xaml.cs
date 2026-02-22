@@ -31,6 +31,7 @@ namespace ModAPI
     public partial class App : Application
     {
         public static string Version = "2.0.0";
+        public static bool DevMode;
 
         public ResourceDictionary LanguageDictionary;
         public static App Instance;
@@ -69,6 +70,16 @@ namespace ModAPI
             AssemblyResolver.Initialize();
             RootPath = Path.GetFullPath(".");
             UpdatePath = Path.GetFullPath("_update") + Path.DirectorySeparatorChar;
+            DevMode = false;
+            var args = Environment.GetCommandLineArgs();
+            foreach (var arg in args)
+            {
+                if (arg.Equals("--dev", StringComparison.OrdinalIgnoreCase))
+                {
+                    DevMode = true;
+                    break;
+                }
+            }
 
             if (Directory.Exists(UpdatePath))
             {

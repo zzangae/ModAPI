@@ -368,6 +368,10 @@
     <s:String x:Key="Lang.Downloads.Status.Downloading">Wird heruntergeladen...</s:String>
     <s:String x:Key="Lang.Downloads.Status.Complete">Download abgeschlossen!</s:String>
     <s:String x:Key="Lang.Downloads.Status.Error">Beim Herunterladen ist ein Fehler aufgetreten.</s:String>
+    <s:String x:Key="Lang.Downloads.Offline.Title">Keine Internetverbindung</s:String>
+    <s:String x:Key="Lang.Downloads.Offline.Text">Verbindung zum Mod-Server nicht möglich. Sie können Mods manuell von der Website herunterladen:</s:String>
+    <s:String x:Key="Lang.Downloads.Offline.Manual">Legen Sie die heruntergeladenen .mod-Dateien in den Ordner "mods/TheForest" in Ihrem ModAPI-Verzeichnis.</s:String>
+    <s:String x:Key="Lang.Downloads.Offline.Retry">Erneut verbinden</s:String>
 
     <s:String x:Key="Lang.Options.Tab">Einstellungen</s:String>
     <s:String x:Key="Lang.Options.Labels.Language">Sprache:</s:String>

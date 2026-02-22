@@ -196,71 +196,105 @@
                     <Grid Margin="16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Components:PopupPanel Title="{DynamicResource Lang.Downloads.Title}">
                             <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
+                                <!-- Online Content -->
+                                <Grid x:Name="DownloadOnlinePanel" Visibility="Visible">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
 
-                                <!-- Top Bar: Search + Refresh -->
-                                <ContentControl Style="{StaticResource PanelButtons}" Grid.Row="0">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBox x:Name="DownloadSearchBox" Grid.Column="0" 
-                                                 VerticalAlignment="Center" Margin="0,0,8,0"
-                                                 Text="" TextChanged="DownloadSearch_TextChanged" />
-                                        <Button x:Name="DownloadRefreshButton" Grid.Column="1" 
-                                                Style="{StaticResource NormalButton}" Click="DownloadRefresh_Click">
+                                    <!-- Top Bar: Search + Refresh -->
+                                    <ContentControl Style="{StaticResource PanelButtons}" Grid.Row="0">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox x:Name="DownloadSearchBox" Grid.Column="0" 
+                                                     VerticalAlignment="Center" Margin="0,0,8,0"
+                                                     Text="" TextChanged="DownloadSearch_TextChanged" />
+                                            <Button x:Name="DownloadRefreshButton" Grid.Column="1" 
+                                                    Style="{StaticResource NormalButton}" Click="DownloadRefresh_Click">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="/resources/textures/Icons/Icon_Refresh.png" Margin="0,0,5,0" />
+                                                    <TextBlock Text="{DynamicResource Lang.Downloads.Buttons.Refresh}" />
+                                                </StackPanel>
+                                            </Button>
+                                        </Grid>
+                                    </ContentControl>
+
+                                    <!-- Mod List -->
+                                    <ContentControl Style="{StaticResource PanelCenter}" Grid.Row="1">
+                                        <ListView x:Name="DownloadModList" 
+                                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                                  SelectionChanged="DownloadModList_SelectionChanged">
+                                            <ListView.View>
+                                                <GridView>
+                                                    <GridViewColumn Header="{DynamicResource Lang.Downloads.Headers.Name}" Width="200" 
+                                                                    DisplayMemberBinding="{Binding Name}" />
+                                                    <GridViewColumn Header="{DynamicResource Lang.Downloads.Headers.Author}" Width="120" 
+                                                                    DisplayMemberBinding="{Binding Author}" />
+                                                    <GridViewColumn Header="{DynamicResource Lang.Downloads.Headers.Category}" Width="120" 
+                                                                    DisplayMemberBinding="{Binding Category}" />
+                                                    <GridViewColumn Header="{DynamicResource Lang.Downloads.Headers.Downloads}" Width="100" 
+                                                                    DisplayMemberBinding="{Binding DownloadCount}" />
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                    </ContentControl>
+
+                                    <!-- Bottom Bar: Status + Download Button -->
+                                    <ContentControl Grid.Row="2" Style="{StaticResource PanelButtons}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock x:Name="DownloadStatusText" Grid.Column="0" 
+                                                       Style="{StaticResource NormalLabel}" VerticalAlignment="Center"
+                                                       Text="{DynamicResource Lang.Downloads.Status.Ready}" />
+                                            <Button x:Name="DownloadButton" Grid.Column="1" IsEnabled="False"
+                                                    Style="{StaticResource AccentButton}" Click="DownloadMod_Click">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="/resources/textures/Icons/Icon_Download.png" Margin="0,0,5,0" />
+                                                    <TextBlock Text="{DynamicResource Lang.Downloads.Buttons.Download}" />
+                                                </StackPanel>
+                                            </Button>
+                                        </Grid>
+                                    </ContentControl>
+                                </Grid>
+
+                                <!-- Offline Notice -->
+                                <Grid x:Name="DownloadOfflinePanel" Visibility="Collapsed">
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="40">
+                                        <Image Source="/resources/textures/Icons/Icon_Warning.png" 
+                                               Width="48" Height="48" HorizontalAlignment="Center" Margin="0,0,0,16" />
+                                        <TextBlock Style="{StaticResource HeaderLabel}" 
+                                                   HorizontalAlignment="Center" Margin="0,0,0,12"
+                                                   Text="{DynamicResource Lang.Downloads.Offline.Title}" />
+                                        <TextBlock Style="{StaticResource NormalLabel}" TextWrapping="Wrap" 
+                                                   HorizontalAlignment="Center" TextAlignment="Center" Margin="0,0,0,8"
+                                                   Text="{DynamicResource Lang.Downloads.Offline.Text}" />
+                                        <TextBlock HorizontalAlignment="Center" Margin="0,8,0,16">
+                                            <Hyperlink NavigateUri="https://modapi.survivetheforest.net/mods/" 
+                                                       RequestNavigate="Hyperlink_RequestNavigate"
+                                                       Foreground="#FFD700" TextDecorations="None">
+                                                <TextBlock Text="modapi.survivetheforest.net/mods/" />
+                                            </Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource NormalLabel}" TextWrapping="Wrap" 
+                                                   HorizontalAlignment="Center" TextAlignment="Center" Margin="0,0,0,16"
+                                                   Text="{DynamicResource Lang.Downloads.Offline.Manual}" />
+                                        <Button Style="{StaticResource NormalButton}" HorizontalAlignment="Center"
+                                                Click="DownloadRetryConnection_Click">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="/resources/textures/Icons/Icon_Refresh.png" Margin="0,0,5,0" />
-                                                <TextBlock Text="{DynamicResource Lang.Downloads.Buttons.Refresh}" />
+                                                <TextBlock Text="{DynamicResource Lang.Downloads.Offline.Retry}" />
                                             </StackPanel>
                                         </Button>
-                                    </Grid>
-                                </ContentControl>
-
-                                <!-- Mod List -->
-                                <ContentControl Style="{StaticResource PanelCenter}" Grid.Row="1">
-                                    <ListView x:Name="DownloadModList" 
-                                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                              SelectionChanged="DownloadModList_SelectionChanged">
-                                        <ListView.View>
-                                            <GridView>
-                                                <GridViewColumn Header="{DynamicResource Lang.Downloads.Headers.Name}" Width="200" 
-                                                                DisplayMemberBinding="{Binding Name}" />
-                                                <GridViewColumn Header="{DynamicResource Lang.Downloads.Headers.Author}" Width="120" 
-                                                                DisplayMemberBinding="{Binding Author}" />
-                                                <GridViewColumn Header="{DynamicResource Lang.Downloads.Headers.Category}" Width="120" 
-                                                                DisplayMemberBinding="{Binding Category}" />
-                                                <GridViewColumn Header="{DynamicResource Lang.Downloads.Headers.Downloads}" Width="100" 
-                                                                DisplayMemberBinding="{Binding DownloadCount}" />
-                                            </GridView>
-                                        </ListView.View>
-                                    </ListView>
-                                </ContentControl>
-
-                                <!-- Bottom Bar: Status + Download Button -->
-                                <ContentControl Grid.Row="2" Style="{StaticResource PanelButtons}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock x:Name="DownloadStatusText" Grid.Column="0" 
-                                                   Style="{StaticResource NormalLabel}" VerticalAlignment="Center"
-                                                   Text="{DynamicResource Lang.Downloads.Status.Ready}" />
-                                        <Button x:Name="DownloadButton" Grid.Column="1" IsEnabled="False"
-                                                Style="{StaticResource AccentButton}" Click="DownloadMod_Click">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Source="/resources/textures/Icons/Icon_Download.png" Margin="0,0,5,0" />
-                                                <TextBlock Text="{DynamicResource Lang.Downloads.Buttons.Download}" />
-                                            </StackPanel>
-                                        </Button>
-                                    </Grid>
-                                </ContentControl>
+                                    </StackPanel>
+                                </Grid>
                             </Grid>
                         </Components:PopupPanel>
                     </Grid>

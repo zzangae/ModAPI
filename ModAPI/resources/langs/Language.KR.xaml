@@ -221,6 +221,10 @@
     <s:String x:Key="Lang.Downloads.Status.Downloading">다운로드 중...</s:String>
     <s:String x:Key="Lang.Downloads.Status.Complete">다운로드 완료!</s:String>
     <s:String x:Key="Lang.Downloads.Status.Error">다운로드 중 오류가 발생했습니다.</s:String>
+    <s:String x:Key="Lang.Downloads.Offline.Title">인터넷 연결 없음</s:String>
+    <s:String x:Key="Lang.Downloads.Offline.Text">모드 서버에 연결할 수 없습니다. 아래 웹사이트에서 수동으로 다운로드할 수 있습니다:</s:String>
+    <s:String x:Key="Lang.Downloads.Offline.Manual">다운로드 후 .mod 파일을 ModAPI 폴더의 "mods/TheForest" 폴더에 넣어주세요.</s:String>
+    <s:String x:Key="Lang.Downloads.Offline.Retry">다시 연결</s:String>
 
     <s:String x:Key="Lang.Options.Tab">설정</s:String>
     <s:String x:Key="Lang.Options.Labels.Language">언어 선택:</s:String>

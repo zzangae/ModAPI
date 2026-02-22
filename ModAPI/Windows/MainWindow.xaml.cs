@@ -18,19 +18,6 @@
  *  To contact me you can e-mail me at info@fluffyfish.de
  */
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Threading;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
-using System.Windows.Threading;
-using System.Windows.Navigation;
-using System.Windows.Shell;
 using Microsoft.Win32;
 using ModAPI.Components;
 using ModAPI.Components.Panels;
@@ -39,6 +26,18 @@ using ModAPI.Data;
 using ModAPI.Data.Models;
 using ModAPI.Utils;
 using ModAPI.Windows.SubWindows;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shell;
+using System.Windows.Threading;
 using Path = System.IO.Path;
 
 namespace ModAPI
@@ -100,7 +99,7 @@ namespace ModAPI
         {
             if (PositionWindow)
             {
-                var window = (Window) sender;
+                var window = (Window)sender;
                 if (window.IsVisible)
                 {
                     window.Left = Instance.Left + Instance.ActualWidth / 2.0 - window.ActualWidth / 2.0;
@@ -113,7 +112,7 @@ namespace ModAPI
 
         static void SubWindowClosed(object sender, EventArgs e)
         {
-            WindowQueue.Remove((Window) sender);
+            WindowQueue.Remove((Window)sender);
             if (CurrentWindow == sender)
             {
                 CurrentWindow = null;
@@ -142,23 +141,6 @@ namespace ModAPI
             Development.DataContext = ModProjects;
 
             Configuration.Save();
-
-            /*
-            if (Configuration.GetString("AutoUpdate").ToLower() == "true")
-            {
-                var webReq = (HttpWebRequest) WebRequest.Create("http://www.modapi.cc/app/lastVersion.txt");
-                webReq.Method = "GET";
-                var webResp = (HttpWebResponse) webReq.GetResponse();
-                var Answer = webResp.GetResponseStream();
-                var _Answer = new StreamReader(Answer);
-                var answer = _Answer.ReadToEnd();
-                if (answer != Version.Number + "")
-                {
-                    var win = new UpdateAvailable("Lang.Windows.UpdateAvailable", answer);
-                    win.ShowSubWindow();
-                }
-            }
-            */
         }
 
         public bool CheckSteamPath()
@@ -206,10 +188,10 @@ namespace ModAPI
 
         protected string SearchSteam()
         {
-            var steamPath = (string) Registry.GetValue("HKEY_CURRENT_USER\\Software\\Valve\\Steam\\", "SteamPath", "");
+            var steamPath = (string)Registry.GetValue("HKEY_CURRENT_USER\\Software\\Valve\\Steam\\", "SteamPath", "");
             if (!File.Exists(steamPath + Path.DirectorySeparatorChar + "Steam.exe"))
             {
-                steamPath = (string) Registry.GetValue("HKEY_CURRENT_USER\\Software\\Valve\\Steam\\", "SteamExe", "");
+                steamPath = (string)Registry.GetValue("HKEY_CURRENT_USER\\Software\\Valve\\Steam\\", "SteamExe", "");
                 if (File.Exists(steamPath))
                 {
                     steamPath = Path.GetDirectoryName(steamPath);
@@ -223,76 +205,6 @@ namespace ModAPI
         protected Dictionary<string, ComboBoxItem> LanguageItems = new Dictionary<string, ComboBoxItem>();
         protected SettingsViewModel SettingsVm;
 
-        /* TODO: Disabled Login components due to php backend not functioning on modapi.cc
-        protected void ShowLoginLoader()
-        {
-            Dispatcher.Invoke(delegate
-            {
-                LoginButton.Visibility = Visibility.Collapsed;
-                LoginLoader.Visibility = Visibility.Visible;
-                LoggedIn.Visibility = Visibility.Collapsed;
-            });
-        }
-
-        protected void ShowLoginUser(WebService.User user)
-        {
-            Dispatcher.Invoke(delegate
-            {
-                LoginButton.Visibility = Visibility.Collapsed;
-                LoginLoader.Visibility = Visibility.Collapsed;
-                LoggedIn.Visibility = Visibility.Visible;
-                UserAvatarLoader.Visibility = Visibility.Visible;
-                Console.WriteLine(user.Usergroup);
-                Usergroup.SetResourceReference(TextBlock.TextProperty, "Lang.UserGroup." + user.Usergroup);
-                Username.Text = user.Username;
-                user.OnAvatarChange = AvatarChange;
-                user.LoadAvatar();
-            });
-        }
-
-        protected void AvatarChange()
-        {
-            Dispatcher.Invoke(delegate
-            {
-                UserAvatarLoader.Visibility = Visibility.Collapsed;
-                var avatar = new BitmapImage();
-                avatar.BeginInit();
-                if (WebService.CurrentUser.Avatar == null)
-                {
-                    avatar.UriSource = new Uri("pack://application:,,,/ModAPI;component/resources/textures/Icons/noAvatar.png");
-                }
-                else
-                {
-                    avatar.StreamSource = WebService.CurrentUser.Avatar;
-                }
-                avatar.CacheOption = BitmapCacheOption.OnLoad;
-                avatar.EndInit();
-                UserAvatar.Source = avatar;
-                UserAvatar.InvalidateProperty(Image.SourceProperty);
-            });
-        }
-
-        protected void ShowLoginError(int id, string text)
-        {
-            Dispatcher.Invoke(delegate
-            {
-                ShowLogin();
-                var win = new LoginWindow("Lang.Windows.Login", true);
-                win.ShowSubWindow();
-            });
-        }
-
-        protected void ShowLogin()
-        {
-            Dispatcher.Invoke(delegate
-            {
-                LoginButton.Visibility = Visibility.Visible;
-                LoginLoader.Visibility = Visibility.Collapsed;
-                LoggedIn.Visibility = Visibility.Collapsed;
-            });
-        }
-        */
-
         public MainWindow()
         {
             //System.Console.WriteLine("AAA");
@@ -303,15 +215,6 @@ namespace ModAPI
             InitializeComponent();
             Instance = this;
             CheckDir();
-            
-
-            /* TODO: Disabled Login components due to php backend not functioning on modapi.cc
-            WebService.OnDoLogin = ShowLoginLoader;
-            WebService.OnLogin = ShowLoginUser;
-            WebService.OnLoginError = ShowLoginError;
-            WebService.OnLogout = ShowLogin;
-            */
-            WebService.Initialize();
 
             foreach (var langCode in Languages)
             {
@@ -405,7 +308,7 @@ namespace ModAPI
                 }
 
                 newTab.SetResourceReference(IconTabItem.LabelProperty, tab.LangPath + ".Tab");
-                var newPanel = (IPanel) Activator.CreateInstance(tab.ComponentType);
+                var newPanel = (IPanel)Activator.CreateInstance(tab.ComponentType);
                 newTab.Content = newPanel;
                 Debug.Log("MainWindow", "Added tab of type \"" + tab.TypeName + "\".");
                 newPanel.SetTab(tab);
@@ -415,7 +318,7 @@ namespace ModAPI
 
             Timer = new DispatcherTimer();
             Timer.Tick += GuiTick;
-            Timer.Interval = new TimeSpan((long) (GuiDeltaTime * 10000000));
+            Timer.Interval = new TimeSpan((long)(GuiDeltaTime * 10000000));
             Timer.Start();
             LanguageChanged();
             SettingsVm.Changed();
@@ -438,7 +341,7 @@ namespace ModAPI
             }
             else
             {
-                
+
             }
 
         }
@@ -458,10 +361,6 @@ namespace ModAPI
 
         void GuiTick(object sender, EventArgs e)
         {
-            /* TODO: Disabled Login components due to php backend not functioning on modapi.cc
-            LoginLoaderRotation.Angle += 5;
-            UserAvatarLoaderRotation.Angle += 5;
-            */
             if (!FirstSetup)
             {
                 var tasks = Schedule.GetTasks("GUI");
@@ -710,13 +609,9 @@ namespace ModAPI
             LanguageSelector.Items.Add(c);
         }
 
-        public Dictionary<int, int> BuildingToIndex = new Dictionary<int, int>();
-        public Dictionary<int, int> IndexToBuilding = new Dictionary<int, int>();
-        protected Dictionary<int, ToggleButton> BuildingButtons = new Dictionary<int, ToggleButton>();
-
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
-            ((FrameworkElement) FindName("Mover")).MouseLeftButtonDown += MoveWindow;
+            ((FrameworkElement)FindName("Mover")).MouseLeftButtonDown += MoveWindow;
 
             // Force WindowChrome after all styles are applied - guarantees drag for all themes
             var chrome = new WindowChrome
@@ -731,19 +626,17 @@ namespace ModAPI
 
             if (WindowState == WindowState.Maximized)
             {
-                ((Button) FindName("MaximizeButton")).Visibility = Visibility.Hidden;
-                ((Button) FindName("MaximizeButton")).Width = 0;
+                ((Button)FindName("MaximizeButton")).Visibility = Visibility.Hidden;
+                ((Button)FindName("MaximizeButton")).Width = 0;
             }
             else
             {
-                ((Button) FindName("NormalizeButton")).Visibility = Visibility.Hidden;
-                ((Button) FindName("NormalizeButton")).Width = 0;
+                ((Button)FindName("NormalizeButton")).Visibility = Visibility.Hidden;
+                ((Button)FindName("NormalizeButton")).Width = 0;
             }
 
             VersionLabel.Text = Version.Descriptor + " [" + Version.BuildDate + "]";
         }
-
-        public Dictionary<string, Grid> InventoryElements = new Dictionary<string, Grid>();
 
         private void MoveWindow(object sender, MouseButtonEventArgs args)
         {
@@ -766,19 +659,19 @@ namespace ModAPI
         private void Normalize(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Normal;
-            ((Button) FindName("MaximizeButton")).Visibility = Visibility.Visible;
-            ((Button) FindName("MaximizeButton")).Width = 24;
-            ((Button) FindName("NormalizeButton")).Visibility = Visibility.Hidden;
-            ((Button) FindName("NormalizeButton")).Width = 0;
+            ((Button)FindName("MaximizeButton")).Visibility = Visibility.Visible;
+            ((Button)FindName("MaximizeButton")).Width = 24;
+            ((Button)FindName("NormalizeButton")).Visibility = Visibility.Hidden;
+            ((Button)FindName("NormalizeButton")).Width = 0;
         }
 
         private void Maximize(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Maximized;
-            ((Button) FindName("MaximizeButton")).Visibility = Visibility.Hidden;
-            ((Button) FindName("MaximizeButton")).Width = 0;
-            ((Button) FindName("NormalizeButton")).Visibility = Visibility.Visible;
-            ((Button) FindName("NormalizeButton")).Width = 24;
+            ((Button)FindName("MaximizeButton")).Visibility = Visibility.Hidden;
+            ((Button)FindName("MaximizeButton")).Width = 0;
+            ((Button)FindName("NormalizeButton")).Visibility = Visibility.Visible;
+            ((Button)FindName("NormalizeButton")).Width = 24;
         }
 
         private void CloseWindow(object sender, RoutedEventArgs e)
@@ -787,80 +680,9 @@ namespace ModAPI
             Environment.Exit(0);
         }
 
-        private void ComboBoxItem_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-        }
-
-        private void Building_Click(object sender, RoutedEventArgs e)
-        {
-            var button = (ToggleButton) sender;
-            /*BuildingSelect.SelectedIndex = BuildingToIndex[(int) button.DataContext];
-
-            BuildingSelect.IsDropDownOpen = false;*/
-        }
-
-        private void BuildingSelect_DropDownOpened(object sender, EventArgs e)
-        {
-            foreach (var button in BuildingButtons)
-            {
-                button.Value.IsChecked = false;
-            }
-        }
-
         private void Window_LayoutUpdated(object sender, EventArgs e)
         {
-            /*
-            BuildingImage.Visibility = BuildingImage.ActualWidth < 150 ? System.Windows.Visibility.Hidden : System.Windows.Visibility.Visible;
-            double available = BuildingTabGrid.ActualWidth - BuildingList.ActualWidth - 20.0;
-            if (available > 0)
-            {
-                if (available > BuildingValuesGrid.ActualWidth + 150)
-                {
-                    BuildingValuesColumn.Width = new GridLength(0, GridUnitType.Auto);
-                }
-                else
-                {
-                    if (BuildingValuesColumn.ActualWidth != available)
-                        BuildingValuesColumn.Width = new GridLength(available);
-                }
-            }*/
         }
-
-        private void BuildingSelect_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            e.Handled = true;
-        }
-
-        private void BuildingSelect_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key != Key.Tab)
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void BuildingList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            /*
-            ListBox listBox = (ListBox) sender;
-            if (listBox.SelectedItems.Count == 1) 
-            {
-                BuildingGrid.DataContext = ((ListBoxItem)(listBox.SelectedItem)).DataContext;
-            }
-            else
-            {
-                List<SavegameBuildingViewModel> Selected = new List<SavegameBuildingViewModel>();
-                foreach (ListBoxItem item in listBox.SelectedItems)
-                {
-                    Selected.Add((SavegameBuildingViewModel) item.DataContext);
-                }
-                BuildingGrid.DataContext = new SavegameMultipleBuildingViewModel(Selected);
-            }*/
-        }
-
-        bool _altDown;
-        bool _ctrlDown;
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -868,21 +690,9 @@ namespace ModAPI
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.LeftAlt)
-            {
-                _altDown = false;
-            }
-            if (e.Key == Key.LeftCtrl)
-            {
-                _ctrlDown = false;
-            }
         }
 
         private void Tabs_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-        }
-
-        private void IconTabItem_Loaded(object sender, RoutedEventArgs e)
         {
         }
 
@@ -987,7 +797,7 @@ namespace ModAPI
         {
             if (CurrentModProjectViewModel != null)
             {
-                CurrentModProjectViewModel.AddProjectLanguage((string) (((ComboBoxItem) DevelopmentLanguageSelector.SelectedItem).DataContext));
+                CurrentModProjectViewModel.AddProjectLanguage((string)(((ComboBoxItem)DevelopmentLanguageSelector.SelectedItem).DataContext));
                 DevelopmentLanguageSelector.SelectedIndex = -1;
                 foreach (var kv in LanguageItems)
                 {
@@ -1013,13 +823,13 @@ namespace ModAPI
                 var win =
                     new RemoveModProject("Lang.Windows.RemoveModProject", CurrentModProjectViewModel.Project.Id, CurrentModProjectViewModel.Project)
                     {
-                        Confirm = delegate(object obj)
+                        Confirm = delegate (object obj)
                         {
                             ProjectList.SelectedIndex = -1;
                             NoProjectSelected.Visibility = Visibility.Visible;
                             SelectedProject.DataContext = null;
                             SelectedProject.Visibility = Visibility.Collapsed;
-                            ModProjects.Remove((ModProject) obj);
+                            ModProjects.Remove((ModProject)obj);
                         }
                     };
                 win.ShowSubWindow();
@@ -1032,7 +842,7 @@ namespace ModAPI
             if (CurrentModProjectViewModel != null)
             {
                 var progressHandler = new ProgressHandler();
-                var thread = new Thread(delegate() { CurrentModProjectViewModel.Project.Create(progressHandler); });
+                var thread = new Thread(delegate () { CurrentModProjectViewModel.Project.Create(progressHandler); });
                 var window = new OperationPending("Lang.Windows.OperationPending", "CreateMod", progressHandler);
                 if (!window.Completed)
                 {
@@ -1048,10 +858,10 @@ namespace ModAPI
             var mods = new List<Mod>();
             foreach (var i in Mods.Mods)
             {
-                var vm = (ModViewModel) i.DataContext;
+                var vm = (ModViewModel)i.DataContext;
                 if (vm != null && vm.Selected)
                 {
-                    var vm2 = (ModVersionViewModel) vm.SelectedVersion.DataContext;
+                    var vm2 = (ModVersionViewModel)vm.SelectedVersion.DataContext;
                     if (vm2 != null)
                     {
                         mods.Add(vm2.Mod);
@@ -1076,7 +886,7 @@ namespace ModAPI
                 }
             };
 
-            var thread = new Thread(delegate() { App.Game.ApplyMods(mods, progressHandler); });
+            var thread = new Thread(delegate () { App.Game.ApplyMods(mods, progressHandler); });
             var window = new OperationPending("Lang.Windows.OperationPending", "ApplyMods", progressHandler, null, true);
             if (!window.Completed)
             {
@@ -1086,41 +896,11 @@ namespace ModAPI
             thread.Start();
         }
 
-        private void ClickFacebook(object sender, RoutedEventArgs e)
-        {
-            Process.Start("http://www.facebook.com/SouldrinkerLP");
-        }
-
-        private void ClickTwitter(object sender, RoutedEventArgs e)
-        {
-            Process.Start("http://www.twitter.com/SouldrinkerLP");
-        }
-
-        private void ClickYouTube(object sender, RoutedEventArgs e)
-        {
-            Process.Start("http://www.youtube.com/SouldrinkerLP");
-        }
-
-        private void ClickTwitch(object sender, RoutedEventArgs e)
-        {
-            Process.Start("http://live.souldrinker.de");
-        }
-
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
             Environment.Exit(0);
         }
 
-        private void Login(object sender, RoutedEventArgs e)
-        {
-            var win = new LoginWindow("Lang.Windows.Login");
-            win.ShowSubWindow();
-        }
-
-        private void DoLogout(object sender, RoutedEventArgs e)
-        {
-            WebService.Logout();
-        }
     }
 }

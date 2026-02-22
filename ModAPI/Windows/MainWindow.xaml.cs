@@ -50,6 +50,7 @@ namespace ModAPI
     {
         public static bool BlendIn = false;
         public static ResourceDictionary CurrentLanguage;
+        public static List<string> LanguageOrder = new List<string>();
 
         public static MainWindow Instance;
         public List<IPanel> Panels = new List<IPanel>();
@@ -203,7 +204,7 @@ namespace ModAPI
         }
 
         public ModProjectsViewModel ModProjects;
-        protected List<string> Languages = new List<string> { "EN", "DE", "AR", "BN", "ZH", "FR", "HI", "IT", "JA", "KO", "PT", "RU", "ES", "TR", "VI" };
+        protected List<string> Languages = new List<string> { "EN", "DE", "AR", "BN", "ZH", "ZH-TW", "FR", "HI", "IT", "JA", "KO", "PT", "RU", "ES", "TR", "VI" };
         protected Dictionary<string, ComboBoxItem> LanguageItems = new Dictionary<string, ComboBoxItem>();
         protected SettingsViewModel SettingsVm;
 
@@ -230,17 +231,22 @@ namespace ModAPI
                 {
                     Orientation = Orientation.Horizontal
                 };
-                var image = new Image
+
+                try
                 {
-                    Height = 20
-                };
-                var source = new BitmapImage();
-                source.BeginInit();
-                source.UriSource = new Uri("pack://application:,,,/ModAPI;component/resources/textures/Icons/Lang_" + langCode + ".png");
-                source.EndInit();
-                image.Source = source;
-                image.Margin = new Thickness(0, 0, 5, 0);
-                panel.Children.Add(image);
+                    var image = new Image
+                    {
+                        Height = 20
+                    };
+                    var source = new BitmapImage();
+                    source.BeginInit();
+                    source.UriSource = new Uri("pack://application:,,,/ModAPI;component/resources/textures/Icons/Lang_" + langCode + ".png");
+                    source.EndInit();
+                    image.Source = source;
+                    image.Margin = new Thickness(0, 0, 5, 0);
+                    panel.Children.Add(image);
+                }
+                catch { }
 
                 var label = new TextBlock
                 {
@@ -267,9 +273,26 @@ namespace ModAPI
 
             Configuration.OnLanguageChanged += LanguageChanged;
 
+            // Custom language order for Settings selector (KR after FR)
+            string[] preferredOrder = { "en", "de", "es", "fr", "ko", "it", "ja", "pl", "pt", "ru", "vi", "zh", "zh-tw" };
+            LanguageOrder.Clear();
+            foreach (var langCode in preferredOrder)
+            {
+                if (Configuration.Languages.ContainsKey(langCode))
+                {
+                    AddLanguage(Configuration.Languages[langCode]);
+                    LanguageOrder.Add(langCode);
+                }
+            }
+            // Add any remaining languages not in the preferred order
             foreach (var language in Configuration.Languages.Values)
             {
-                AddLanguage(language);
+                var key = language.Key.ToLower();
+                if (Array.IndexOf(preferredOrder, key) < 0)
+                {
+                    AddLanguage(language);
+                    LanguageOrder.Add(key);
+                }
             }
 
             SettingsVm = new SettingsViewModel();

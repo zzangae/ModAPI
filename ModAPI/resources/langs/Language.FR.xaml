@@ -22,7 +22,7 @@
     <s:String x:Key="Lang.UserGroup.User">Utilisateur</s:String>
     
     <s:String x:Key="Lang.Windows.Login.Title">S'identifier</s:String>
-    <s:String x:Key="Lang.Windows.Login.Text">Entrez votre nom d'utilisateur et votre mot de passe de www.modapi.de pour vous connecter.</s:String>
+    <s:String x:Key="Lang.Windows.Login.Text">Entrez votre nom d'utilisateur et votre mot de passe de modapi.survivetheforest.net pour vous connecter.</s:String>
     <s:String x:Key="Lang.Windows.Login.Buttons.Login">S'identifier</s:String>
     <s:String x:Key="Lang.Windows.Login.Buttons.Cancel">Annuler</s:String>
     <s:String x:Key="Lang.Windows.Login.Labels.Username">Nom d'utilisateur:</s:String>
@@ -189,7 +189,9 @@
     <s:String x:Key="Lang.Mods.Welcome.Text0">Pour ajouter des mods à votre jeu, vous devez d'abord activer les mods. Pour ce faire, vous devez cliquer sur le bouton rond à gauche du nom du mod. Pour modifier les raccourcis clavier, vous pouvez sélectionner un mod dans la liste et passer à l'onglet "Paramètres".</s:String>
     <s:String x:Key="Lang.Mods.Welcome.Text1">Pour lancer le jeu avec des mods, il suffit de cliquer sur le bouton "Démarrer le jeu" dans le coin inférieur droit</s:String>
     <s:String x:Key="Lang.Mods.Welcome.Title1">Des erreurs?</s:String>
-    <s:String x:Key="Lang.Mods.Welcome.Text2">Si vous rencontrez une erreur, veuillez demander de l'aide sur les forums https://modapi.survivetheforest.net/</s:String>
+    <s:String x:Key="Lang.Mods.Welcome.Text2a">Si vous rencontrez une erreur, veuillez demander de l'aide sur les forums (</s:String>
+    <s:String x:Key="Lang.Mods.Welcome.Text2Link">modapi</s:String>
+    <s:String x:Key="Lang.Mods.Welcome.Text2b">).</s:String>
     <s:String x:Key="Lang.Mods.Welcome.Text3">N'oubliez pas de joindre votre fichier de log  &quot;ModAPI.log&quot; Qui se trouve dans le dossier logs. Ce fichier contient des informations importantes pour le dépannage..</s:String>
 
     <s:String x:Key="Lang.Savegames.Tab">Spielstände</s:String>
@@ -211,5 +213,9 @@
     <s:String x:Key="Lang.Options.Labels.UpdateVersionsTable">Mise à jour de la table des versions:</s:String>
     <s:String x:Key="Lang.Options.Labels.AutoUpdate">Recherche de mises à jour:</s:String>
     <s:String x:Key="Lang.Options.Labels.UseSteam">Connexion Steam:</s:String>
+
+    <s:String x:Key="Lang.Windows.NoProjectWarning.Title">Avertissement</s:String>
+    <s:String x:Key="Lang.Windows.NoProjectWarning.Text">Aucun projet trouvé. Veuillez d'abord créer un projet.</s:String>
+    <s:String x:Key="Lang.Windows.NoProjectWarning.Buttons.OK">OK</s:String>
 </ResourceDictionary>
     

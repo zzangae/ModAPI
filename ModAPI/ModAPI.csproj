@@ -207,6 +207,7 @@
     <Compile Include="Windows\SubWindows\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\SubWindows\Noprojectwarning.xaml .cs" />
     <Compile Include="Windows\SubWindows\OperationPending.xaml.cs">
       <DependentUpon>OperationPending.xaml</DependentUpon>
     </Compile>
@@ -279,6 +280,10 @@
     <Page Include="Windows\SubWindows\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\SubWindows\NoProjectWarning.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\SubWindows\UpdateAvailable.xaml">
       <SubType>Designer</SubType>
@@ -602,7 +607,6 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

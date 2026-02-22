@@ -80,7 +80,10 @@
                                                     <TextBlock TextWrapping="Wrap" Style="{StaticResource NormalLabel}" Margin="0,8,0,0" Text="{DynamicResource Lang.Mods.Welcome.Text0}" />
                                                     <TextBlock Margin="0,10,0,0" TextWrapping="Wrap" Style="{StaticResource NormalLabel}" Text="{DynamicResource Lang.Mods.Welcome.Text1}" />
                                                     <TextBlock Margin="0,16,0,0" Style="{StaticResource HeaderLabel}" Text="{DynamicResource Lang.Mods.Welcome.Title1}" />
-                                                    <TextBlock TextWrapping="Wrap" Style="{StaticResource NormalLabel}" Margin="0,8,0,0" Text="{DynamicResource Lang.Mods.Welcome.Text2}" />
+                                                    <TextBlock TextWrapping="Wrap" Style="{StaticResource NormalLabel}" Margin="0,8,0,0">
+                                                        <TextBlock Text="{DynamicResource Lang.Mods.Welcome.Text2a}" /><Hyperlink x:Name="ModApiLink" NavigateUri="https://modapi.survivetheforest.net" RequestNavigate="Hyperlink_RequestNavigate"
+                                                                   Foreground="#FFD700" TextDecorations="None"><TextBlock Text="{DynamicResource Lang.Mods.Welcome.Text2Link}" /></Hyperlink><TextBlock Text="{DynamicResource Lang.Mods.Welcome.Text2b}" />
+                                                    </TextBlock>
                                                     <TextBlock Margin="0,10,0,0" TextWrapping="Wrap" Style="{StaticResource NormalLabel}" Text="{DynamicResource Lang.Mods.Welcome.Text3}" />
                                                 </StackPanel>
                                             </ScrollViewer>
@@ -502,25 +505,19 @@
         <!-- ============================================================ -->
         <!-- Title Bar Drag Area + Caption Buttons (overlay on Tab strip) -->
         <!-- ============================================================ -->
-        <Grid Grid.Row="0" x:Name="Mover" 
-              HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="48">
-            <!-- Mover Grid: Background 미설정(null) → 빈 영역은 hit test 통과 → 탭 클릭 가능 -->
-            <!-- 오른쪽에만 드래그 영역 + 캡션 버튼 배치 -->
-            <Grid HorizontalAlignment="Right" Background="Transparent">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <!-- Column 0: 드래그 여백 (Background="Transparent" 상속 → Mouse.MouseDown bubble up → DragMove) -->
-                <StackPanel Grid.Column="1" Orientation="Horizontal">
-                    <Button Style="{StaticResource MinimizeButton}" Click="Minimize" />
-                    <Button x:Name="NormalizeButton" Style="{StaticResource NormalizeButton}" Click="Normalize" />
-                    <Button x:Name="MaximizeButton" Style="{StaticResource MaximizeButton}" Click="Maximize" />
-                    <Button Style="{StaticResource FluentCloseButton}" Content="&#xE8BB;" 
-                            FontFamily="{StaticResource FluentIconFont}" FontSize="10" Click="CloseWindow" />
-                </StackPanel>
-            </Grid>
-        </Grid>
+        <!-- Mover: hidden, exists only for FindName compatibility -->
+        <Grid x:Name="Mover" Visibility="Collapsed" Height="0" />
+
+        <!-- Caption Buttons (CaptionHeight=48 handles drag, these are exempt via IsHitTestVisibleInChrome) -->
+        <StackPanel Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="48"
+                    Orientation="Horizontal"
+                    WindowChrome.IsHitTestVisibleInChrome="True">
+            <Button Style="{StaticResource MinimizeButton}" Click="Minimize" />
+            <Button x:Name="NormalizeButton" Style="{StaticResource NormalizeButton}" Click="Normalize" />
+            <Button x:Name="MaximizeButton" Style="{StaticResource MaximizeButton}" Click="Maximize" />
+            <Button Style="{StaticResource FluentCloseButton}" Content="&#xE8BB;" 
+                    FontFamily="{StaticResource FluentIconFont}" FontSize="10" Click="CloseWindow" />
+        </StackPanel>
 
         <!-- ============================================================ -->
         <!-- Status Bar -->
@@ -535,7 +532,7 @@
                                Foreground="{StaticResource FluentTextTertiaryBrush}" Margin="6,0,0,0" Text="·" />
                     <TextBlock FontFamily="{StaticResource NormalFont}" FontSize="11" 
                                Foreground="{StaticResource FluentTextTertiaryBrush}" Margin="6,0,0,0" 
-                               Text="Made with ♥ in Engelskirchen, Germany" />
+                               Text="Made with ♥ in Engelskirchen, Germany | upgrade by zzangae, Republic of Korea" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <TextBlock FontFamily="{StaticResource NormalFont}" FontSize="11" 

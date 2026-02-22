@@ -22,7 +22,7 @@
     <s:String x:Key="Lang.UserGroup.User">Benutzer</s:String>
     
     <s:String x:Key="Lang.Windows.Login.Title">Einloggen</s:String>
-    <s:String x:Key="Lang.Windows.Login.Text">Gib bitte deine Logindaten von www.modapi.cc ein um dich einzuloggen.</s:String>
+    <s:String x:Key="Lang.Windows.Login.Text">Gib bitte deine Logindaten von modapi.survivetheforest.net ein um dich einzuloggen.</s:String>
     <s:String x:Key="Lang.Windows.Login.Buttons.Login">Einloggen</s:String>
     <s:String x:Key="Lang.Windows.Login.Buttons.Cancel">Abbrechen</s:String>
     <s:String x:Key="Lang.Windows.Login.Labels.Username">Benutzername:</s:String>
@@ -189,7 +189,9 @@
     <s:String x:Key="Lang.Mods.Welcome.Text0">Um Mods auf dein Spiel anzuwenden, musst du die Mods zunächst aktivieren. Um dies zu tun, klickst du einfach auf den runden Knopf neben den Mod in der linken Liste. Um Änderungen an z.B. der Tastenbelegung der einzelnen Mods vorzunehmen, kannst du einen Mod aus der Liste auswählen und die Werte anpassen.</s:String>
     <s:String x:Key="Lang.Mods.Welcome.Text1">Damit die Mods auf das Spiel angewendet werden, musst du nur unten rechts auf die Schaltfläche &quot;Spiel starten&quot; drücken.</s:String>
     <s:String x:Key="Lang.Mods.Welcome.Title1">Fehler?</s:String>
-    <s:String x:Key="Lang.Mods.Welcome.Text2">Sollten Fehler auftreten wende dich hilfesuchend an das Forum unter https://modapi.survivetheforest.net/</s:String>
+    <s:String x:Key="Lang.Mods.Welcome.Text2a">Sollten Fehler auftreten wende dich hilfesuchend an das Forum (</s:String>
+    <s:String x:Key="Lang.Mods.Welcome.Text2Link">modapi</s:String>
+    <s:String x:Key="Lang.Mods.Welcome.Text2b">).</s:String>
     <s:String x:Key="Lang.Mods.Welcome.Text3">Denke daran die Logdatei &quot;ModAPI.log&quot; im Unterordner &quot;Logs&quot; mitzusenden. Diese Datei enthält wichtige Informationen zur Fehlerfindung.</s:String>
 
     <s:String x:Key="Lang.Savegames.Tab">Spielstände</s:String>
@@ -358,5 +360,9 @@
     <s:String x:Key="Lang.Options.Labels.UpdateVersionsTable">Versionstabelle aktuell halten:</s:String>
     <s:String x:Key="Lang.Options.Labels.AutoUpdate">Nach Updates suchen:</s:String>
     <s:String x:Key="Lang.Options.Labels.UseSteam">Steamanbindung:</s:String>
+
+    <s:String x:Key="Lang.Windows.NoProjectWarning.Title">Warnung</s:String>
+    <s:String x:Key="Lang.Windows.NoProjectWarning.Text">Keine Projekte gefunden. Bitte erstellen Sie zuerst ein Projekt.</s:String>
+    <s:String x:Key="Lang.Windows.NoProjectWarning.Buttons.OK">OK</s:String>
 </ResourceDictionary>
     

@@ -502,17 +502,24 @@
         <!-- ============================================================ -->
         <!-- Title Bar Drag Area + Caption Buttons (overlay on Tab strip) -->
         <!-- ============================================================ -->
-        <Grid Grid.Row="0" x:Name="Mover" IsHitTestVisible="False"
+        <Grid Grid.Row="0" x:Name="Mover" 
               HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="48">
-            <StackPanel HorizontalAlignment="Right" Margin="0,0,0,0" Orientation="Horizontal" 
-                        IsHitTestVisible="True"
-                        WindowChrome.IsHitTestVisibleInChrome="True">
-                <Button Style="{StaticResource MinimizeButton}" Click="Minimize" />
-                <Button x:Name="NormalizeButton" Style="{StaticResource NormalizeButton}" Click="Normalize" />
-                <Button x:Name="MaximizeButton" Style="{StaticResource MaximizeButton}" Click="Maximize" />
-                <Button Style="{StaticResource FluentCloseButton}" Content="&#xE8BB;" 
-                        FontFamily="{StaticResource FluentIconFont}" FontSize="10" Click="CloseWindow" />
-            </StackPanel>
+            <!-- Mover Grid: Background 미설정(null) → 빈 영역은 hit test 통과 → 탭 클릭 가능 -->
+            <!-- 오른쪽에만 드래그 영역 + 캡션 버튼 배치 -->
+            <Grid HorizontalAlignment="Right" Background="Transparent">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <!-- Column 0: 드래그 여백 (Background="Transparent" 상속 → Mouse.MouseDown bubble up → DragMove) -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Style="{StaticResource MinimizeButton}" Click="Minimize" />
+                    <Button x:Name="NormalizeButton" Style="{StaticResource NormalizeButton}" Click="Normalize" />
+                    <Button x:Name="MaximizeButton" Style="{StaticResource MaximizeButton}" Click="Maximize" />
+                    <Button Style="{StaticResource FluentCloseButton}" Content="&#xE8BB;" 
+                            FontFamily="{StaticResource FluentIconFont}" FontSize="10" Click="CloseWindow" />
+                </StackPanel>
+            </Grid>
         </Grid>
 
         <!-- ============================================================ -->

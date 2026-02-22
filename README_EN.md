@@ -1,4 +1,4 @@
-# ModAPI(v1) v2.0.9549 - 20260222
+# ModAPI(v1) v2.0.9550 - 20260223
 
 **The Forest Mod Management Tool — Upgraded Edition**
 
@@ -9,7 +9,7 @@
 
 ## Overview
 
-ModAPI is a desktop application for managing mods for The Forest. This upgraded edition includes .NET Framework 4.8 migration, Windows 11 Fluent Design UI, a 3-theme system, and enhanced multilingual support.
+ModAPI is a desktop application for managing mods for The Forest. This upgraded edition includes .NET Framework 4.8 migration, Windows 11 Fluent Design UI, a 3-theme system, 13-language support, Downloads tab, and more.
 
 ---
 
@@ -75,18 +75,62 @@ ModAPI is a desktop application for managing mods for The Forest. This upgraded 
 Made with ♥ in Engelskirchen, Germany | upgrade by zzangae, Republic of Korea
 ```
 
----
+### Phase 4 — Feature Improvements & Dead Code Cleanup
 
-## Localization
+#### 4-1. Login System Cleanup
+- Removed dead backend (`modapi.cc`) connection code
+- `WebService.Initialize()` → no-op
+- Removed 5 commented-out login handlers (ShowLoginLoader, ShowLoginUser, etc.)
+- Removed active `Login()`, `DoLogout()` methods
 
-| Language | File |
-|----------|------|
-| Korean | Language.KR.xaml |
-| English | Language.EN.xaml |
-| German | Language.DE.xaml |
-| Spanish | Language.ES.xaml |
-| French | Language.FR.xaml |
-| Polish | Language.PL.xaml |
+#### 4-2. Update System Modernization
+- Download URL: `modapi.cc/app/archives/` → `github.com/zzangae/ModAPI/releases/download/`
+- Added GitHub redirect support (`AllowAutoRedirect` + `UserAgent`)
+
+#### 4-3. Dead Social Links Removal
+- Removed 4 SouldrinkerLP social links (Facebook, Twitter, YouTube, Twitch)
+
+#### 4-4. Dead Code Cleanup
+- Removed 6 dead Building-related methods
+- Removed unused fields and using statements
+- Marked `OldConfiguration`, `LanguageList` classes as `[Obsolete]`
+- **MainWindow.xaml.cs**: 1127 lines → 905 lines (**-222 lines**)
+
+#### 4-5. Developer Mode Bypass
+- `--dev` command-line argument to skip game/Steam path validation
+- Enables UI development without game installation
+
+### Phase 5 — Downloads Tab & Multilingual Expansion
+
+#### 5-1. Downloads Tab UI Framework
+- Added Downloads tab to **MainWindow.xaml** (between Mods and Development)
+- Internet connectivity check (`modapi.survivetheforest.net` ping)
+- **Online mode**: Mod list ListView (name, author, category, download count)
+- **Offline mode**: Manual download instructions + website link + retry button
+- 17 Downloads-related UI string keys (all 13 languages supported)
+
+#### 5-2. Multilingual Support Expansion (6 → 13 Languages)
+
+| # | Code | Language | File | New |
+|---|------|----------|------|-----|
+| 1 | EN | English | Language.EN.xaml | |
+| 2 | DE | Deutsch | Language.DE.xaml | |
+| 3 | ES | Español | Language.ES.xaml | |
+| 4 | FR | Français | Language.FR.xaml | |
+| 5 | KO | 한국어 | Language.KR.xaml | |
+| 6 | IT | Italiano | Language.IT.xaml | ✅ |
+| 7 | JA | 日本語 | Language.JA.xaml | ✅ |
+| 8 | PL | Polski | Language.PL.xaml | |
+| 9 | PT | Português | Language.PT.xaml | ✅ |
+| 10 | RU | Русский | Language.RU.xaml | ✅ |
+| 11 | VI | Tiếng Việt | Language.VI.xaml | ✅ |
+| 12 | ZH | 简体中文 | Language.ZH.xaml | ✅ |
+| 13 | ZH-TW | 繁體中文 | Language.ZH-TW.xaml | ✅ |
+
+- Flag icon PNGs (36×24) included for each language
+- Settings language selector **custom sort order** (Korean fixed at 5th position)
+- `SettingsViewModel` index mapping fix (`MainWindow.LanguageOrder`-based)
+- Development selector icon loading with exception handling
 
 ---
 
@@ -94,27 +138,37 @@ Made with ♥ in Engelskirchen, Germany | upgrade by zzangae, Republic of Korea
 
 ```
 ModAPI/
-├── App.xaml / App.xaml.cs          # Theme load/save/apply
+├── App.xaml / App.xaml.cs          # Theme load/save/apply, --dev mode
 ├── Dictionary.xaml                  # Original styles + Fluent fallback resources
 ├── FluentStyles.xaml                # Dark theme (default)
 ├── FluentStylesLight.xaml           # Light theme
 ├── ModAPI.csproj                    # Project configuration
+├── Data/
+│   └── ViewModels/
+│       └── SettingsViewModel.cs     # Language/theme/settings binding
 ├── Windows/
-│   ├── MainWindow.xaml / .cs        # Main UI + theme selector + drag
+│   ├── MainWindow.xaml / .cs        # Main UI + theme + drag + Downloads tab
 │   ├── SplashScreen.xaml / .cs      # Splash screen
 │   └── SubWindows/
 │       ├── BaseSubWindow.cs         # SubWindow base class
-│       ├── ThemeConfirm.xaml / .cs  # Theme change confirmation
+│       ├── ThemeConfirm.xaml / .cs
 │       ├── ThemeRestartNotice.xaml / .cs
 │       └── NoProjectWarning.xaml / .cs
 ├── resources/
 │   └── langs/
-│       ├── Language.KR.xaml
-│       ├── Language.EN.xaml
-│       ├── Language.DE.xaml
-│       ├── Language.ES.xaml
-│       ├── Language.FR.xaml
-│       └── Language.PL.xaml
+│       ├── Language.EN.xaml + .png
+│       ├── Language.DE.xaml + .png
+│       ├── Language.ES.xaml + .png
+│       ├── Language.FR.xaml + .png
+│       ├── Language.KR.xaml + .png
+│       ├── Language.IT.xaml + .png   # New
+│       ├── Language.JA.xaml + .png   # New
+│       ├── Language.PL.xaml + .png
+│       ├── Language.PT.xaml + .png   # New
+│       ├── Language.RU.xaml + .png   # New
+│       ├── Language.VI.xaml + .png   # New
+│       ├── Language.ZH.xaml + .png   # New
+│       └── Language.ZH-TW.xaml + .png # New
 └── libs/
     └── UnityEngine.dll              # Stub DLL
 ```

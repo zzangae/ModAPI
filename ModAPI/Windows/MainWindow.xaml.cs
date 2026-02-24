@@ -938,7 +938,7 @@ namespace ModAPI
             public string Slug { get; set; }
         }
 
-        public class ModVersionInfo : System.ComponentModel.INotifyPropertyChanged
+        public class ModVersionInfo
         {
             public string Version { get; set; }
             public string Compatible { get; set; }
@@ -948,19 +948,6 @@ namespace ModAPI
             public int ModId { get; set; }
             public int FileId { get; set; }
             public string GameShortName { get; set; }
-
-            private bool _isSelected;
-            public bool IsSelected
-            {
-                get { return _isSelected; }
-                set
-                {
-                    _isSelected = value;
-                    PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs("IsSelected"));
-                }
-            }
-
-            public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         }
 
         private bool CheckInternetConnection()
@@ -1177,7 +1164,20 @@ namespace ModAPI
             {
                 var url = "https://modapi.survivetheforest.net/mod/" + mod.ModId + "/" + mod.Slug;
                 var html = FetchHtml(url);
+                var htmlLen = html != null ? html.Length : 0;
                 var versions = ParseVersionsFromHtml(html);
+
+                // Debug: count using IndexOf (no Regex on large HTML)
+                int btnCount = 0, verCount = 0, dlLinkCount = 0;
+                if (html != null)
+                {
+                    int p = 0;
+                    while ((p = html.IndexOf("create-mod-single", p)) >= 0) { btnCount++; p += 17; }
+                    p = 0;
+                    while ((p = html.IndexOf("Version ", p)) >= 0) { verCount++; p += 8; }
+                    p = 0;
+                    while ((p = html.IndexOf("/download/mod/", p)) >= 0) { dlLinkCount++; p += 14; }
+                }
 
                 Dispatcher.Invoke(() =>
                 {
@@ -1187,7 +1187,6 @@ namespace ModAPI
 
                     foreach (var v in versions)
                     {
-                        v.IsSelected = false;
                         DownloadVersionList.Items.Add(v);
                     }
 
@@ -1199,7 +1198,7 @@ namespace ModAPI
                     }
                     else
                     {
-                        DownloadStatusText.Text = FindResource("Lang.Downloads.Status.Error") as string;
+                        DownloadStatusText.Text = string.Format("HTML:{0} Btn:{1} Ver:{2} DL:{3}", htmlLen, btnCount, verCount, dlLinkCount);
                     }
                     DownloadButton.IsEnabled = false;
                 });
@@ -1215,29 +1214,14 @@ namespace ModAPI
             Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
         }
 
-        private void DownloadVersionRadio_Checked(object sender, RoutedEventArgs e)
+        private void DownloadVersionList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Uncheck all others
-            foreach (var item in _currentVersions)
-            {
-                item.IsSelected = false;
-            }
-
-            var radio = sender as System.Windows.Controls.RadioButton;
-            if (radio != null)
-            {
-                var ver = radio.DataContext as ModVersionInfo;
-                if (ver != null)
-                {
-                    ver.IsSelected = true;
-                    DownloadButton.IsEnabled = true;
-                }
-            }
+            DownloadButton.IsEnabled = DownloadVersionList.SelectedItem != null;
         }
 
         private void DownloadMod_Click(object sender, RoutedEventArgs e)
         {
-            var selectedVersion = _currentVersions.FirstOrDefault(v => v.IsSelected);
+            var selectedVersion = DownloadVersionList.SelectedItem as ModVersionInfo;
             if (selectedVersion == null) return;
 
             DownloadButton.IsEnabled = false;
@@ -1263,64 +1247,254 @@ namespace ModAPI
             var versions = new List<ModVersionInfo>();
             if (string.IsNullOrEmpty(html)) return versions;
 
-            // Find all create-mod-single buttons: data-modid, data-fileid, data-game
-            var btnMatches = Regex.Matches(html,
-                @"create-mod-single[^>]*data-modid=""(\d+)""[^>]*data-fileid=""(\d+)""[^>]*data-game=""([^""]+)""");
-
-            // Also try reversed attribute order
-            if (btnMatches.Count == 0)
+            // Step 1: Find all download buttons using IndexOf
+            var btnList = new List<Dictionary<string, string>>();
+            int searchPos = 0;
+            while (true)
             {
-                btnMatches = Regex.Matches(html,
-                    @"create-mod-single[^>]*data-fileid=""(\d+)""[^>]*data-modid=""(\d+)""[^>]*data-game=""([^""]+)""");
-                // Swap groups for this pattern
-                var tempList = new List<int[]>();
-                foreach (Match m in btnMatches)
+                int btnIdx = html.IndexOf("create-mod-single", searchPos);
+                if (btnIdx < 0) break;
+
+                int tagEnd = html.IndexOf('>', btnIdx);
+                if (tagEnd < 0) break;
+
+                var tag = html.Substring(btnIdx, tagEnd - btnIdx);
+                var modid = ExtractAttribute(tag, "data-modid");
+                var fileid = ExtractAttribute(tag, "data-fileid");
+                var game = ExtractAttribute(tag, "data-game");
+
+                if (modid != null && fileid != null && game != null)
                 {
-                    tempList.Add(new[] { int.Parse(m.Groups[2].Value), int.Parse(m.Groups[1].Value) });
+                    btnList.Add(new Dictionary<string, string>
+                    {
+                        { "modid", modid },
+                        { "fileid", fileid },
+                        { "game", game }
+                    });
                 }
+                searchPos = tagEnd + 1;
             }
 
-            // Parse version text blocks: "Version X.X.X.X (Y.YYb)"
-            var verMatches = Regex.Matches(html,
-                @"Version\s+([\d.]+)\s*\(([^)]+)\)[^<]*?(\d{2}\.\s*\w+\s*\d{4})[^<]*?([\d.]+\s*[kKmM]?B)[^<]*?([\d,]+)\s*downloads");
+            // Step 2: Find all version blocks using IndexOf
+            var verList = new List<Dictionary<string, string>>();
+            searchPos = 0;
+            while (true)
+            {
+                int verIdx = html.IndexOf("Version ", searchPos);
+                if (verIdx < 0) break;
 
-            var count = Math.Min(btnMatches.Count, verMatches.Count);
+                // Extract chunk (max 500 chars from this point)
+                int chunkEnd = Math.Min(verIdx + 500, html.Length);
+                var chunk = html.Substring(verIdx, chunkEnd - verIdx);
+
+                // Parse: "Version 1.0.0.5 (1.11b)"
+                int spaceAfterVer = chunk.IndexOf(' ');
+                if (spaceAfterVer < 0) { searchPos = verIdx + 8; continue; }
+
+                int parenOpen = chunk.IndexOf('(', spaceAfterVer);
+                if (parenOpen < 0) { searchPos = verIdx + 8; continue; }
+
+                int parenClose = chunk.IndexOf(')', parenOpen);
+                if (parenClose < 0) { searchPos = verIdx + 8; continue; }
+
+                var version = chunk.Substring(spaceAfterVer + 1, parenOpen - spaceAfterVer - 1).Trim();
+                var compatible = chunk.Substring(parenOpen + 1, parenClose - parenOpen - 1).Trim();
+
+                // Validate version format (must start with digit)
+                if (version.Length == 0 || !char.IsDigit(version[0]))
+                {
+                    searchPos = verIdx + 8;
+                    continue;
+                }
+
+                // Parse date: "12. Feb 2021" pattern - find "dd. Mmm yyyy"
+                var date = ExtractDate(chunk, parenClose);
+
+                // Parse size: "2.69 kB" or "467.17 kB"
+                var size = ExtractSize(chunk, parenClose);
+
+                // Parse download count: "238,681 downloads"
+                var downloads = ExtractDownloadCount(chunk, parenClose);
+
+                verList.Add(new Dictionary<string, string>
+                {
+                    { "version", version },
+                    { "compatible", compatible },
+                    { "date", date },
+                    { "size", size },
+                    { "downloads", downloads }
+                });
+
+                searchPos = verIdx + 8;
+            }
+
+            // Step 3: Combine buttons with version info
+            int count = Math.Min(btnList.Count, verList.Count);
             for (int i = 0; i < count; i++)
             {
-                var btn = btnMatches[i];
-                var ver = verMatches[i];
-
-                int modId, fileId;
-                string gameShortName;
-
-                // Determine which group is modid vs fileid based on attribute order
-                if (btn.Value.IndexOf("data-modid") < btn.Value.IndexOf("data-fileid"))
-                {
-                    modId = int.Parse(btn.Groups[1].Value);
-                    fileId = int.Parse(btn.Groups[2].Value);
-                    gameShortName = btn.Groups[3].Value;
-                }
-                else
-                {
-                    fileId = int.Parse(btn.Groups[1].Value);
-                    modId = int.Parse(btn.Groups[2].Value);
-                    gameShortName = btn.Groups[3].Value;
-                }
-
                 versions.Add(new ModVersionInfo
                 {
-                    Version = ver.Groups[1].Value,
-                    Compatible = ver.Groups[2].Value,
-                    Date = ver.Groups[3].Value,
-                    Size = ver.Groups[4].Value,
-                    Downloads = ver.Groups[5].Value,
-                    ModId = modId,
-                    FileId = fileId,
-                    GameShortName = gameShortName
+                    Version = verList[i]["version"],
+                    Compatible = verList[i]["compatible"],
+                    Date = verList[i]["date"],
+                    Size = verList[i]["size"],
+                    Downloads = verList[i]["downloads"],
+                    ModId = int.Parse(btnList[i]["modid"]),
+                    FileId = int.Parse(btnList[i]["fileid"]),
+                    GameShortName = btnList[i]["game"]
                 });
             }
 
+            // Step 4: Fallback - if no buttons but versions found, try download links
+            if (btnList.Count == 0 && verList.Count > 0)
+            {
+                var dlLinks = new List<string[]>();
+                int dlPos = 0;
+                while (true)
+                {
+                    int dlIdx = html.IndexOf("/download/mod/", dlPos);
+                    if (dlIdx < 0) break;
+
+                    int pathStart = dlIdx + "/download/mod/".Length;
+                    int pathEnd = html.IndexOf('"', pathStart);
+                    if (pathEnd < 0) pathEnd = html.IndexOf('\'', pathStart);
+                    if (pathEnd < 0) { dlPos = pathStart; continue; }
+
+                    var path = html.Substring(pathStart, pathEnd - pathStart);
+                    var parts = path.Split('/');
+                    if (parts.Length >= 2)
+                    {
+                        dlLinks.Add(new[] { parts[0], parts[1] });
+                    }
+                    dlPos = pathEnd + 1;
+                }
+
+                var gameAttr = ExtractFirstAttribute(html, "data-game");
+                var gameName = gameAttr ?? "TheForest";
+
+                int linkCount = Math.Min(dlLinks.Count, verList.Count);
+                for (int i = 0; i < linkCount; i++)
+                {
+                    versions.Add(new ModVersionInfo
+                    {
+                        Version = verList[i]["version"],
+                        Compatible = verList[i]["compatible"],
+                        Date = verList[i]["date"],
+                        Size = verList[i]["size"],
+                        Downloads = verList[i]["downloads"],
+                        ModId = int.Parse(dlLinks[i][0]),
+                        FileId = int.Parse(dlLinks[i][1]),
+                        GameShortName = gameName
+                    });
+                }
+            }
+
             return versions;
+        }
+
+        private string ExtractAttribute(string tag, string attrName)
+        {
+            var search = attrName + "=\"";
+            int idx = tag.IndexOf(search);
+            if (idx < 0) return null;
+            int valStart = idx + search.Length;
+            int valEnd = tag.IndexOf('"', valStart);
+            if (valEnd < 0) return null;
+            return tag.Substring(valStart, valEnd - valStart);
+        }
+
+        private string ExtractFirstAttribute(string html, string attrName)
+        {
+            var search = attrName + "=\"";
+            int idx = html.IndexOf(search);
+            if (idx < 0) return null;
+            int valStart = idx + search.Length;
+            int valEnd = html.IndexOf('"', valStart);
+            if (valEnd < 0) return null;
+            return html.Substring(valStart, valEnd - valStart);
+        }
+
+        private string ExtractDate(string chunk, int startAfter)
+        {
+            // Look for pattern: dd. Mmm yyyy
+            for (int i = startAfter; i < chunk.Length - 14; i++)
+            {
+                if (char.IsDigit(chunk[i]) && i + 1 < chunk.Length && char.IsDigit(chunk[i + 1])
+                    && chunk[i + 2] == '.')
+                {
+                    // Found "dd." - look for month and year
+                    int spaceIdx = i + 3;
+                    while (spaceIdx < chunk.Length && chunk[spaceIdx] == ' ') spaceIdx++;
+
+                    // Check for month name (3+ letters)
+                    int monthStart = spaceIdx;
+                    int monthEnd = monthStart;
+                    while (monthEnd < chunk.Length && char.IsLetter(chunk[monthEnd])) monthEnd++;
+
+                    if (monthEnd - monthStart >= 3)
+                    {
+                        int yearStart = monthEnd;
+                        while (yearStart < chunk.Length && !char.IsDigit(chunk[yearStart])) yearStart++;
+
+                        if (yearStart + 4 <= chunk.Length && char.IsDigit(chunk[yearStart])
+                            && char.IsDigit(chunk[yearStart + 1]) && char.IsDigit(chunk[yearStart + 2])
+                            && char.IsDigit(chunk[yearStart + 3]))
+                        {
+                            return chunk.Substring(i, yearStart + 4 - i).Trim();
+                        }
+                    }
+                }
+            }
+            return "";
+        }
+
+        private string ExtractSize(string chunk, int startAfter)
+        {
+            // Look for pattern: number followed by kB, MB, B
+            var lower = chunk.ToLower();
+            foreach (var suffix in new[] { " kb", " mb", " b" })
+            {
+                int idx = lower.IndexOf(suffix, startAfter);
+                if (idx > 0)
+                {
+                    // Walk back to find the number start
+                    int numEnd = idx;
+                    int numStart = idx - 1;
+                    while (numStart >= startAfter && (char.IsDigit(chunk[numStart]) || chunk[numStart] == '.'))
+                        numStart--;
+                    numStart++;
+
+                    if (numStart < numEnd)
+                    {
+                        return chunk.Substring(numStart, idx + suffix.Length - numStart).Trim();
+                    }
+                }
+            }
+            return "";
+        }
+
+        private string ExtractDownloadCount(string chunk, int startAfter)
+        {
+            var lower = chunk.ToLower();
+            int idx = lower.IndexOf("downloads", startAfter);
+            if (idx < 0) idx = lower.IndexOf("download", startAfter);
+            if (idx < 0) return "0";
+
+            // Walk back past spaces
+            int numEnd = idx - 1;
+            while (numEnd >= startAfter && chunk[numEnd] == ' ') numEnd--;
+
+            // Walk back through digits and commas
+            int numStart = numEnd;
+            while (numStart >= startAfter && (char.IsDigit(chunk[numStart]) || chunk[numStart] == ','))
+                numStart--;
+            numStart++;
+
+            if (numStart <= numEnd)
+            {
+                return chunk.Substring(numStart, numEnd - numStart + 1);
+            }
+            return "0";
         }
 
         private bool DownloadModFile(int modId, int fileId, string gameShortName)

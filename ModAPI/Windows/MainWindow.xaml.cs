@@ -18,29 +18,30 @@
  *  To contact me you can e-mail me at info@fluffyfish.de
  */
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Net;
-using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
-using System.Windows.Threading;
-using System.Windows.Navigation;
-using System.Windows.Shell;
 using Microsoft.Win32;
 using ModAPI.Components;
 using ModAPI.Components.Panels;
 using ModAPI.Configurations;
 using ModAPI.Data;
 using ModAPI.Data.Models;
+using ModAPI.Properties;
 using ModAPI.Utils;
 using ModAPI.Windows.SubWindows;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shell;
+using System.Windows.Threading;
 using Path = System.IO.Path;
 
 namespace ModAPI
@@ -801,79 +802,77 @@ namespace ModAPI
 
             var modName = CurrentModViewModel.Name;
             var modId = CurrentModViewModel.Id;
+            var versionsData = CurrentModViewModel.VersionsData;
 
-            // Confirm deletion using SubWindow
-            var result = System.Windows.MessageBox.Show(
-                string.Format(FindResource("Lang.Mods.Delete.Confirm") as string ?? "Delete mod \"{0}\" and all its versions?", modName),
-                FindResource("Lang.Mods.Delete.Title") as string ?? "Delete Mod",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Warning);
-
-            if (result != MessageBoxResult.Yes) return;
-
-            try
+            var win = new Windows.SubWindows.DeleteModConfirm("Lang.Windows.DeleteModConfirm", modName);
+            win.Closed += (s, args) =>
             {
-                // Step 1: Delete all .mod files for this mod
-                foreach (var kv in CurrentModViewModel.VersionsData)
-                {
-                    var mod = kv.Value;
-                    if (!string.IsNullOrEmpty(mod.FileName) && File.Exists(mod.FileName))
-                    {
-                        try { File.Delete(mod.FileName); }
-                        catch (Exception ex) { Debug.Log("DeleteMod", "Failed to delete: " + mod.FileName + " - " + ex.Message, Debug.Type.Warning); }
-                    }
-                }
+                if (!win.Confirmed) return;
 
-                // Step 2: Delete deployed mod DLL from game's Mods folder
-                if (App.Game != null && !string.IsNullOrEmpty(App.Game.GamePath))
-                {
-                    var gameModsDir = Path.Combine(App.Game.GamePath, "Mods");
-                    if (Directory.Exists(gameModsDir))
-                    {
-                        // Delete mod DLL: {GamePath}/Mods/{ModId}.dll
-                        var modDll = Path.Combine(gameModsDir, modId + ".dll");
-                        if (File.Exists(modDll))
-                        {
-                            try { File.Delete(modDll); }
-                            catch (Exception ex) { Debug.Log("DeleteMod", "Failed to delete DLL: " + modDll + " - " + ex.Message, Debug.Type.Warning); }
-                        }
-
-                        // Delete mod resources: {GamePath}/Mods/{ModId}.resources
-                        var modRes = Path.Combine(gameModsDir, modId + ".resources");
-                        if (File.Exists(modRes))
-                        {
-                            try { File.Delete(modRes); }
-                            catch (Exception ex) { Debug.Log("DeleteMod", "Failed to delete resources: " + modRes + " - " + ex.Message, Debug.Type.Warning); }
-                        }
-                    }
-                }
-
-                // Step 3: Delete from ModdedGameFiles staging area
                 try
                 {
-                    var moddedModsDir = Path.GetFullPath(
-                        ModAPI.Configurations.Configuration.GetPath("ModdedGameFiles") +
-                        Path.DirectorySeparatorChar + App.Game.GameConfiguration.Id +
-                        Path.DirectorySeparatorChar + "Mods");
-                    if (Directory.Exists(moddedModsDir))
+                    // Step 1: Delete all .mod files for this mod
+                    foreach (var kv in versionsData)
                     {
-                        var moddedDll = Path.Combine(moddedModsDir, modId + ".dll");
-                        if (File.Exists(moddedDll))
-                            File.Delete(moddedDll);
-                        var moddedRes = Path.Combine(moddedModsDir, modId + ".resources");
-                        if (File.Exists(moddedRes))
-                            File.Delete(moddedRes);
+                        var mod = kv.Value;
+                        if (!string.IsNullOrEmpty(mod.FileName) && File.Exists(mod.FileName))
+                        {
+                            try { File.Delete(mod.FileName); }
+                            catch (Exception ex) { Debug.Log("DeleteMod", "Failed to delete: " + mod.FileName + " - " + ex.Message, Debug.Type.Warning); }
+                        }
                     }
-                }
-                catch { }
 
-                // Step 4: Reset UI - ModsViewModel timer will auto-detect deleted files
-                SetMod(null);
-            }
-            catch (Exception ex)
-            {
-                Debug.Log("DeleteMod", "Error deleting mod: " + ex.Message, Debug.Type.Error);
-            }
+                    // Step 2: Delete deployed mod DLL from game's Mods folder
+                    if (App.Game != null && !string.IsNullOrEmpty(App.Game.GamePath))
+                    {
+                        var gameModsDir = Path.Combine(App.Game.GamePath, "Mods");
+                        if (Directory.Exists(gameModsDir))
+                        {
+                            var modDll = Path.Combine(gameModsDir, modId + ".dll");
+                            if (File.Exists(modDll))
+                            {
+                                try { File.Delete(modDll); }
+                                catch (Exception ex) { Debug.Log("DeleteMod", "Failed to delete DLL: " + modDll + " - " + ex.Message, Debug.Type.Warning); }
+                            }
+
+                            var modRes = Path.Combine(gameModsDir, modId + ".resources");
+                            if (File.Exists(modRes))
+                            {
+                                try { File.Delete(modRes); }
+                                catch (Exception ex) { Debug.Log("DeleteMod", "Failed to delete resources: " + modRes + " - " + ex.Message, Debug.Type.Warning); }
+                            }
+                        }
+                    }
+
+                    // Step 3: Delete from ModdedGameFiles staging area
+                    try
+                    {
+                        var moddedModsDir = Path.GetFullPath(
+                            ModAPI.Configurations.Configuration.GetPath("ModdedGameFiles") +
+                            Path.DirectorySeparatorChar + App.Game.GameConfiguration.Id +
+                            Path.DirectorySeparatorChar + "Mods");
+                        if (Directory.Exists(moddedModsDir))
+                        {
+                            var moddedDll = Path.Combine(moddedModsDir, modId + ".dll");
+                            if (File.Exists(moddedDll))
+                                File.Delete(moddedDll);
+                            var moddedRes = Path.Combine(moddedModsDir, modId + ".resources");
+                            if (File.Exists(moddedRes))
+                                File.Delete(moddedRes);
+                        }
+                    }
+                    catch { }
+
+                    // Step 4: Reset UI - ModsViewModel timer will auto-detect deleted files
+                    SetMod(null);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log("DeleteMod", "Error deleting mod: " + ex.Message, Debug.Type.Error);
+                }
+            };
+            win.ShowSubWindow();
+            win.Show();
         }
 
         public void SetProject(ModProjectViewModel model)

@@ -243,7 +243,8 @@
                                         <ContentControl Style="{StaticResource PanelCenter}" Grid.Column="0">
                                             <ListView x:Name="DownloadModList" 
                                                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                                      SelectionChanged="DownloadModList_SelectionChanged">
+                                                      SelectionChanged="DownloadModList_SelectionChanged"
+                                                      GridViewColumnHeader.Click="DownloadModList_HeaderClick">
                                                 <ListView.View>
                                                     <GridView>
                                                         <GridViewColumn Header="{DynamicResource Lang.Downloads.Headers.Name}" Width="120" 
@@ -262,8 +263,7 @@
                                         </ContentControl>
 
                                         <!-- Separator -->
-                                        <GridSplitter Grid.Column="1" Width="4" HorizontalAlignment="Stretch" 
-                                                      Background="Transparent" />
+                                        <GridSplitter Grid.Column="1" Width="4" HorizontalAlignment="Stretch" />
 
                                         <!-- Right: Version List -->
                                         <Grid Grid.Column="2">

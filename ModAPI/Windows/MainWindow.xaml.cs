@@ -1007,6 +1007,8 @@ namespace ModAPI
         // ===== Downloads Tab =====
 
         private List<ModInfo> _allMods = new List<ModInfo>();
+        private string _sortProperty = "DownloadCount";
+        private bool _sortAscending = false;
 
         public class ModInfo
         {
@@ -1175,12 +1177,86 @@ namespace ModAPI
                     m.Game.ToLower().Contains(searchText)
                 ).ToList();
 
-            foreach (var mod in filtered)
+            // Apply sort
+            var sorted = SortModList(filtered);
+
+            foreach (var mod in sorted)
             {
                 DownloadModList.Items.Add(mod);
             }
 
             DownloadStatusText.Text = string.Format("{0} mods", filtered.Count);
+        }
+
+        private List<ModInfo> SortModList(List<ModInfo> list)
+        {
+            switch (_sortProperty)
+            {
+                case "Name":
+                    return _sortAscending ? list.OrderBy(m => m.Name).ToList() : list.OrderByDescending(m => m.Name).ToList();
+                case "Author":
+                    return _sortAscending ? list.OrderBy(m => m.Author).ToList() : list.OrderByDescending(m => m.Author).ToList();
+                case "Category":
+                    return _sortAscending ? list.OrderBy(m => m.Category).ToList() : list.OrderByDescending(m => m.Category).ToList();
+                case "Game":
+                    return _sortAscending ? list.OrderBy(m => m.Game).ToList() : list.OrderByDescending(m => m.Game).ToList();
+                case "DownloadCount":
+                    return _sortAscending
+                        ? list.OrderBy(m => ParseDownloadCount(m.DownloadCount)).ToList()
+                        : list.OrderByDescending(m => ParseDownloadCount(m.DownloadCount)).ToList();
+                default:
+                    return list;
+            }
+        }
+
+        private int ParseDownloadCount(string count)
+        {
+            if (string.IsNullOrEmpty(count)) return 0;
+            var cleaned = count.Replace(",", "").Replace(".", "").Trim();
+            int result;
+            return int.TryParse(cleaned, out result) ? result : 0;
+        }
+
+        private GridViewColumnHeader _lastSortHeader = null;
+
+        private void DownloadModList_HeaderClick(object sender, RoutedEventArgs e)
+        {
+            var header = e.OriginalSource as GridViewColumnHeader;
+            if (header == null || header.Role == GridViewColumnHeaderRole.Padding) return;
+
+            var column = header.Column;
+            if (column == null) return;
+
+            var binding = column.DisplayMemberBinding as System.Windows.Data.Binding;
+            if (binding == null) return;
+
+            var property = binding.Path.Path;
+
+            // Remove arrow from previous header
+            if (_lastSortHeader != null && _lastSortHeader.Column != null)
+            {
+                var prevText = _lastSortHeader.Column.Header as string ?? "";
+                prevText = prevText.Replace(" ▲", "").Replace(" ▼", "");
+                _lastSortHeader.Column.Header = prevText;
+            }
+
+            if (_sortProperty == property)
+            {
+                _sortAscending = !_sortAscending;
+            }
+            else
+            {
+                _sortProperty = property;
+                _sortAscending = true;
+            }
+
+            // Add arrow to current header
+            var headerText = column.Header as string ?? column.Header?.ToString() ?? "";
+            headerText = headerText.Replace(" ▲", "").Replace(" ▼", "");
+            column.Header = headerText + (_sortAscending ? " ▲" : " ▼");
+            _lastSortHeader = header;
+
+            ApplyModFilter();
         }
 
         private void DownloadSearch_TextChanged(object sender, TextChangedEventArgs e)

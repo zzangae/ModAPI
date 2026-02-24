@@ -938,6 +938,31 @@ namespace ModAPI
             public string Slug { get; set; }
         }
 
+        public class ModVersionInfo : System.ComponentModel.INotifyPropertyChanged
+        {
+            public string Version { get; set; }
+            public string Compatible { get; set; }
+            public string Date { get; set; }
+            public string Size { get; set; }
+            public string Downloads { get; set; }
+            public int ModId { get; set; }
+            public int FileId { get; set; }
+            public string GameShortName { get; set; }
+
+            private bool _isSelected;
+            public bool IsSelected
+            {
+                get { return _isSelected; }
+                set
+                {
+                    _isSelected = value;
+                    PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs("IsSelected"));
+                }
+            }
+
+            public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        }
+
         private bool CheckInternetConnection()
         {
             try
@@ -1128,18 +1153,230 @@ namespace ModAPI
             DownloadRefresh_Click(sender, e);
         }
 
+        private ModInfo _selectedMod;
+        private List<ModVersionInfo> _currentVersions = new List<ModVersionInfo>();
+
         private void DownloadModList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DownloadButton.IsEnabled = DownloadModList.SelectedItem != null;
+            var mod = DownloadModList.SelectedItem as ModInfo;
+            if (mod == null)
+            {
+                DownloadVersionPanel.Visibility = Visibility.Collapsed;
+                DownloadVersionPlaceholder.Visibility = Visibility.Visible;
+                DownloadButton.IsEnabled = false;
+                return;
+            }
+
+            _selectedMod = mod;
+            DownloadButton.IsEnabled = false;
+            DownloadVersionPanel.Visibility = Visibility.Collapsed;
+            DownloadVersionPlaceholder.Visibility = Visibility.Visible;
+            DownloadStatusText.Text = FindResource("Lang.Downloads.Status.Loading") as string;
+
+            var thread = new Thread(() =>
+            {
+                var url = "https://modapi.survivetheforest.net/mod/" + mod.ModId + "/" + mod.Slug;
+                var html = FetchHtml(url);
+                var versions = ParseVersionsFromHtml(html);
+
+                Dispatcher.Invoke(() =>
+                {
+                    _currentVersions = versions;
+                    DownloadVersionTitle.Text = mod.Name;
+                    DownloadVersionList.Items.Clear();
+
+                    foreach (var v in versions)
+                    {
+                        v.IsSelected = false;
+                        DownloadVersionList.Items.Add(v);
+                    }
+
+                    if (versions.Count > 0)
+                    {
+                        DownloadVersionPlaceholder.Visibility = Visibility.Collapsed;
+                        DownloadVersionPanel.Visibility = Visibility.Visible;
+                        DownloadStatusText.Text = string.Format("{0} versions", versions.Count);
+                    }
+                    else
+                    {
+                        DownloadStatusText.Text = FindResource("Lang.Downloads.Status.Error") as string;
+                    }
+                    DownloadButton.IsEnabled = false;
+                });
+            });
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void DownloadInfo_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedMod == null) return;
+            var url = "https://modapi.survivetheforest.net/mod/" + _selectedMod.ModId + "/" + _selectedMod.Slug;
+            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+        }
+
+        private void DownloadVersionRadio_Checked(object sender, RoutedEventArgs e)
+        {
+            // Uncheck all others
+            foreach (var item in _currentVersions)
+            {
+                item.IsSelected = false;
+            }
+
+            var radio = sender as System.Windows.Controls.RadioButton;
+            if (radio != null)
+            {
+                var ver = radio.DataContext as ModVersionInfo;
+                if (ver != null)
+                {
+                    ver.IsSelected = true;
+                    DownloadButton.IsEnabled = true;
+                }
+            }
         }
 
         private void DownloadMod_Click(object sender, RoutedEventArgs e)
         {
-            var mod = DownloadModList.SelectedItem as ModInfo;
-            if (mod == null) return;
+            var selectedVersion = _currentVersions.FirstOrDefault(v => v.IsSelected);
+            if (selectedVersion == null) return;
 
-            var url = "https://modapi.survivetheforest.net/mod/" + mod.ModId + "/" + mod.Slug;
-            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+            DownloadButton.IsEnabled = false;
+            DownloadStatusText.Text = FindResource("Lang.Downloads.Status.Downloading") as string;
+
+            var thread = new Thread(() =>
+            {
+                var success = DownloadModFile(selectedVersion.ModId, selectedVersion.FileId, selectedVersion.GameShortName);
+                Dispatcher.Invoke(() =>
+                {
+                    DownloadButton.IsEnabled = true;
+                    DownloadStatusText.Text = success
+                        ? (FindResource("Lang.Downloads.Status.Complete") as string)
+                        : (FindResource("Lang.Downloads.Status.Error") as string);
+                });
+            });
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private List<ModVersionInfo> ParseVersionsFromHtml(string html)
+        {
+            var versions = new List<ModVersionInfo>();
+            if (string.IsNullOrEmpty(html)) return versions;
+
+            // Find all create-mod-single buttons: data-modid, data-fileid, data-game
+            var btnMatches = Regex.Matches(html,
+                @"create-mod-single[^>]*data-modid=""(\d+)""[^>]*data-fileid=""(\d+)""[^>]*data-game=""([^""]+)""");
+
+            // Also try reversed attribute order
+            if (btnMatches.Count == 0)
+            {
+                btnMatches = Regex.Matches(html,
+                    @"create-mod-single[^>]*data-fileid=""(\d+)""[^>]*data-modid=""(\d+)""[^>]*data-game=""([^""]+)""");
+                // Swap groups for this pattern
+                var tempList = new List<int[]>();
+                foreach (Match m in btnMatches)
+                {
+                    tempList.Add(new[] { int.Parse(m.Groups[2].Value), int.Parse(m.Groups[1].Value) });
+                }
+            }
+
+            // Parse version text blocks: "Version X.X.X.X (Y.YYb)"
+            var verMatches = Regex.Matches(html,
+                @"Version\s+([\d.]+)\s*\(([^)]+)\)[^<]*?(\d{2}\.\s*\w+\s*\d{4})[^<]*?([\d.]+\s*[kKmM]?B)[^<]*?([\d,]+)\s*downloads");
+
+            var count = Math.Min(btnMatches.Count, verMatches.Count);
+            for (int i = 0; i < count; i++)
+            {
+                var btn = btnMatches[i];
+                var ver = verMatches[i];
+
+                int modId, fileId;
+                string gameShortName;
+
+                // Determine which group is modid vs fileid based on attribute order
+                if (btn.Value.IndexOf("data-modid") < btn.Value.IndexOf("data-fileid"))
+                {
+                    modId = int.Parse(btn.Groups[1].Value);
+                    fileId = int.Parse(btn.Groups[2].Value);
+                    gameShortName = btn.Groups[3].Value;
+                }
+                else
+                {
+                    fileId = int.Parse(btn.Groups[1].Value);
+                    modId = int.Parse(btn.Groups[2].Value);
+                    gameShortName = btn.Groups[3].Value;
+                }
+
+                versions.Add(new ModVersionInfo
+                {
+                    Version = ver.Groups[1].Value,
+                    Compatible = ver.Groups[2].Value,
+                    Date = ver.Groups[3].Value,
+                    Size = ver.Groups[4].Value,
+                    Downloads = ver.Groups[5].Value,
+                    ModId = modId,
+                    FileId = fileId,
+                    GameShortName = gameShortName
+                });
+            }
+
+            return versions;
+        }
+
+        private bool DownloadModFile(int modId, int fileId, string gameShortName)
+        {
+            try
+            {
+                var url = "https://modapi.survivetheforest.net/download/mod/" + modId + "/" + fileId;
+                var request = (HttpWebRequest)WebRequest.Create(url);
+                request.UserAgent = "ModAPI/2.0";
+                request.AllowAutoRedirect = true;
+                request.Timeout = 30000;
+
+                using (var response = (HttpWebResponse)request.GetResponse())
+                using (var stream = response.GetResponseStream())
+                {
+                    // Get filename from Content-Disposition header or URL
+                    var fileName = "";
+                    var disposition = response.Headers["Content-Disposition"];
+                    if (!string.IsNullOrEmpty(disposition))
+                    {
+                        var fnMatch = Regex.Match(disposition, @"filename=""?([^"";\s]+)""?");
+                        if (fnMatch.Success)
+                            fileName = fnMatch.Groups[1].Value;
+                    }
+
+                    if (string.IsNullOrEmpty(fileName))
+                    {
+                        // Fallback: use last segment of response URL
+                        fileName = Path.GetFileName(response.ResponseUri.AbsolutePath);
+                    }
+
+                    if (string.IsNullOrEmpty(fileName) || !fileName.EndsWith(".mod"))
+                    {
+                        fileName = "mod_" + modId + "_" + fileId + ".mod";
+                    }
+
+                    // Determine target folder
+                    var modsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "mods", gameShortName);
+                    if (!Directory.Exists(modsDir))
+                        Directory.CreateDirectory(modsDir);
+
+                    var filePath = Path.Combine(modsDir, fileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                    {
+                        stream.CopyTo(fileStream);
+                    }
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Log("Downloads", "Download failed: " + ex.Message, Debug.Type.Error);
+                return false;
+            }
         }
 
         protected override void OnClosed(EventArgs e)

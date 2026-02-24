@@ -1154,11 +1154,18 @@ namespace ModAPI
                 if (catMatch.Success)
                     category = catMatch.Groups[1].Value.Trim();
 
-                // Extract author name (text after avatar image, typically in a span or div)
+                // Extract author name (text after avatar image)
                 var author = "";
-                var authorMatch = Regex.Match(block, @"(?:steamstatic|steamcdn)[^>]+full\.jpg[^>]*/>\s*(?:<[^>]+>\s*)*([^<]+)");
+                var authorMatch = Regex.Match(block, @"(?:steamstatic|steamcdn|akamaihd)[^""]*full\.jpg[^>]*/?\>\s*(?:<[^>]+>\s*)*([^<\r\n]+)");
                 if (authorMatch.Success)
                     author = authorMatch.Groups[1].Value.Trim();
+                if (string.IsNullOrEmpty(author))
+                {
+                    // Fallback: look for text between avatar section and date pattern
+                    var fallbackMatch = Regex.Match(block, @"full\.jpg[^>]*/?\>[\s\S]*?(?:</[^>]+>\s*)*\n\s*(\S[^\n<]*?)\s*\n");
+                    if (fallbackMatch.Success)
+                        author = fallbackMatch.Groups[1].Value.Trim();
+                }
 
                 // Extract download count (number after "Downloads" text with file_download icon)
                 var downloadCount = "0";

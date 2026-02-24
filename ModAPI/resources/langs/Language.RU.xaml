@@ -226,6 +226,12 @@
     <s:String x:Key="Lang.Downloads.Status.Downloading">Скачивание...</s:String>
     <s:String x:Key="Lang.Downloads.Status.Complete">Загрузка завершена!</s:String>
     <s:String x:Key="Lang.Downloads.Status.Error">Ошибка при скачивании.</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Version">Версия</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Compatible">Совместимость</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Date">Дата</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Size">Размер</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Select">Выберите мод для просмотра версий</s:String>
+    <s:String x:Key="Lang.Downloads.Buttons.Info">Инфо</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Title">Нет подключения к интернету</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Text">Не удалось подключиться к серверу модов. Вы можете скачать моды вручную с сайта:</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Manual">После скачивания поместите файлы .mod в папку «mods/TheForest» в каталоге ModAPI.</s:String>
@@ -256,4 +262,9 @@
     <s:String x:Key="Lang.Windows.NoProjectWarning.Title">Предупреждение</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Text">Проекты не найдены. Сначала создайте проект.</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Buttons.OK">OK</s:String>
+    <s:String x:Key="Lang.Mods.Buttons.Delete">Удалить мод</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Title">Удалить мод</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Text">Удалить мод &quot;{0}&quot; и все версии? Это также удалит .dll из папки игры.</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Buttons.Yes">Да</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Buttons.No">Нет</s:String>
 </ResourceDictionary>

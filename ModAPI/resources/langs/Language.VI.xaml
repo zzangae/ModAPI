@@ -226,6 +226,12 @@
     <s:String x:Key="Lang.Downloads.Status.Downloading">Đang tải xuống...</s:String>
     <s:String x:Key="Lang.Downloads.Status.Complete">Tải xuống hoàn tất!</s:String>
     <s:String x:Key="Lang.Downloads.Status.Error">Đã xảy ra lỗi khi tải xuống.</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Version">Phiên bản</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Compatible">Tương thích</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Date">Ngày</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Size">Kích thước</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Select">Chọn mod để xem các phiên bản</s:String>
+    <s:String x:Key="Lang.Downloads.Buttons.Info">Thông tin</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Title">Không có kết nối Internet</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Text">Không thể kết nối máy chủ mod. Bạn có thể tải mod thủ công từ trang web:</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Manual">Sau khi tải, đặt tệp .mod vào thư mục "mods/TheForest" trong thư mục ModAPI.</s:String>
@@ -256,4 +262,9 @@
     <s:String x:Key="Lang.Windows.NoProjectWarning.Title">Cảnh báo</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Text">Không tìm thấy dự án. Hãy tạo dự án trước.</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Buttons.OK">OK</s:String>
+    <s:String x:Key="Lang.Mods.Buttons.Delete">Xóa Mod</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Title">Xóa Mod</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Text">Xóa mod &quot;{0}&quot; và tất cả phiên bản? File .dll cũng sẽ bị xóa khỏi thư mục game.</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Buttons.Yes">Có</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Buttons.No">Không</s:String>
 </ResourceDictionary>

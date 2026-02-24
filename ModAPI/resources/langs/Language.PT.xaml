@@ -226,6 +226,12 @@
     <s:String x:Key="Lang.Downloads.Status.Downloading">Baixando...</s:String>
     <s:String x:Key="Lang.Downloads.Status.Complete">Download concluído!</s:String>
     <s:String x:Key="Lang.Downloads.Status.Error">Ocorreu um erro durante o download.</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Version">Versão</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Compatible">Compatível</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Date">Data</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Size">Tamanho</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Select">Selecione um mod para ver as versões</s:String>
+    <s:String x:Key="Lang.Downloads.Buttons.Info">Info</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Title">Sem conexão com a Internet</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Text">Não foi possível conectar ao servidor de mods. Você pode baixar mods manualmente pelo site:</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Manual">Após o download, coloque os arquivos .mod na pasta "mods/TheForest" no diretório do ModAPI.</s:String>
@@ -256,4 +262,9 @@
     <s:String x:Key="Lang.Windows.NoProjectWarning.Title">Aviso</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Text">Nenhum projeto encontrado. Crie um projeto primeiro.</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Buttons.OK">OK</s:String>
+    <s:String x:Key="Lang.Mods.Buttons.Delete">Excluir Mod</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Title">Excluir Mod</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Text">Excluir o mod &quot;{0}&quot; e todas as versões? Isso também removerá o .dll da pasta do jogo.</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Buttons.Yes">Sim</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Buttons.No">Não</s:String>
 </ResourceDictionary>

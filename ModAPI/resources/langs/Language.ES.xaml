@@ -225,11 +225,17 @@
     <s:String x:Key="Lang.Downloads.Status.Ready">Selecciona un mod para descargar.</s:String>
     <s:String x:Key="Lang.Downloads.Status.Loading">Cargando lista de mods...</s:String>
     <s:String x:Key="Lang.Downloads.Status.Downloading">Descargando...</s:String>
-    <s:String x:Key="Lang.Downloads.Status.Complete">¡Descarga completada!</s:String>
-    <s:String x:Key="Lang.Downloads.Status.Error">Error al descargar.</s:String>
+    <s:String x:Key="Lang.Downloads.Status.Complete">¡Descarga completa!</s:String>
+    <s:String x:Key="Lang.Downloads.Status.Error">Error durante la descarga.</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Version">Versión</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Compatible">Compatible</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Date">Fecha</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Size">Tamaño</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Select">Selecciona un mod para ver versiones</s:String>
+    <s:String x:Key="Lang.Downloads.Buttons.Info">Info</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Title">Sin conexión a Internet</s:String>
-    <s:String x:Key="Lang.Downloads.Offline.Text">No se puede conectar al servidor de mods. Puede descargar mods manualmente desde el sitio web:</s:String>
-    <s:String x:Key="Lang.Downloads.Offline.Manual">Después de descargar, coloque los archivos .mod en la carpeta "mods/TheForest" de su directorio ModAPI.</s:String>
+    <s:String x:Key="Lang.Downloads.Offline.Text">No se puede conectar al servidor de mods. Puedes descargar mods manualmente desde el sitio web:</s:String>
+    <s:String x:Key="Lang.Downloads.Offline.Manual">Después de descargar, coloca los archivos .mod en la carpeta "mods/TheForest" en tu directorio de ModAPI.</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Retry">Reintentar conexión</s:String>
 
     <s:String x:Key="Lang.Options.Tab">Ajustes</s:String>
@@ -257,5 +263,10 @@
     <s:String x:Key="Lang.Windows.NoProjectWarning.Title">Advertencia</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Text">No se encontraron proyectos. Por favor, cree un proyecto primero.</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Buttons.OK">OK</s:String>
+    <s:String x:Key="Lang.Mods.Buttons.Delete">Eliminar Mod</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Title">Eliminar Mod</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Text">¿Eliminar el mod &quot;{0}&quot; y todas sus versiones? Esto también eliminará el .dll de la carpeta del juego.</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Buttons.Yes">Sí</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Buttons.No">No</s:String>
 </ResourceDictionary>
 <!-- Traducción: Nicolás F. y Martin A. de www.TheForest-ES.COM -->

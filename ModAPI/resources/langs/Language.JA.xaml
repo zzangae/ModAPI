@@ -226,6 +226,12 @@
     <s:String x:Key="Lang.Downloads.Status.Downloading">ダウンロード中...</s:String>
     <s:String x:Key="Lang.Downloads.Status.Complete">ダウンロード完了!</s:String>
     <s:String x:Key="Lang.Downloads.Status.Error">ダウンロード中にエラーが発生しました。</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Version">バージョン</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Compatible">互換性</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Date">日付</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Size">サイズ</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Select">MODを選択してバージョンを表示</s:String>
+    <s:String x:Key="Lang.Downloads.Buttons.Info">情報</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Title">インターネット接続なし</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Text">Modサーバーに接続できません。以下のサイトから手動でダウンロードできます:</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Manual">ダウンロード後、.modファイルをModAPIフォルダの「mods/TheForest」フォルダに配置してください。</s:String>
@@ -256,4 +262,9 @@
     <s:String x:Key="Lang.Windows.NoProjectWarning.Title">警告</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Text">プロジェクトが見つかりません。先にプロジェクトを作成してください。</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Buttons.OK">OK</s:String>
+    <s:String x:Key="Lang.Mods.Buttons.Delete">Modを削除</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Title">Modを削除</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Text">Mod &quot;{0}&quot; の全バージョンを削除しますか？ ゲームフォルダの.dllファイルも削除されます。</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Buttons.Yes">はい</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Buttons.No">いいえ</s:String>
 </ResourceDictionary>

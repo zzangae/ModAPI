@@ -226,6 +226,12 @@
     <s:String x:Key="Lang.Downloads.Status.Downloading">下載中...</s:String>
     <s:String x:Key="Lang.Downloads.Status.Complete">下載完成!</s:String>
     <s:String x:Key="Lang.Downloads.Status.Error">下載時發生錯誤。</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Version">版本</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Compatible">相容</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Date">日期</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Size">大小</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Select">選擇模組查看版本</s:String>
+    <s:String x:Key="Lang.Downloads.Buttons.Info">資訊</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Title">無網路連線</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Text">無法連線到Mod伺服器。你可以從網站手動下載:</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Manual">下載後將.mod檔案放入ModAPI目錄下的「mods/TheForest」資料夾。</s:String>
@@ -256,4 +262,9 @@
     <s:String x:Key="Lang.Windows.NoProjectWarning.Title">警告</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Text">未找到專案。請先建立一個專案。</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Buttons.OK">確定</s:String>
+    <s:String x:Key="Lang.Mods.Buttons.Delete">刪除模組</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Title">刪除模組</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Text">刪除模組 &quot;{0}&quot; 及其所有版本？ 這也將從遊戲資料夾中刪除已部署的 .dll 檔案。</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Buttons.Yes">是</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Buttons.No">否</s:String>
 </ResourceDictionary>

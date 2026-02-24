@@ -222,9 +222,15 @@
     <s:String x:Key="Lang.Downloads.Status.Loading">Ładowanie listy modów...</s:String>
     <s:String x:Key="Lang.Downloads.Status.Downloading">Pobieranie...</s:String>
     <s:String x:Key="Lang.Downloads.Status.Complete">Pobieranie zakończone!</s:String>
-    <s:String x:Key="Lang.Downloads.Status.Error">Wystąpił błąd podczas pobierania.</s:String>
+    <s:String x:Key="Lang.Downloads.Status.Error">Błąd podczas pobierania.</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Version">Wersja</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Compatible">Kompatybilny</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Date">Data</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Size">Rozmiar</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Select">Wybierz mod, aby zobaczyć wersje</s:String>
+    <s:String x:Key="Lang.Downloads.Buttons.Info">Info</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Title">Brak połączenia z Internetem</s:String>
-    <s:String x:Key="Lang.Downloads.Offline.Text">Nie można połączyć się z serwerem modów. Możesz pobrać mody ręcznie ze strony internetowej:</s:String>
+    <s:String x:Key="Lang.Downloads.Offline.Text">Nie można połączyć się z serwerem modów. Możesz pobrać mody ręcznie ze strony:</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Manual">Po pobraniu umieść pliki .mod w folderze "mods/TheForest" w katalogu ModAPI.</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Retry">Ponów połączenie</s:String>
 
@@ -253,5 +259,10 @@
     <s:String x:Key="Lang.Windows.NoProjectWarning.Title">Ostrzeżenie</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Text">Nie znaleziono projektów. Proszę najpierw utworzyć projekt.</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Buttons.OK">OK</s:String>
+    <s:String x:Key="Lang.Mods.Buttons.Delete">Usuń Mod</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Title">Usuń Mod</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Text">Usunąć mod &quot;{0}&quot; i wszystkie wersje? Plik .dll zostanie również usunięty z folderu gry.</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Buttons.Yes">Tak</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Buttons.No">Nie</s:String>
 </ResourceDictionary>
     

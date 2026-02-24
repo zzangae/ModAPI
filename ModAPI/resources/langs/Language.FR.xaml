@@ -221,10 +221,16 @@
     <s:String x:Key="Lang.Downloads.Status.Ready">Sélectionnez un mod à télécharger.</s:String>
     <s:String x:Key="Lang.Downloads.Status.Loading">Chargement de la liste des mods...</s:String>
     <s:String x:Key="Lang.Downloads.Status.Downloading">Téléchargement en cours...</s:String>
-    <s:String x:Key="Lang.Downloads.Status.Complete">Téléchargement terminé!</s:String>
+    <s:String x:Key="Lang.Downloads.Status.Complete">Téléchargement terminé !</s:String>
     <s:String x:Key="Lang.Downloads.Status.Error">Erreur lors du téléchargement.</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Version">Version</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Compatible">Compatible</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Date">Date</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Size">Taille</s:String>
+    <s:String x:Key="Lang.Downloads.Version.Select">Sélectionnez un mod pour voir les versions</s:String>
+    <s:String x:Key="Lang.Downloads.Buttons.Info">Info</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Title">Pas de connexion Internet</s:String>
-    <s:String x:Key="Lang.Downloads.Offline.Text">Impossible de se connecter au serveur de mods. Vous pouvez télécharger les mods manuellement depuis le site web:</s:String>
+    <s:String x:Key="Lang.Downloads.Offline.Text">Impossible de se connecter au serveur de mods. Vous pouvez télécharger les mods manuellement depuis le site web :</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Manual">Après le téléchargement, placez les fichiers .mod dans le dossier "mods/TheForest" de votre répertoire ModAPI.</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Retry">Réessayer la connexion</s:String>
 
@@ -253,5 +259,10 @@
     <s:String x:Key="Lang.Windows.NoProjectWarning.Title">Avertissement</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Text">Aucun projet trouvé. Veuillez d'abord créer un projet.</s:String>
     <s:String x:Key="Lang.Windows.NoProjectWarning.Buttons.OK">OK</s:String>
+    <s:String x:Key="Lang.Mods.Buttons.Delete">Supprimer le Mod</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Title">Supprimer le Mod</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Text">Supprimer le mod &quot;{0}&quot; et toutes ses versions ? Le .dll déployé sera également supprimé du dossier du jeu.</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Buttons.Yes">Oui</s:String>
+    <s:String x:Key="Lang.Windows.DeleteModConfirm.Buttons.No">Non</s:String>
 </ResourceDictionary>
     

@@ -231,6 +231,10 @@
     <s:String x:Key="Lang.Downloads.Version.Date">日付</s:String>
     <s:String x:Key="Lang.Downloads.Version.Size">サイズ</s:String>
     <s:String x:Key="Lang.Downloads.Version.Select">MODを選択してバージョンを表示</s:String>
+    <s:String x:Key="Lang.Downloads.Game.All">すべて</s:String>
+    <s:String x:Key="Lang.Downloads.Game.TheForest">The Forest</s:String>
+    <s:String x:Key="Lang.Downloads.Game.DedicatedServer">専用サーバー</s:String>
+    <s:String x:Key="Lang.Downloads.Game.VR">VR</s:String>
     <s:String x:Key="Lang.Downloads.Category.All">すべて</s:String>
     <s:String x:Key="Lang.Downloads.Category.Bugfixes">バグ修正</s:String>
     <s:String x:Key="Lang.Downloads.Category.Balancing">バランス</s:String>

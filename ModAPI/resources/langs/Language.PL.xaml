@@ -228,6 +228,10 @@
     <s:String x:Key="Lang.Downloads.Version.Date">Data</s:String>
     <s:String x:Key="Lang.Downloads.Version.Size">Rozmiar</s:String>
     <s:String x:Key="Lang.Downloads.Version.Select">Wybierz mod, aby zobaczyć wersje</s:String>
+    <s:String x:Key="Lang.Downloads.Game.All">Wszystkie</s:String>
+    <s:String x:Key="Lang.Downloads.Game.TheForest">The Forest</s:String>
+    <s:String x:Key="Lang.Downloads.Game.DedicatedServer">Serwer dedykowany</s:String>
+    <s:String x:Key="Lang.Downloads.Game.VR">VR</s:String>
     <s:String x:Key="Lang.Downloads.Category.All">Wszystkie</s:String>
     <s:String x:Key="Lang.Downloads.Category.Bugfixes">Poprawki</s:String>
     <s:String x:Key="Lang.Downloads.Category.Balancing">Balans</s:String>

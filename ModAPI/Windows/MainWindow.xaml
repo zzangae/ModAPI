@@ -213,6 +213,7 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
@@ -244,8 +245,22 @@
                                         </Grid>
                                     </ContentControl>
 
-                                    <!-- Category Filter Radio Buttons -->
+                                    <!-- Game Filter Radio Buttons (1st filter) -->
                                     <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="4,2,4,2">
+                                        <WrapPanel x:Name="GameFilterPanel" Orientation="Horizontal">
+                                            <RadioButton x:Name="GameAll" Content="{DynamicResource Lang.Downloads.Game.All}" 
+                                                         GroupName="GameFilter" IsChecked="True" Checked="GameFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                            <RadioButton x:Name="GameTheForest" Content="{DynamicResource Lang.Downloads.Game.TheForest}" 
+                                                         GroupName="GameFilter" Checked="GameFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                            <RadioButton x:Name="GameDedicatedServer" Content="{DynamicResource Lang.Downloads.Game.DedicatedServer}" 
+                                                         GroupName="GameFilter" Checked="GameFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                            <RadioButton x:Name="GameVR" Content="{DynamicResource Lang.Downloads.Game.VR}" 
+                                                         GroupName="GameFilter" Checked="GameFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                        </WrapPanel>
+                                    </ScrollViewer>
+
+                                    <!-- Category Filter Radio Buttons (2nd filter) -->
+                                    <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="4,2,4,2">
                                         <WrapPanel x:Name="CategoryFilterPanel" Orientation="Horizontal">
                                             <RadioButton x:Name="CatAll" Content="{DynamicResource Lang.Downloads.Category.All}" 
                                                          GroupName="CategoryFilter" IsChecked="True" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
@@ -275,7 +290,7 @@
                                     </ScrollViewer>
 
                                     <!-- Split: Left=Mod List, Right=Version List -->
-                                    <Grid Grid.Row="2">
+                                    <Grid Grid.Row="3">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="3*" />
                                             <ColumnDefinition Width="4" />
@@ -367,7 +382,7 @@
                                     </Grid>
 
                                     <!-- Bottom Bar: Status + Download Button -->
-                                    <ContentControl Grid.Row="3" Style="{StaticResource PanelButtons}">
+                                    <ContentControl Grid.Row="4" Style="{StaticResource PanelButtons}">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />

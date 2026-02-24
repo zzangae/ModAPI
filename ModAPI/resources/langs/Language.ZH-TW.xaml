@@ -231,6 +231,10 @@
     <s:String x:Key="Lang.Downloads.Version.Date">日期</s:String>
     <s:String x:Key="Lang.Downloads.Version.Size">大小</s:String>
     <s:String x:Key="Lang.Downloads.Version.Select">選擇模組查看版本</s:String>
+    <s:String x:Key="Lang.Downloads.Game.All">全部</s:String>
+    <s:String x:Key="Lang.Downloads.Game.TheForest">The Forest</s:String>
+    <s:String x:Key="Lang.Downloads.Game.DedicatedServer">專用伺服器</s:String>
+    <s:String x:Key="Lang.Downloads.Game.VR">VR</s:String>
     <s:String x:Key="Lang.Downloads.Category.All">全部</s:String>
     <s:String x:Key="Lang.Downloads.Category.Bugfixes">漏洞修復</s:String>
     <s:String x:Key="Lang.Downloads.Category.Balancing">平衡</s:String>

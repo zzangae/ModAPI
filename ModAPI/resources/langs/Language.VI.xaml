@@ -231,6 +231,10 @@
     <s:String x:Key="Lang.Downloads.Version.Date">Ngày</s:String>
     <s:String x:Key="Lang.Downloads.Version.Size">Kích thước</s:String>
     <s:String x:Key="Lang.Downloads.Version.Select">Chọn mod để xem các phiên bản</s:String>
+    <s:String x:Key="Lang.Downloads.Game.All">Tất cả</s:String>
+    <s:String x:Key="Lang.Downloads.Game.TheForest">The Forest</s:String>
+    <s:String x:Key="Lang.Downloads.Game.DedicatedServer">Máy chủ riêng</s:String>
+    <s:String x:Key="Lang.Downloads.Game.VR">VR</s:String>
     <s:String x:Key="Lang.Downloads.Category.All">Tất cả</s:String>
     <s:String x:Key="Lang.Downloads.Category.Bugfixes">Sửa lỗi</s:String>
     <s:String x:Key="Lang.Downloads.Category.Balancing">Cân bằng</s:String>

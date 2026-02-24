@@ -1009,6 +1009,7 @@ namespace ModAPI
         private string _sortProperty = "DownloadCount";
         private bool _sortAscending = false;
         private string _selectedCategory = "All";
+        private string _selectedGame = "All";
 
         public class ModInfo
         {
@@ -1170,7 +1171,14 @@ namespace ModAPI
 
             var filtered = _allMods.AsEnumerable();
 
-            // Category filter
+            // 1st filter: Game
+            if (!string.IsNullOrEmpty(_selectedGame) && _selectedGame != "All")
+            {
+                filtered = filtered.Where(m =>
+                    m.Game.IndexOf(_selectedGame, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+
+            // 2nd filter: Category
             if (!string.IsNullOrEmpty(_selectedCategory) && _selectedCategory != "All")
             {
                 filtered = filtered.Where(m => 
@@ -1227,6 +1235,28 @@ namespace ModAPI
                 category = "All";
 
             _selectedCategory = category;
+            if (_allMods.Count > 0)
+                ApplyModFilter();
+        }
+
+        private static readonly Dictionary<string, string> GameMap = new Dictionary<string, string>
+        {
+            { "GameAll", "All" },
+            { "GameTheForest", "The Forest" },
+            { "GameDedicatedServer", "Dedicated Server" },
+            { "GameVR", "VR" },
+        };
+
+        private void GameFilter_Checked(object sender, RoutedEventArgs e)
+        {
+            var rb = sender as System.Windows.Controls.RadioButton;
+            if (rb == null) return;
+
+            string game;
+            if (!GameMap.TryGetValue(rb.Name, out game))
+                game = "All";
+
+            _selectedGame = game;
             if (_allMods.Count > 0)
                 ApplyModFilter();
         }

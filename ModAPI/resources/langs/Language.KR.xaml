@@ -228,6 +228,10 @@
     <s:String x:Key="Lang.Downloads.Version.Date">날짜</s:String>
     <s:String x:Key="Lang.Downloads.Version.Size">크기</s:String>
     <s:String x:Key="Lang.Downloads.Version.Select">모드를 선택하면 버전이 표시됩니다</s:String>
+    <s:String x:Key="Lang.Downloads.Game.All">전체</s:String>
+    <s:String x:Key="Lang.Downloads.Game.TheForest">The Forest</s:String>
+    <s:String x:Key="Lang.Downloads.Game.DedicatedServer">전용 서버</s:String>
+    <s:String x:Key="Lang.Downloads.Game.VR">VR</s:String>
     <s:String x:Key="Lang.Downloads.Category.All">전체</s:String>
     <s:String x:Key="Lang.Downloads.Category.Bugfixes">버그수정</s:String>
     <s:String x:Key="Lang.Downloads.Category.Balancing">밸런싱</s:String>

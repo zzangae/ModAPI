@@ -375,6 +375,7 @@
     <s:String x:Key="Lang.Downloads.Version.Date">Datum</s:String>
     <s:String x:Key="Lang.Downloads.Version.Size">Größe</s:String>
     <s:String x:Key="Lang.Downloads.Version.Select">Mod auswählen um Versionen anzuzeigen</s:String>
+    <s:String x:Key="Lang.Downloads.Search.Placeholder">Mods suchen...</s:String>
     <s:String x:Key="Lang.Downloads.Buttons.Info">Info</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Title">Keine Internetverbindung</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Text">Verbindung zum Mod-Server nicht möglich. Sie können Mods manuell von der Website herunterladen:</s:String>

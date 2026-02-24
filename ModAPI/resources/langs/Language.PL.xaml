@@ -228,6 +228,7 @@
     <s:String x:Key="Lang.Downloads.Version.Date">Data</s:String>
     <s:String x:Key="Lang.Downloads.Version.Size">Rozmiar</s:String>
     <s:String x:Key="Lang.Downloads.Version.Select">Wybierz mod, aby zobaczyć wersje</s:String>
+    <s:String x:Key="Lang.Downloads.Search.Placeholder">Szukaj modów...</s:String>
     <s:String x:Key="Lang.Downloads.Buttons.Info">Info</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Title">Brak połączenia z Internetem</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Text">Nie można połączyć się z serwerem modów. Możesz pobrać mody ręcznie ze strony:</s:String>

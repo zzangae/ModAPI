@@ -231,6 +231,7 @@
     <s:String x:Key="Lang.Downloads.Version.Date">日期</s:String>
     <s:String x:Key="Lang.Downloads.Version.Size">大小</s:String>
     <s:String x:Key="Lang.Downloads.Version.Select">選擇模組查看版本</s:String>
+    <s:String x:Key="Lang.Downloads.Search.Placeholder">搜尋模組...</s:String>
     <s:String x:Key="Lang.Downloads.Buttons.Info">資訊</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Title">無網路連線</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Text">無法連線到Mod伺服器。你可以從網站手動下載:</s:String>

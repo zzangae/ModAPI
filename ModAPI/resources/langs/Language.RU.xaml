@@ -231,6 +231,7 @@
     <s:String x:Key="Lang.Downloads.Version.Date">Дата</s:String>
     <s:String x:Key="Lang.Downloads.Version.Size">Размер</s:String>
     <s:String x:Key="Lang.Downloads.Version.Select">Выберите мод для просмотра версий</s:String>
+    <s:String x:Key="Lang.Downloads.Search.Placeholder">Поиск модов...</s:String>
     <s:String x:Key="Lang.Downloads.Buttons.Info">Инфо</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Title">Нет подключения к интернету</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Text">Не удалось подключиться к серверу модов. Вы можете скачать моды вручную с сайта:</s:String>

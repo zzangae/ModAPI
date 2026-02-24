@@ -231,6 +231,7 @@
     <s:String x:Key="Lang.Downloads.Version.Date">Date</s:String>
     <s:String x:Key="Lang.Downloads.Version.Size">Size</s:String>
     <s:String x:Key="Lang.Downloads.Version.Select">Select a mod to view versions</s:String>
+    <s:String x:Key="Lang.Downloads.Search.Placeholder">Search mods...</s:String>
     <s:String x:Key="Lang.Downloads.Buttons.Info">Info</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Title">No Internet Connection</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Text">Unable to connect to the mod server. You can download mods manually from the website:</s:String>

@@ -231,6 +231,7 @@
     <s:String x:Key="Lang.Downloads.Version.Date">日付</s:String>
     <s:String x:Key="Lang.Downloads.Version.Size">サイズ</s:String>
     <s:String x:Key="Lang.Downloads.Version.Select">MODを選択してバージョンを表示</s:String>
+    <s:String x:Key="Lang.Downloads.Search.Placeholder">Mod検索...</s:String>
     <s:String x:Key="Lang.Downloads.Buttons.Info">情報</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Title">インターネット接続なし</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Text">Modサーバーに接続できません。以下のサイトから手動でダウンロードできます:</s:String>

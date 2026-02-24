@@ -228,6 +228,7 @@
     <s:String x:Key="Lang.Downloads.Version.Date">날짜</s:String>
     <s:String x:Key="Lang.Downloads.Version.Size">크기</s:String>
     <s:String x:Key="Lang.Downloads.Version.Select">모드를 선택하면 버전이 표시됩니다</s:String>
+    <s:String x:Key="Lang.Downloads.Search.Placeholder">모드 검색...</s:String>
     <s:String x:Key="Lang.Downloads.Buttons.Info">정보</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Title">인터넷 연결 없음</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Text">모드 서버에 연결할 수 없습니다. 아래 웹사이트에서 수동으로 다운로드할 수 있습니다:</s:String>

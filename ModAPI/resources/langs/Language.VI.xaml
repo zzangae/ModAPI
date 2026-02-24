@@ -231,6 +231,7 @@
     <s:String x:Key="Lang.Downloads.Version.Date">Ngày</s:String>
     <s:String x:Key="Lang.Downloads.Version.Size">Kích thước</s:String>
     <s:String x:Key="Lang.Downloads.Version.Select">Chọn mod để xem các phiên bản</s:String>
+    <s:String x:Key="Lang.Downloads.Search.Placeholder">Tìm mod...</s:String>
     <s:String x:Key="Lang.Downloads.Buttons.Info">Thông tin</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Title">Không có kết nối Internet</s:String>
     <s:String x:Key="Lang.Downloads.Offline.Text">Không thể kết nối máy chủ mod. Bạn có thể tải mod thủ công từ trang web:</s:String>

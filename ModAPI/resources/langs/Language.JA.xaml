@@ -131,6 +131,7 @@
     <s:String x:Key="Lang.Languages.IT">イタリア語</s:String>
     <s:String x:Key="Lang.Languages.VI">ベトナム語</s:String>
     <s:String x:Key="Lang.Languages.ZH">中国語</s:String>
+    <s:String x:Key="Lang.Languages.ZH-TW">中国語(繁体)</s:String>
     <s:String x:Key="Lang.Languages.JA">日本語</s:String>
     <s:String x:Key="Lang.Languages.KO">韓国語</s:String>
     <s:String x:Key="Lang.Languages.BN">ベンガル語</s:String>
@@ -218,6 +219,7 @@
     <s:String x:Key="Lang.Downloads.Headers.Name">名前</s:String>
     <s:String x:Key="Lang.Downloads.Headers.Author">作者</s:String>
     <s:String x:Key="Lang.Downloads.Headers.Category">カテゴリ</s:String>
+    <s:String x:Key="Lang.Downloads.Headers.Game">ゲーム</s:String>
     <s:String x:Key="Lang.Downloads.Headers.Downloads">ダウンロード数</s:String>
     <s:String x:Key="Lang.Downloads.Status.Ready">ダウンロードするModを選択してください。</s:String>
     <s:String x:Key="Lang.Downloads.Status.Loading">Modリストを読み込み中...</s:String>

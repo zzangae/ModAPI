@@ -131,6 +131,7 @@
     <s:String x:Key="Lang.Languages.IT">Italian</s:String>
     <s:String x:Key="Lang.Languages.VI">Vietnamese</s:String>
     <s:String x:Key="Lang.Languages.ZH">Chinese</s:String>
+    <s:String x:Key="Lang.Languages.ZH-TW">Chinese (Traditional)</s:String>
     <s:String x:Key="Lang.Languages.JA">Japanese</s:String>
     <s:String x:Key="Lang.Languages.KO">Korean</s:String>
     <s:String x:Key="Lang.Languages.BN">Bengali</s:String>
@@ -218,6 +219,7 @@
     <s:String x:Key="Lang.Downloads.Headers.Name">Name</s:String>
     <s:String x:Key="Lang.Downloads.Headers.Author">Author</s:String>
     <s:String x:Key="Lang.Downloads.Headers.Category">Category</s:String>
+    <s:String x:Key="Lang.Downloads.Headers.Game">Game</s:String>
     <s:String x:Key="Lang.Downloads.Headers.Downloads">Downloads</s:String>
     <s:String x:Key="Lang.Downloads.Status.Ready">Select a mod to download.</s:String>
     <s:String x:Key="Lang.Downloads.Status.Loading">Loading mod list...</s:String>

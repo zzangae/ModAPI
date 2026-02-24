@@ -22,8 +22,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -101,7 +103,7 @@ namespace ModAPI
         {
             if (PositionWindow)
             {
-                var window = (Window) sender;
+                var window = (Window)sender;
                 if (window.IsVisible)
                 {
                     window.Left = Instance.Left + Instance.ActualWidth / 2.0 - window.ActualWidth / 2.0;
@@ -114,7 +116,7 @@ namespace ModAPI
 
         static void SubWindowClosed(object sender, EventArgs e)
         {
-            WindowQueue.Remove((Window) sender);
+            WindowQueue.Remove((Window)sender);
             if (CurrentWindow == sender)
             {
                 CurrentWindow = null;
@@ -191,10 +193,10 @@ namespace ModAPI
 
         protected string SearchSteam()
         {
-            var steamPath = (string) Registry.GetValue("HKEY_CURRENT_USER\\Software\\Valve\\Steam\\", "SteamPath", "");
+            var steamPath = (string)Registry.GetValue("HKEY_CURRENT_USER\\Software\\Valve\\Steam\\", "SteamPath", "");
             if (!File.Exists(steamPath + Path.DirectorySeparatorChar + "Steam.exe"))
             {
-                steamPath = (string) Registry.GetValue("HKEY_CURRENT_USER\\Software\\Valve\\Steam\\", "SteamExe", "");
+                steamPath = (string)Registry.GetValue("HKEY_CURRENT_USER\\Software\\Valve\\Steam\\", "SteamExe", "");
                 if (File.Exists(steamPath))
                 {
                     steamPath = Path.GetDirectoryName(steamPath);
@@ -333,7 +335,7 @@ namespace ModAPI
                 }
 
                 newTab.SetResourceReference(IconTabItem.LabelProperty, tab.LangPath + ".Tab");
-                var newPanel = (IPanel) Activator.CreateInstance(tab.ComponentType);
+                var newPanel = (IPanel)Activator.CreateInstance(tab.ComponentType);
                 newTab.Content = newPanel;
                 Debug.Log("MainWindow", "Added tab of type \"" + tab.TypeName + "\".");
                 newPanel.SetTab(tab);
@@ -343,7 +345,7 @@ namespace ModAPI
 
             Timer = new DispatcherTimer();
             Timer.Tick += GuiTick;
-            Timer.Interval = new TimeSpan((long) (GuiDeltaTime * 10000000));
+            Timer.Interval = new TimeSpan((long)(GuiDeltaTime * 10000000));
             Timer.Start();
             LanguageChanged();
             SettingsVm.Changed();
@@ -366,7 +368,7 @@ namespace ModAPI
             }
             else
             {
-                
+
             }
 
         }
@@ -496,7 +498,7 @@ namespace ModAPI
             {
                 Style = Application.Current.FindResource("ComboBoxItem") as Style
             };
-            var classicText = new TextBlock { VerticalAlignment = VerticalAlignment.Center, FontSize = 16 };
+            var classicText = new TextBlock { VerticalAlignment = VerticalAlignment.Center, FontSize = 16, Padding = new Thickness(0, 0, 10, 0) };
             classicText.SetResourceReference(TextBlock.TextProperty, "Lang.Options.Theme.Classic");
             classicItem.Content = classicText;
             ThemeSelector.Items.Add(classicItem);
@@ -505,7 +507,7 @@ namespace ModAPI
             {
                 Style = Application.Current.FindResource("ComboBoxItem") as Style
             };
-            var lightText = new TextBlock { VerticalAlignment = VerticalAlignment.Center, FontSize = 16 };
+            var lightText = new TextBlock { VerticalAlignment = VerticalAlignment.Center, FontSize = 16, Padding = new Thickness(0, 0, 10, 0) };
             lightText.SetResourceReference(TextBlock.TextProperty, "Lang.Options.Theme.Light");
             lightItem.Content = lightText;
             ThemeSelector.Items.Add(lightItem);
@@ -514,7 +516,7 @@ namespace ModAPI
             {
                 Style = Application.Current.FindResource("ComboBoxItem") as Style
             };
-            var darkText = new TextBlock { VerticalAlignment = VerticalAlignment.Center, FontSize = 16 };
+            var darkText = new TextBlock { VerticalAlignment = VerticalAlignment.Center, FontSize = 16, Padding = new Thickness(0, 0, 10, 0) };
             darkText.SetResourceReference(TextBlock.TextProperty, "Lang.Options.Theme.Dark");
             darkItem.Content = darkText;
             ThemeSelector.Items.Add(darkItem);
@@ -636,7 +638,7 @@ namespace ModAPI
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
-            ((FrameworkElement) FindName("Mover")).MouseLeftButtonDown += MoveWindow;
+            ((FrameworkElement)FindName("Mover")).MouseLeftButtonDown += MoveWindow;
 
             // Force WindowChrome after all styles are applied - guarantees drag for all themes
             var chrome = new WindowChrome
@@ -651,13 +653,13 @@ namespace ModAPI
 
             if (WindowState == WindowState.Maximized)
             {
-                ((Button) FindName("MaximizeButton")).Visibility = Visibility.Hidden;
-                ((Button) FindName("MaximizeButton")).Width = 0;
+                ((Button)FindName("MaximizeButton")).Visibility = Visibility.Hidden;
+                ((Button)FindName("MaximizeButton")).Width = 0;
             }
             else
             {
-                ((Button) FindName("NormalizeButton")).Visibility = Visibility.Hidden;
-                ((Button) FindName("NormalizeButton")).Width = 0;
+                ((Button)FindName("NormalizeButton")).Visibility = Visibility.Hidden;
+                ((Button)FindName("NormalizeButton")).Width = 0;
             }
 
             VersionLabel.Text = Version.Descriptor + " [" + Version.BuildDate + "]";
@@ -684,19 +686,19 @@ namespace ModAPI
         private void Normalize(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Normal;
-            ((Button) FindName("MaximizeButton")).Visibility = Visibility.Visible;
-            ((Button) FindName("MaximizeButton")).Width = 24;
-            ((Button) FindName("NormalizeButton")).Visibility = Visibility.Hidden;
-            ((Button) FindName("NormalizeButton")).Width = 0;
+            ((Button)FindName("MaximizeButton")).Visibility = Visibility.Visible;
+            ((Button)FindName("MaximizeButton")).Width = 24;
+            ((Button)FindName("NormalizeButton")).Visibility = Visibility.Hidden;
+            ((Button)FindName("NormalizeButton")).Width = 0;
         }
 
         private void Maximize(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Maximized;
-            ((Button) FindName("MaximizeButton")).Visibility = Visibility.Hidden;
-            ((Button) FindName("MaximizeButton")).Width = 0;
-            ((Button) FindName("NormalizeButton")).Visibility = Visibility.Visible;
-            ((Button) FindName("NormalizeButton")).Width = 24;
+            ((Button)FindName("MaximizeButton")).Visibility = Visibility.Hidden;
+            ((Button)FindName("MaximizeButton")).Width = 0;
+            ((Button)FindName("NormalizeButton")).Visibility = Visibility.Visible;
+            ((Button)FindName("NormalizeButton")).Width = 24;
         }
 
         private void CloseWindow(object sender, RoutedEventArgs e)
@@ -822,7 +824,7 @@ namespace ModAPI
         {
             if (CurrentModProjectViewModel != null)
             {
-                CurrentModProjectViewModel.AddProjectLanguage((string) (((ComboBoxItem) DevelopmentLanguageSelector.SelectedItem).DataContext));
+                CurrentModProjectViewModel.AddProjectLanguage((string)(((ComboBoxItem)DevelopmentLanguageSelector.SelectedItem).DataContext));
                 DevelopmentLanguageSelector.SelectedIndex = -1;
                 foreach (var kv in LanguageItems)
                 {
@@ -848,13 +850,13 @@ namespace ModAPI
                 var win =
                     new RemoveModProject("Lang.Windows.RemoveModProject", CurrentModProjectViewModel.Project.Id, CurrentModProjectViewModel.Project)
                     {
-                        Confirm = delegate(object obj)
+                        Confirm = delegate (object obj)
                         {
                             ProjectList.SelectedIndex = -1;
                             NoProjectSelected.Visibility = Visibility.Visible;
                             SelectedProject.DataContext = null;
                             SelectedProject.Visibility = Visibility.Collapsed;
-                            ModProjects.Remove((ModProject) obj);
+                            ModProjects.Remove((ModProject)obj);
                         }
                     };
                 win.ShowSubWindow();
@@ -867,7 +869,7 @@ namespace ModAPI
             if (CurrentModProjectViewModel != null)
             {
                 var progressHandler = new ProgressHandler();
-                var thread = new Thread(delegate() { CurrentModProjectViewModel.Project.Create(progressHandler); });
+                var thread = new Thread(delegate () { CurrentModProjectViewModel.Project.Create(progressHandler); });
                 var window = new OperationPending("Lang.Windows.OperationPending", "CreateMod", progressHandler);
                 if (!window.Completed)
                 {
@@ -883,10 +885,10 @@ namespace ModAPI
             var mods = new List<Mod>();
             foreach (var i in Mods.Mods)
             {
-                var vm = (ModViewModel) i.DataContext;
+                var vm = (ModViewModel)i.DataContext;
                 if (vm != null && vm.Selected)
                 {
-                    var vm2 = (ModVersionViewModel) vm.SelectedVersion.DataContext;
+                    var vm2 = (ModVersionViewModel)vm.SelectedVersion.DataContext;
                     if (vm2 != null)
                     {
                         mods.Add(vm2.Mod);
@@ -911,7 +913,7 @@ namespace ModAPI
                 }
             };
 
-            var thread = new Thread(delegate() { App.Game.ApplyMods(mods, progressHandler); });
+            var thread = new Thread(delegate () { App.Game.ApplyMods(mods, progressHandler); });
             var window = new OperationPending("Lang.Windows.OperationPending", "ApplyMods", progressHandler, null, true);
             if (!window.Completed)
             {
@@ -922,6 +924,19 @@ namespace ModAPI
         }
 
         // ===== Downloads Tab =====
+
+        private List<ModInfo> _allMods = new List<ModInfo>();
+
+        public class ModInfo
+        {
+            public string Name { get; set; }
+            public string Author { get; set; }
+            public string Category { get; set; }
+            public string Game { get; set; }
+            public string DownloadCount { get; set; }
+            public int ModId { get; set; }
+            public string Slug { get; set; }
+        }
 
         private bool CheckInternetConnection()
         {
@@ -947,8 +962,138 @@ namespace ModAPI
             DownloadOfflinePanel.Visibility = isOnline ? Visibility.Collapsed : Visibility.Visible;
         }
 
+        private string FetchHtml(string url)
+        {
+            try
+            {
+                var request = (HttpWebRequest)WebRequest.Create(url);
+                request.Timeout = 15000;
+                request.UserAgent = "ModAPI/2.0";
+                using (var response = (HttpWebResponse)request.GetResponse())
+                using (var reader = new System.IO.StreamReader(response.GetResponseStream()))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        private List<ModInfo> ParseModsFromHtml(string html, string gameLabel)
+        {
+            var mods = new List<ModInfo>();
+            if (string.IsNullOrEmpty(html)) return mods;
+
+            // Split HTML by mod entry blocks using the View link pattern
+            // Each mod has: <a href="/mod/{id}/{slug}"> for title and [View] link
+            var modBlocks = Regex.Split(html, @"(?=<h4[^>]*>\s*<a\s+href=""/mod/)");
+
+            foreach (var block in modBlocks)
+            {
+                if (string.IsNullOrWhiteSpace(block)) continue;
+
+                // Extract mod ID and slug from title link
+                var linkMatch = Regex.Match(block, @"<a\s+href=""/mod/(\d+)/([^""]+)""[^>]*>([^<]+)</a>");
+                if (!linkMatch.Success) continue;
+
+                var modId = int.Parse(linkMatch.Groups[1].Value);
+                var slug = linkMatch.Groups[2].Value;
+                var name = System.Net.WebUtility.HtmlDecode(linkMatch.Groups[3].Value).Trim();
+
+                // Extract category (text after material-icons "label")
+                var category = "";
+                var catMatch = Regex.Match(block, @">label</[^>]+>\s*(?:<[^>]+>\s*)*([^<]+)");
+                if (catMatch.Success)
+                    category = catMatch.Groups[1].Value.Trim();
+
+                // Extract author name (text after avatar image, typically in a span or div)
+                var author = "";
+                var authorMatch = Regex.Match(block, @"(?:steamstatic|steamcdn)[^>]+full\.jpg[^>]*/>\s*(?:<[^>]+>\s*)*([^<]+)");
+                if (authorMatch.Success)
+                    author = authorMatch.Groups[1].Value.Trim();
+
+                // Extract download count (number after "Downloads" text with file_download icon)
+                var downloadCount = "0";
+                var dlMatch = Regex.Match(block, @">file_download</[^>]+>.*?>Downloads\s*</[^>]+>\s*(?:<[^>]+>\s*)*([0-9,]+)");
+                if (!dlMatch.Success)
+                    dlMatch = Regex.Match(block, @"Downloads\s*(?:<[^>]+>\s*)*([0-9,]+)");
+                if (dlMatch.Success)
+                    downloadCount = dlMatch.Groups[1].Value.Trim();
+
+                mods.Add(new ModInfo
+                {
+                    Name = name,
+                    Author = author,
+                    Category = category,
+                    Game = gameLabel,
+                    DownloadCount = downloadCount,
+                    ModId = modId,
+                    Slug = slug
+                });
+            }
+
+            return mods;
+        }
+
+        private void LoadModsFromWeb()
+        {
+            var sources = new[]
+            {
+                new { Url = "https://modapi.survivetheforest.net/mods/", Label = "The Forest" },
+                new { Url = "https://modapi.survivetheforest.net/mods/game/TheForestDedicatedServer/", Label = "Dedicated Server" },
+                new { Url = "https://modapi.survivetheforest.net/mods/game/TheForestVR/", Label = "VR" }
+            };
+
+            var allMods = new List<ModInfo>();
+
+            foreach (var source in sources)
+            {
+                var html = FetchHtml(source.Url);
+                var mods = ParseModsFromHtml(html, source.Label);
+                allMods.AddRange(mods);
+            }
+
+            // Remove duplicates by ModId (keep first occurrence)
+            _allMods = allMods
+                .GroupBy(m => m.ModId)
+                .Select(g => g.First())
+                .OrderByDescending(m =>
+                {
+                    int count;
+                    int.TryParse(m.DownloadCount.Replace(",", ""), out count);
+                    return count;
+                })
+                .ToList();
+        }
+
+        private void ApplyModFilter()
+        {
+            var searchText = DownloadSearchBox.Text.Trim().ToLower();
+            DownloadModList.Items.Clear();
+
+            var filtered = string.IsNullOrEmpty(searchText)
+                ? _allMods
+                : _allMods.Where(m =>
+                    m.Name.ToLower().Contains(searchText) ||
+                    m.Author.ToLower().Contains(searchText) ||
+                    m.Category.ToLower().Contains(searchText) ||
+                    m.Game.ToLower().Contains(searchText)
+                ).ToList();
+
+            foreach (var mod in filtered)
+            {
+                DownloadModList.Items.Add(mod);
+            }
+
+            DownloadStatusText.Text = string.Format("{0} mods", filtered.Count);
+        }
+
         private void DownloadSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (_allMods.Count > 0)
+                ApplyModFilter();
         }
 
         private void DownloadRefresh_Click(object sender, RoutedEventArgs e)
@@ -959,14 +1104,18 @@ namespace ModAPI
             var thread = new Thread(() =>
             {
                 var online = CheckInternetConnection();
+                if (online)
+                {
+                    LoadModsFromWeb();
+                }
+
                 Dispatcher.Invoke(() =>
                 {
                     UpdateDownloadPanelVisibility(online);
                     DownloadRefreshButton.IsEnabled = true;
                     if (online)
                     {
-                        // TODO: Phase 5-2 - Load mod list from modapi.survivetheforest.net
-                        DownloadStatusText.Text = FindResource("Lang.Downloads.Status.Ready") as string;
+                        ApplyModFilter();
                     }
                 });
             });
@@ -986,6 +1135,11 @@ namespace ModAPI
 
         private void DownloadMod_Click(object sender, RoutedEventArgs e)
         {
+            var mod = DownloadModList.SelectedItem as ModInfo;
+            if (mod == null) return;
+
+            var url = "https://modapi.survivetheforest.net/mod/" + mod.ModId + "/" + mod.Slug;
+            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
         }
 
         protected override void OnClosed(EventArgs e)

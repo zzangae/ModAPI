@@ -237,6 +237,8 @@
                                                                     DisplayMemberBinding="{Binding Author}" />
                                                     <GridViewColumn Header="{DynamicResource Lang.Downloads.Headers.Category}" Width="120" 
                                                                     DisplayMemberBinding="{Binding Category}" />
+                                                    <GridViewColumn Header="{DynamicResource Lang.Downloads.Headers.Game}" Width="100" 
+                                                                    DisplayMemberBinding="{Binding Game}" />
                                                     <GridViewColumn Header="{DynamicResource Lang.Downloads.Headers.Downloads}" Width="100" 
                                                                     DisplayMemberBinding="{Binding DownloadCount}" />
                                                 </GridView>

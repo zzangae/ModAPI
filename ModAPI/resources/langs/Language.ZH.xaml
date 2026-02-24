@@ -219,6 +219,7 @@
     <s:String x:Key="Lang.Downloads.Headers.Name">名称</s:String>
     <s:String x:Key="Lang.Downloads.Headers.Author">作者</s:String>
     <s:String x:Key="Lang.Downloads.Headers.Category">分类</s:String>
+    <s:String x:Key="Lang.Downloads.Headers.Game">游戏</s:String>
     <s:String x:Key="Lang.Downloads.Headers.Downloads">下载量</s:String>
     <s:String x:Key="Lang.Downloads.Status.Ready">选择要下载的Mod。</s:String>
     <s:String x:Key="Lang.Downloads.Status.Loading">正在加载Mod列表...</s:String>

@@ -219,6 +219,7 @@
     <s:String x:Key="Lang.Downloads.Headers.Name">Название</s:String>
     <s:String x:Key="Lang.Downloads.Headers.Author">Автор</s:String>
     <s:String x:Key="Lang.Downloads.Headers.Category">Категория</s:String>
+    <s:String x:Key="Lang.Downloads.Headers.Game">Игра</s:String>
     <s:String x:Key="Lang.Downloads.Headers.Downloads">Загрузки</s:String>
     <s:String x:Key="Lang.Downloads.Status.Ready">Выберите мод для скачивания.</s:String>
     <s:String x:Key="Lang.Downloads.Status.Loading">Загрузка списка модов...</s:String>

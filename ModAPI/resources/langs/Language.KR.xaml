@@ -216,6 +216,7 @@
     <s:String x:Key="Lang.Downloads.Headers.Name">이름</s:String>
     <s:String x:Key="Lang.Downloads.Headers.Author">작성자</s:String>
     <s:String x:Key="Lang.Downloads.Headers.Category">카테고리</s:String>
+    <s:String x:Key="Lang.Downloads.Headers.Game">게임</s:String>
     <s:String x:Key="Lang.Downloads.Headers.Downloads">다운로드수</s:String>
     <s:String x:Key="Lang.Downloads.Status.Ready">다운로드할 모드를 선택하세요.</s:String>
     <s:String x:Key="Lang.Downloads.Status.Loading">모드 목록을 불러오는 중...</s:String>

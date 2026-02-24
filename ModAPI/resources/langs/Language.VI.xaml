@@ -131,6 +131,7 @@
     <s:String x:Key="Lang.Languages.IT">Tiếng Ý</s:String>
     <s:String x:Key="Lang.Languages.VI">Tiếng Việt</s:String>
     <s:String x:Key="Lang.Languages.ZH">Tiếng Trung</s:String>
+    <s:String x:Key="Lang.Languages.ZH-TW">Tiếng Trung (Phồn thể)</s:String>
     <s:String x:Key="Lang.Languages.JA">Tiếng Nhật</s:String>
     <s:String x:Key="Lang.Languages.KO">Tiếng Hàn</s:String>
     <s:String x:Key="Lang.Languages.BN">Tiếng Bengal</s:String>
@@ -218,6 +219,7 @@
     <s:String x:Key="Lang.Downloads.Headers.Name">Tên</s:String>
     <s:String x:Key="Lang.Downloads.Headers.Author">Tác giả</s:String>
     <s:String x:Key="Lang.Downloads.Headers.Category">Thể loại</s:String>
+    <s:String x:Key="Lang.Downloads.Headers.Game">Trò chơi</s:String>
     <s:String x:Key="Lang.Downloads.Headers.Downloads">Lượt tải</s:String>
     <s:String x:Key="Lang.Downloads.Status.Ready">Chọn mod để tải xuống.</s:String>
     <s:String x:Key="Lang.Downloads.Status.Loading">Đang tải danh sách mod...</s:String>

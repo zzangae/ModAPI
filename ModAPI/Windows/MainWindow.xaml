@@ -73,9 +73,16 @@
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <Grid Grid.Column="0" x:Name="ModsPanel">
-                                            <ListBox ItemsSource="{Binding Mods}" SelectedIndex="{Binding SelectedMod,Mode=TwoWay}" 
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <ListBox Grid.Row="0" ItemsSource="{Binding Mods}" SelectedIndex="{Binding SelectedMod,Mode=TwoWay}" 
                                                      SelectionMode="Extended" Style="{StaticResource List}" 
                                                      HorizontalAlignment="Left" MinWidth="220" VerticalAlignment="Stretch" />
+                                            <Button Grid.Row="1" x:Name="DeleteModButton" Content="{DynamicResource Lang.Mods.Buttons.Delete}" 
+                                                    HorizontalAlignment="Stretch" Margin="0,5,0,0" Padding="8,4"
+                                                    Click="DeleteMod_Click" Style="{StaticResource NormalButton}" />
                                         </Grid>
                                         <Grid Grid.Column="1" x:Name="NoModSelected" Margin="16,0,0,10">
                                             <ScrollViewer VerticalScrollBarVisibility="Auto">

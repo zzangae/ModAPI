@@ -795,6 +795,87 @@ namespace ModAPI
             }
         }
 
+        private void DeleteMod_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentModViewModel == null) return;
+
+            var modName = CurrentModViewModel.Name;
+            var modId = CurrentModViewModel.Id;
+
+            // Confirm deletion using SubWindow
+            var result = System.Windows.MessageBox.Show(
+                string.Format(FindResource("Lang.Mods.Delete.Confirm") as string ?? "Delete mod \"{0}\" and all its versions?", modName),
+                FindResource("Lang.Mods.Delete.Title") as string ?? "Delete Mod",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (result != MessageBoxResult.Yes) return;
+
+            try
+            {
+                // Step 1: Delete all .mod files for this mod
+                foreach (var kv in CurrentModViewModel.VersionsData)
+                {
+                    var mod = kv.Value;
+                    if (!string.IsNullOrEmpty(mod.FileName) && File.Exists(mod.FileName))
+                    {
+                        try { File.Delete(mod.FileName); }
+                        catch (Exception ex) { Debug.Log("DeleteMod", "Failed to delete: " + mod.FileName + " - " + ex.Message, Debug.Type.Warning); }
+                    }
+                }
+
+                // Step 2: Delete deployed mod DLL from game's Mods folder
+                if (App.Game != null && !string.IsNullOrEmpty(App.Game.GamePath))
+                {
+                    var gameModsDir = Path.Combine(App.Game.GamePath, "Mods");
+                    if (Directory.Exists(gameModsDir))
+                    {
+                        // Delete mod DLL: {GamePath}/Mods/{ModId}.dll
+                        var modDll = Path.Combine(gameModsDir, modId + ".dll");
+                        if (File.Exists(modDll))
+                        {
+                            try { File.Delete(modDll); }
+                            catch (Exception ex) { Debug.Log("DeleteMod", "Failed to delete DLL: " + modDll + " - " + ex.Message, Debug.Type.Warning); }
+                        }
+
+                        // Delete mod resources: {GamePath}/Mods/{ModId}.resources
+                        var modRes = Path.Combine(gameModsDir, modId + ".resources");
+                        if (File.Exists(modRes))
+                        {
+                            try { File.Delete(modRes); }
+                            catch (Exception ex) { Debug.Log("DeleteMod", "Failed to delete resources: " + modRes + " - " + ex.Message, Debug.Type.Warning); }
+                        }
+                    }
+                }
+
+                // Step 3: Delete from ModdedGameFiles staging area
+                try
+                {
+                    var moddedModsDir = Path.GetFullPath(
+                        ModAPI.Configurations.Configuration.GetPath("ModdedGameFiles") +
+                        Path.DirectorySeparatorChar + App.Game.GameConfiguration.Id +
+                        Path.DirectorySeparatorChar + "Mods");
+                    if (Directory.Exists(moddedModsDir))
+                    {
+                        var moddedDll = Path.Combine(moddedModsDir, modId + ".dll");
+                        if (File.Exists(moddedDll))
+                            File.Delete(moddedDll);
+                        var moddedRes = Path.Combine(moddedModsDir, modId + ".resources");
+                        if (File.Exists(moddedRes))
+                            File.Delete(moddedRes);
+                    }
+                }
+                catch { }
+
+                // Step 4: Reset UI - ModsViewModel timer will auto-detect deleted files
+                SetMod(null);
+            }
+            catch (Exception ex)
+            {
+                Debug.Log("DeleteMod", "Error deleting mod: " + ex.Message, Debug.Type.Error);
+            }
+        }
+
         public void SetProject(ModProjectViewModel model)
         {
             CurrentModProjectViewModel = model;
@@ -1121,7 +1202,7 @@ namespace ModAPI
                     LoadModsFromWeb();
                 }
 
-                Dispatcher.Invoke(() =>
+                Dispatcher.BeginInvoke(new Action(() =>
                 {
                     UpdateDownloadPanelVisibility(online);
                     DownloadRefreshButton.IsEnabled = true;
@@ -1129,7 +1210,7 @@ namespace ModAPI
                     {
                         ApplyModFilter();
                     }
-                });
+                }));
             });
             thread.IsBackground = true;
             thread.Start();
@@ -1179,7 +1260,7 @@ namespace ModAPI
                     while ((p = html.IndexOf("/download/mod/", p)) >= 0) { dlLinkCount++; p += 14; }
                 }
 
-                Dispatcher.Invoke(() =>
+                Dispatcher.BeginInvoke(new Action(() =>
                 {
                     _currentVersions = versions;
                     DownloadVersionTitle.Text = mod.Name;
@@ -1201,7 +1282,7 @@ namespace ModAPI
                         DownloadStatusText.Text = string.Format("HTML:{0} Btn:{1} Ver:{2} DL:{3}", htmlLen, btnCount, verCount, dlLinkCount);
                     }
                     DownloadButton.IsEnabled = false;
-                });
+                }));
             });
             thread.IsBackground = true;
             thread.Start();
@@ -1229,14 +1310,33 @@ namespace ModAPI
 
             var thread = new Thread(() =>
             {
-                var success = DownloadModFile(selectedVersion.ModId, selectedVersion.FileId, selectedVersion.GameShortName);
-                Dispatcher.Invoke(() =>
+                try
                 {
-                    DownloadButton.IsEnabled = true;
-                    DownloadStatusText.Text = success
-                        ? (FindResource("Lang.Downloads.Status.Complete") as string)
-                        : (FindResource("Lang.Downloads.Status.Error") as string);
-                });
+                    var success = DownloadModFile(selectedVersion.ModId, selectedVersion.FileId, selectedVersion.GameShortName);
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        try
+                        {
+                            DownloadButton.IsEnabled = true;
+                            DownloadStatusText.Text = success
+                                ? (FindResource("Lang.Downloads.Status.Complete") as string)
+                                : (FindResource("Lang.Downloads.Status.Error") as string);
+                        }
+                        catch { }
+                    }));
+                }
+                catch
+                {
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        try
+                        {
+                            DownloadButton.IsEnabled = true;
+                            DownloadStatusText.Text = FindResource("Lang.Downloads.Status.Error") as string;
+                        }
+                        catch { }
+                    }));
+                }
             });
             thread.IsBackground = true;
             thread.Start();
@@ -1510,20 +1610,72 @@ namespace ModAPI
                 using (var response = (HttpWebResponse)request.GetResponse())
                 using (var stream = response.GetResponseStream())
                 {
-                    // Get filename from Content-Disposition header or URL
                     var fileName = "";
                     var disposition = response.Headers["Content-Disposition"];
                     if (!string.IsNullOrEmpty(disposition))
                     {
-                        var fnMatch = Regex.Match(disposition, @"filename=""?([^"";\s]+)""?");
-                        if (fnMatch.Success)
-                            fileName = fnMatch.Groups[1].Value;
+                        // Try filename*=UTF-8'' format first
+                        int starIdx = disposition.IndexOf("filename*=");
+                        if (starIdx >= 0)
+                        {
+                            int tickIdx = disposition.IndexOf("''", starIdx);
+                            if (tickIdx >= 0)
+                            {
+                                int valStart = tickIdx + 2;
+                                int valEnd = disposition.IndexOf(';', valStart);
+                                if (valEnd < 0) valEnd = disposition.Length;
+                                try { fileName = Uri.UnescapeDataString(disposition.Substring(valStart, valEnd - valStart).Trim()); } catch { }
+                            }
+                        }
+
+                        // Try filename="..." or filename=... format
+                        if (string.IsNullOrEmpty(fileName))
+                        {
+                            int fnIdx = disposition.IndexOf("filename=");
+                            if (fnIdx >= 0)
+                            {
+                                int valStart = fnIdx + "filename=".Length;
+                                if (valStart < disposition.Length && disposition[valStart] == '"')
+                                {
+                                    valStart++;
+                                    int valEnd = disposition.IndexOf('"', valStart);
+                                    if (valEnd > valStart)
+                                        fileName = disposition.Substring(valStart, valEnd - valStart);
+                                }
+                                else
+                                {
+                                    int valEnd = disposition.IndexOf(';', valStart);
+                                    if (valEnd < 0) valEnd = disposition.Length;
+                                    fileName = disposition.Substring(valStart, valEnd - valStart).Trim();
+                                }
+                            }
+                        }
+
+                        // URL decode if needed
+                        if (!string.IsNullOrEmpty(fileName) && fileName.Contains("%"))
+                        {
+                            try { fileName = Uri.UnescapeDataString(fileName); } catch { }
+                        }
                     }
 
                     if (string.IsNullOrEmpty(fileName))
                     {
-                        // Fallback: use last segment of response URL
-                        fileName = Path.GetFileName(response.ResponseUri.AbsolutePath);
+                        var uriPath = response.ResponseUri.AbsolutePath;
+                        int lastSlash = uriPath.LastIndexOf('/');
+                        if (lastSlash >= 0 && lastSlash + 1 < uriPath.Length)
+                        {
+                            fileName = uriPath.Substring(lastSlash + 1);
+                            try { fileName = Uri.UnescapeDataString(fileName); } catch { }
+                        }
+                    }
+
+                    // Remove invalid filename characters
+                    if (!string.IsNullOrEmpty(fileName))
+                    {
+                        foreach (var c in Path.GetInvalidFileNameChars())
+                        {
+                            fileName = fileName.Replace(c.ToString(), "");
+                        }
                     }
 
                     if (string.IsNullOrEmpty(fileName) || !fileName.EndsWith(".mod"))
@@ -1537,11 +1689,22 @@ namespace ModAPI
                         Directory.CreateDirectory(modsDir);
 
                     var filePath = Path.Combine(modsDir, fileName);
+                    var tempPath = filePath + ".downloading";
 
-                    using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                    using (var fileStream = new FileStream(tempPath, FileMode.Create, FileAccess.Write))
                     {
-                        stream.CopyTo(fileStream);
+                        var buffer = new byte[8192];
+                        int bytesRead;
+                        while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
+                        {
+                            fileStream.Write(buffer, 0, bytesRead);
+                        }
                     }
+
+                    // Rename temp file to final name (atomic for FindMods timer)
+                    if (File.Exists(filePath))
+                        File.Delete(filePath);
+                    File.Move(tempPath, filePath);
 
                     return true;
                 }

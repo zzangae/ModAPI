@@ -1008,6 +1008,7 @@ namespace ModAPI
         private List<ModInfo> _allMods = new List<ModInfo>();
         private string _sortProperty = "DownloadCount";
         private bool _sortAscending = false;
+        private string _selectedCategory = "All";
 
         public class ModInfo
         {
@@ -1167,24 +1168,67 @@ namespace ModAPI
             var searchText = DownloadSearchBox.Text.Trim().ToLower();
             DownloadModList.Items.Clear();
 
-            var filtered = string.IsNullOrEmpty(searchText)
-                ? _allMods
-                : _allMods.Where(m =>
+            var filtered = _allMods.AsEnumerable();
+
+            // Category filter
+            if (!string.IsNullOrEmpty(_selectedCategory) && _selectedCategory != "All")
+            {
+                filtered = filtered.Where(m => 
+                    m.Category.Equals(_selectedCategory, StringComparison.OrdinalIgnoreCase));
+            }
+
+            // Search text filter
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                filtered = filtered.Where(m =>
                     m.Name.ToLower().Contains(searchText) ||
                     m.Author.ToLower().Contains(searchText) ||
                     m.Category.ToLower().Contains(searchText) ||
                     m.Game.ToLower().Contains(searchText)
-                ).ToList();
+                );
+            }
+
+            var filteredList = filtered.ToList();
 
             // Apply sort
-            var sorted = SortModList(filtered);
+            var sorted = SortModList(filteredList);
 
             foreach (var mod in sorted)
             {
                 DownloadModList.Items.Add(mod);
             }
 
-            DownloadStatusText.Text = string.Format("{0} mods", filtered.Count);
+            DownloadStatusText.Text = string.Format("{0} mods", filteredList.Count);
+        }
+
+        private static readonly Dictionary<string, string> CategoryMap = new Dictionary<string, string>
+        {
+            { "CatAll", "All" },
+            { "CatBugfixes", "Bugfixes" },
+            { "CatBalancing", "Balancing" },
+            { "CatCheats", "Cheats" },
+            { "CatBuildings", "Buildings" },
+            { "CatGraphical", "Graphical" },
+            { "CatChanges", "Changes" },
+            { "CatItems", "Items" },
+            { "CatEnemies", "Enemies" },
+            { "CatMultiplayer", "Multiplayer" },
+            { "CatWorldchanges", "Worldchanges" },
+            { "CatOther", "Other" },
+        };
+
+        private void CategoryFilter_Checked(object sender, RoutedEventArgs e)
+        {
+            var rb = sender as System.Windows.Controls.RadioButton;
+            if (rb == null) return;
+
+            string category;
+            if (!CategoryMap.TryGetValue(rb.Name, out category))
+                category = "All";
+
+            _selectedCategory = category;
+            if (_allMods.Count > 0)
+                ApplyModFilter();
         }
 
         private List<ModInfo> SortModList(List<ModInfo> list)

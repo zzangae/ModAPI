@@ -212,6 +212,7 @@
                                 <Grid x:Name="DownloadOnlinePanel" Visibility="Visible">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
@@ -243,8 +244,38 @@
                                         </Grid>
                                     </ContentControl>
 
+                                    <!-- Category Filter Radio Buttons -->
+                                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="4,2,4,2">
+                                        <WrapPanel x:Name="CategoryFilterPanel" Orientation="Horizontal">
+                                            <RadioButton x:Name="CatAll" Content="{DynamicResource Lang.Downloads.Category.All}" 
+                                                         GroupName="CategoryFilter" IsChecked="True" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                            <RadioButton x:Name="CatBugfixes" Content="{DynamicResource Lang.Downloads.Category.Bugfixes}" 
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                            <RadioButton x:Name="CatBalancing" Content="{DynamicResource Lang.Downloads.Category.Balancing}" 
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                            <RadioButton x:Name="CatCheats" Content="{DynamicResource Lang.Downloads.Category.Cheats}" 
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                            <RadioButton x:Name="CatBuildings" Content="{DynamicResource Lang.Downloads.Category.Buildings}" 
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                            <RadioButton x:Name="CatGraphical" Content="{DynamicResource Lang.Downloads.Category.Graphical}" 
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                            <RadioButton x:Name="CatChanges" Content="{DynamicResource Lang.Downloads.Category.Changes}" 
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                            <RadioButton x:Name="CatItems" Content="{DynamicResource Lang.Downloads.Category.Items}" 
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                            <RadioButton x:Name="CatEnemies" Content="{DynamicResource Lang.Downloads.Category.Enemies}" 
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                            <RadioButton x:Name="CatMultiplayer" Content="{DynamicResource Lang.Downloads.Category.Multiplayer}" 
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                            <RadioButton x:Name="CatWorldchanges" Content="{DynamicResource Lang.Downloads.Category.Worldchanges}" 
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                            <RadioButton x:Name="CatOther" Content="{DynamicResource Lang.Downloads.Category.Other}" 
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                        </WrapPanel>
+                                    </ScrollViewer>
+
                                     <!-- Split: Left=Mod List, Right=Version List -->
-                                    <Grid Grid.Row="1">
+                                    <Grid Grid.Row="2">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="3*" />
                                             <ColumnDefinition Width="4" />
@@ -336,7 +367,7 @@
                                     </Grid>
 
                                     <!-- Bottom Bar: Status + Download Button -->
-                                    <ContentControl Grid.Row="2" Style="{StaticResource PanelButtons}">
+                                    <ContentControl Grid.Row="3" Style="{StaticResource PanelButtons}">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />

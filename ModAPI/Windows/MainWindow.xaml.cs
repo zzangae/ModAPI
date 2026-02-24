@@ -18,30 +18,29 @@
  *  To contact me you can e-mail me at info@fluffyfish.de
  */
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Net;
+using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
+using System.Windows.Navigation;
+using System.Windows.Shell;
 using Microsoft.Win32;
 using ModAPI.Components;
 using ModAPI.Components.Panels;
 using ModAPI.Configurations;
 using ModAPI.Data;
 using ModAPI.Data.Models;
-using ModAPI.Properties;
 using ModAPI.Utils;
 using ModAPI.Windows.SubWindows;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shell;
-using System.Windows.Threading;
 using Path = System.IO.Path;
 
 namespace ModAPI
@@ -104,7 +103,7 @@ namespace ModAPI
         {
             if (PositionWindow)
             {
-                var window = (Window)sender;
+                var window = (Window) sender;
                 if (window.IsVisible)
                 {
                     window.Left = Instance.Left + Instance.ActualWidth / 2.0 - window.ActualWidth / 2.0;
@@ -117,7 +116,7 @@ namespace ModAPI
 
         static void SubWindowClosed(object sender, EventArgs e)
         {
-            WindowQueue.Remove((Window)sender);
+            WindowQueue.Remove((Window) sender);
             if (CurrentWindow == sender)
             {
                 CurrentWindow = null;
@@ -194,10 +193,10 @@ namespace ModAPI
 
         protected string SearchSteam()
         {
-            var steamPath = (string)Registry.GetValue("HKEY_CURRENT_USER\\Software\\Valve\\Steam\\", "SteamPath", "");
+            var steamPath = (string) Registry.GetValue("HKEY_CURRENT_USER\\Software\\Valve\\Steam\\", "SteamPath", "");
             if (!File.Exists(steamPath + Path.DirectorySeparatorChar + "Steam.exe"))
             {
-                steamPath = (string)Registry.GetValue("HKEY_CURRENT_USER\\Software\\Valve\\Steam\\", "SteamExe", "");
+                steamPath = (string) Registry.GetValue("HKEY_CURRENT_USER\\Software\\Valve\\Steam\\", "SteamExe", "");
                 if (File.Exists(steamPath))
                 {
                     steamPath = Path.GetDirectoryName(steamPath);
@@ -336,7 +335,7 @@ namespace ModAPI
                 }
 
                 newTab.SetResourceReference(IconTabItem.LabelProperty, tab.LangPath + ".Tab");
-                var newPanel = (IPanel)Activator.CreateInstance(tab.ComponentType);
+                var newPanel = (IPanel) Activator.CreateInstance(tab.ComponentType);
                 newTab.Content = newPanel;
                 Debug.Log("MainWindow", "Added tab of type \"" + tab.TypeName + "\".");
                 newPanel.SetTab(tab);
@@ -346,7 +345,7 @@ namespace ModAPI
 
             Timer = new DispatcherTimer();
             Timer.Tick += GuiTick;
-            Timer.Interval = new TimeSpan((long)(GuiDeltaTime * 10000000));
+            Timer.Interval = new TimeSpan((long) (GuiDeltaTime * 10000000));
             Timer.Start();
             LanguageChanged();
             SettingsVm.Changed();
@@ -369,7 +368,7 @@ namespace ModAPI
             }
             else
             {
-
+                
             }
 
         }
@@ -639,7 +638,7 @@ namespace ModAPI
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
-            ((FrameworkElement)FindName("Mover")).MouseLeftButtonDown += MoveWindow;
+            ((FrameworkElement) FindName("Mover")).MouseLeftButtonDown += MoveWindow;
 
             // Force WindowChrome after all styles are applied - guarantees drag for all themes
             var chrome = new WindowChrome
@@ -654,13 +653,13 @@ namespace ModAPI
 
             if (WindowState == WindowState.Maximized)
             {
-                ((Button)FindName("MaximizeButton")).Visibility = Visibility.Hidden;
-                ((Button)FindName("MaximizeButton")).Width = 0;
+                ((Button) FindName("MaximizeButton")).Visibility = Visibility.Hidden;
+                ((Button) FindName("MaximizeButton")).Width = 0;
             }
             else
             {
-                ((Button)FindName("NormalizeButton")).Visibility = Visibility.Hidden;
-                ((Button)FindName("NormalizeButton")).Width = 0;
+                ((Button) FindName("NormalizeButton")).Visibility = Visibility.Hidden;
+                ((Button) FindName("NormalizeButton")).Width = 0;
             }
 
             VersionLabel.Text = Version.Descriptor + " [" + Version.BuildDate + "]";
@@ -687,19 +686,19 @@ namespace ModAPI
         private void Normalize(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Normal;
-            ((Button)FindName("MaximizeButton")).Visibility = Visibility.Visible;
-            ((Button)FindName("MaximizeButton")).Width = 24;
-            ((Button)FindName("NormalizeButton")).Visibility = Visibility.Hidden;
-            ((Button)FindName("NormalizeButton")).Width = 0;
+            ((Button) FindName("MaximizeButton")).Visibility = Visibility.Visible;
+            ((Button) FindName("MaximizeButton")).Width = 24;
+            ((Button) FindName("NormalizeButton")).Visibility = Visibility.Hidden;
+            ((Button) FindName("NormalizeButton")).Width = 0;
         }
 
         private void Maximize(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Maximized;
-            ((Button)FindName("MaximizeButton")).Visibility = Visibility.Hidden;
-            ((Button)FindName("MaximizeButton")).Width = 0;
-            ((Button)FindName("NormalizeButton")).Visibility = Visibility.Visible;
-            ((Button)FindName("NormalizeButton")).Width = 24;
+            ((Button) FindName("MaximizeButton")).Visibility = Visibility.Hidden;
+            ((Button) FindName("MaximizeButton")).Width = 0;
+            ((Button) FindName("NormalizeButton")).Visibility = Visibility.Visible;
+            ((Button) FindName("NormalizeButton")).Width = 24;
         }
 
         private void CloseWindow(object sender, RoutedEventArgs e)
@@ -782,6 +781,7 @@ namespace ModAPI
         public void SetMod(ModViewModel model)
         {
             CurrentModViewModel = model;
+            DeleteModButton.IsEnabled = model != null;
             if (model != null)
             {
                 SelectedMod.Visibility = Visibility.Visible;
@@ -904,7 +904,7 @@ namespace ModAPI
         {
             if (CurrentModProjectViewModel != null)
             {
-                CurrentModProjectViewModel.AddProjectLanguage((string)(((ComboBoxItem)DevelopmentLanguageSelector.SelectedItem).DataContext));
+                CurrentModProjectViewModel.AddProjectLanguage((string) (((ComboBoxItem) DevelopmentLanguageSelector.SelectedItem).DataContext));
                 DevelopmentLanguageSelector.SelectedIndex = -1;
                 foreach (var kv in LanguageItems)
                 {
@@ -930,13 +930,13 @@ namespace ModAPI
                 var win =
                     new RemoveModProject("Lang.Windows.RemoveModProject", CurrentModProjectViewModel.Project.Id, CurrentModProjectViewModel.Project)
                     {
-                        Confirm = delegate (object obj)
+                        Confirm = delegate(object obj)
                         {
                             ProjectList.SelectedIndex = -1;
                             NoProjectSelected.Visibility = Visibility.Visible;
                             SelectedProject.DataContext = null;
                             SelectedProject.Visibility = Visibility.Collapsed;
-                            ModProjects.Remove((ModProject)obj);
+                            ModProjects.Remove((ModProject) obj);
                         }
                     };
                 win.ShowSubWindow();
@@ -949,7 +949,7 @@ namespace ModAPI
             if (CurrentModProjectViewModel != null)
             {
                 var progressHandler = new ProgressHandler();
-                var thread = new Thread(delegate () { CurrentModProjectViewModel.Project.Create(progressHandler); });
+                var thread = new Thread(delegate() { CurrentModProjectViewModel.Project.Create(progressHandler); });
                 var window = new OperationPending("Lang.Windows.OperationPending", "CreateMod", progressHandler);
                 if (!window.Completed)
                 {
@@ -965,10 +965,10 @@ namespace ModAPI
             var mods = new List<Mod>();
             foreach (var i in Mods.Mods)
             {
-                var vm = (ModViewModel)i.DataContext;
+                var vm = (ModViewModel) i.DataContext;
                 if (vm != null && vm.Selected)
                 {
-                    var vm2 = (ModVersionViewModel)vm.SelectedVersion.DataContext;
+                    var vm2 = (ModVersionViewModel) vm.SelectedVersion.DataContext;
                     if (vm2 != null)
                     {
                         mods.Add(vm2.Mod);
@@ -993,7 +993,7 @@ namespace ModAPI
                 }
             };
 
-            var thread = new Thread(delegate () { App.Game.ApplyMods(mods, progressHandler); });
+            var thread = new Thread(delegate() { App.Game.ApplyMods(mods, progressHandler); });
             var window = new OperationPending("Lang.Windows.OperationPending", "ApplyMods", progressHandler, null, true);
             if (!window.Completed)
             {
@@ -1153,7 +1153,7 @@ namespace ModAPI
             _allMods = allMods
                 .GroupBy(m => m.ModId)
                 .Select(g => g.First())
-                .OrderByDescending(m =>
+                .OrderByDescending(m => 
                 {
                     int count;
                     int.TryParse(m.DownloadCount.Replace(",", ""), out count);
@@ -1260,6 +1260,8 @@ namespace ModAPI
 
         private void DownloadSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (DownloadSearchPlaceholder != null)
+                DownloadSearchPlaceholder.Visibility = string.IsNullOrEmpty(DownloadSearchBox.Text) ? Visibility.Visible : Visibility.Collapsed;
             if (_allMods.Count > 0)
                 ApplyModFilter();
         }

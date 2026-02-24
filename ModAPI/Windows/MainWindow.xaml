@@ -82,7 +82,8 @@
                                                      HorizontalAlignment="Left" MinWidth="220" VerticalAlignment="Stretch" />
                                             <Button Grid.Row="1" x:Name="DeleteModButton" 
                                                     HorizontalAlignment="Stretch" Margin="0,5,0,0"
-                                                    Click="DeleteMod_Click" Style="{StaticResource NormalButton}">
+                                                    Click="DeleteMod_Click" Style="{StaticResource NormalButton}"
+                                                    IsEnabled="False">
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                     <TextBlock Style="{StaticResource NormalLabel}" Text="{DynamicResource Lang.Mods.Buttons.Delete}" />
                                                 </StackPanel>
@@ -222,9 +223,16 @@
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
-                                            <TextBox x:Name="DownloadSearchBox" Grid.Column="0" 
-                                                     VerticalAlignment="Center" Margin="0,0,8,0"
-                                                     Text="" TextChanged="DownloadSearch_TextChanged" />
+                                            <Grid Grid.Column="0" Margin="0,0,8,0">
+                                                <TextBox x:Name="DownloadSearchBox" 
+                                                         VerticalAlignment="Center"
+                                                         Text="" TextChanged="DownloadSearch_TextChanged" />
+                                                <TextBlock x:Name="DownloadSearchPlaceholder"
+                                                           Text="{DynamicResource Lang.Downloads.Search.Placeholder}"
+                                                           Style="{StaticResource NormalLabel}"
+                                                           VerticalAlignment="Center" Margin="6,0,0,0"
+                                                           Opacity="0.4" IsHitTestVisible="False" />
+                                            </Grid>
                                             <Button x:Name="DownloadRefreshButton" Grid.Column="1" 
                                                     Style="{StaticResource NormalButton}" Click="DownloadRefresh_Click">
                                                 <StackPanel Orientation="Horizontal">

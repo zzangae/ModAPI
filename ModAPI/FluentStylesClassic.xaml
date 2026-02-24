@@ -41,6 +41,7 @@
     <SolidColorBrush x:Key="FluentDangerBrush" Color="{StaticResource FluentDangerColor}" />
     <SolidColorBrush x:Key="FluentSuccessBrush" Color="{StaticResource FluentSuccessColor}" />
     <SolidColorBrush x:Key="FluentWarningBrush" Color="{StaticResource FluentWarningColor}" />
+    <SolidColorBrush x:Key="FluentLinkBrush" Color="#FFD700" />
     <SolidColorBrush x:Key="FluentTabBarBrush" Color="{StaticResource FluentTabBarColor}" />
 
     <!-- ===== Fluent Typography ===== -->
@@ -762,6 +763,8 @@
     <Style TargetType="{x:Type ListViewItem}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{StaticResource FluentTextPrimaryBrush}" />
+        <Setter Property="FontFamily" Value="{StaticResource NormalFont}" />
+        <Setter Property="FontSize" Value="13" />
         <Setter Property="Padding" Value="4,2" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Template">

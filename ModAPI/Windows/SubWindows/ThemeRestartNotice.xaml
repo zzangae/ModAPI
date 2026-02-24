@@ -14,13 +14,13 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10,0,10">
-            <Image Source="/resources/textures/Icons/Icon_Information.png" Width="24" Height="24" Margin="0,0,10,0" VerticalAlignment="Center" />
+            <TextBlock Text="&#xE946;" FontFamily="Segoe MDL2 Assets" FontSize="24" Foreground="{DynamicResource FluentAccentBrush}" Margin="0,0,10,0" VerticalAlignment="Center" />
             <TextBlock Style="{StaticResource NormalLabel}" TextWrapping="Wrap" VerticalAlignment="Center" Utils:Language.Key="Text" />
         </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
             <Button x:Name="ConfirmButton" Style="{StaticResource NormalButton}" Click="Confirm_Click">
                 <StackPanel Orientation="Horizontal">
-                    <Image Margin="0,0,5,0" Source="/resources/textures/Icons/Icon_Continue.png" />
+                    <TextBlock Margin="0,0,5,0" Text="&#xE8FB;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" />
                     <TextBlock Utils:Language.Key="Buttons.OK" />
                 </StackPanel>
             </Button>

@@ -122,7 +122,7 @@ namespace ModAPI
                 };
                 Resources.MergedDictionaries.Add(lightTheme);
             }
-            // classic: no replacement - use Dictionary.xaml only (original ModAPI design)
+            // classic: Dictionary.xaml only (original ModAPI design) + fallback resources
         }
 
         public static string GetCurrentTheme()

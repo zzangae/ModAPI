@@ -18,30 +18,29 @@
  *  To contact me you can e-mail me at info@fluffyfish.de
  */
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Net;
+using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
+using System.Windows.Navigation;
+using System.Windows.Shell;
 using Microsoft.Win32;
 using ModAPI.Components;
 using ModAPI.Components.Panels;
 using ModAPI.Configurations;
 using ModAPI.Data;
 using ModAPI.Data.Models;
-using ModAPI.Properties;
 using ModAPI.Utils;
 using ModAPI.Windows.SubWindows;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shell;
-using System.Windows.Threading;
 using Path = System.IO.Path;
 
 namespace ModAPI

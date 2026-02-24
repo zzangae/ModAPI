@@ -32,7 +32,16 @@
     <SolidColorBrush x:Key="FluentBgBrush" Color="Transparent" />
     <SolidColorBrush x:Key="FluentTabBarBrush" Color="#40000000" />
     <SolidColorBrush x:Key="FluentBorderBrush" Color="#40000000" />
-    <SolidColorBrush x:Key="FluentTextTertiaryBrush" Color="White" />
+    <SolidColorBrush x:Key="FluentTextTertiaryBrush" Color="#999999" />
+    <SolidColorBrush x:Key="FluentTextPrimaryBrush" Color="White" />
+    <SolidColorBrush x:Key="FluentTextSecondaryBrush" Color="#CCCCCC" />
+    <SolidColorBrush x:Key="FluentLinkBrush" Color="#FFD700" />
+    <SolidColorBrush x:Key="FluentWarningBrush" Color="#FF8C00" />
+    <SolidColorBrush x:Key="FluentDangerBrush" Color="#E81123" />
+    <SolidColorBrush x:Key="FluentSuccessBrush" Color="#107C10" />
+    <SolidColorBrush x:Key="FluentAccentBrush" Color="#0078D4" />
+    <SolidColorBrush x:Key="FluentCardBrush" Color="#20FFFFFF" />
+    <SolidColorBrush x:Key="FluentBgTertiaryBrush" Color="#30FFFFFF" />
     <FontFamily x:Key="FluentIconFont">Segoe UI Symbol</FontFamily>
     <Style x:Key="FluentCloseButton" TargetType="{x:Type Button}">
         <Setter Property="Template">
@@ -397,6 +406,38 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- RadioButton fallback style for all themes -->
+    <Style TargetType="{x:Type RadioButton}">
+        <Setter Property="Foreground" Value="{DynamicResource FluentTextPrimaryBrush}" />
+        <Setter Property="FontFamily" Value="{StaticResource NormalFont}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Grid Width="16" Height="16" Margin="0,0,5,0" VerticalAlignment="Center">
+                            <Ellipse x:Name="OuterCircle" Width="16" Height="16" 
+                                     Stroke="{DynamicResource FluentTextTertiaryBrush}" StrokeThickness="1.5" Fill="Transparent" />
+                            <Ellipse x:Name="InnerDot" Width="8" Height="8" 
+                                     Fill="{DynamicResource FluentAccentBrush}" Visibility="Collapsed" />
+                        </Grid>
+                        <ContentPresenter VerticalAlignment="Center"
+                                          TextElement.Foreground="{TemplateBinding Foreground}" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="OuterCircle" Property="Stroke" Value="{DynamicResource FluentAccentBrush}" />
+                            <Setter TargetName="InnerDot" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="OuterCircle" Property="Stroke" Value="{DynamicResource FluentTextSecondaryBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -1145,14 +1186,14 @@
         <Setter Property="TextOptions.TextHintingMode" Value="Animated" />
         <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome GlassFrameThickness="-1" CaptionHeight="0" ResizeBorderThickness="10" />
+            </Setter.Value>
+        </Setter>
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="AllowsTransparency" Value="True" />
         <Setter Property="WindowStyle" Value="None" />
-        <Setter Property="WindowChrome.WindowChrome">
-            <Setter.Value>
-                <WindowChrome GlassFrameThickness="0" CaptionHeight="48" ResizeBorderThickness="6" CornerRadius="0" UseAeroCaptionButtons="False" />
-            </Setter.Value>
-        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
@@ -3002,6 +3043,92 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== ListView / GridView Support for Downloads Tab (Classic fallback) ===== -->
+    <Style TargetType="{x:Type ListView}">
+        <Setter Property="Background" Value="#20FFFFFF" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderBrush" Value="#40FFFFFF" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontFamily" Value="{StaticResource NormalFont}" />
+        <Setter Property="FontSize" Value="13" />
+    </Style>
+
+    <Style TargetType="{x:Type ListViewItem}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontFamily" Value="{StaticResource NormalFont}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Padding" Value="4,2" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}" 
+                            BorderBrush="#30FFFFFF" BorderThickness="0,0,0,0.5"
+                            Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                        <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="#1AFFFFFF" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="#0078D4" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type GridViewColumnHeader}">
+        <Setter Property="Background" Value="#30FFFFFF" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderBrush" Value="#40FFFFFF" />
+        <Setter Property="BorderThickness" Value="0,0,1,1" />
+        <Setter Property="Padding" Value="6,4" />
+        <Setter Property="FontFamily" Value="{StaticResource NormalFont}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                    <Grid>
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="Center" RecognizesAccessKey="True" />
+                        </Border>
+                        <Thumb x:Name="PART_HeaderGripper" HorizontalAlignment="Right" Margin="0,0,-9,0"
+                               Width="18" Background="Transparent">
+                            <Thumb.Template>
+                                <ControlTemplate TargetType="{x:Type Thumb}">
+                                    <Border Background="Transparent">
+                                        <Rectangle Width="1" HorizontalAlignment="Center" Fill="#40FFFFFF" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Thumb.Template>
+                        </Thumb>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="#2AFFFFFF" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="#005A9E" />
+                        </Trigger>
+                        <Trigger Property="Role" Value="Padding">
+                            <Setter TargetName="Bd" Property="Background" Value="#30FFFFFF" />
+                            <Setter TargetName="Bd" Property="BorderThickness" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

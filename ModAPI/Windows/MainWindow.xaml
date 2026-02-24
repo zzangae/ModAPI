@@ -98,7 +98,7 @@
                                                     <TextBlock Margin="0,16,0,0" Style="{StaticResource HeaderLabel}" Text="{DynamicResource Lang.Mods.Welcome.Title1}" />
                                                     <TextBlock TextWrapping="Wrap" Style="{StaticResource NormalLabel}" Margin="0,8,0,0">
                                                         <TextBlock Text="{DynamicResource Lang.Mods.Welcome.Text2a}" /><Hyperlink x:Name="ModApiLink" NavigateUri="https://modapi.survivetheforest.net" RequestNavigate="Hyperlink_RequestNavigate"
-                                                                   Foreground="#FFD700" TextDecorations="None"><TextBlock Text="{DynamicResource Lang.Mods.Welcome.Text2Link}" /></Hyperlink><TextBlock Text="{DynamicResource Lang.Mods.Welcome.Text2b}" />
+                                                                   Foreground="{DynamicResource FluentLinkBrush}" TextDecorations="None"><TextBlock Text="{DynamicResource Lang.Mods.Welcome.Text2Link}" /></Hyperlink><TextBlock Text="{DynamicResource Lang.Mods.Welcome.Text2b}" />
                                                     </TextBlock>
                                                     <TextBlock Margin="0,10,0,0" TextWrapping="Wrap" Style="{StaticResource NormalLabel}" Text="{DynamicResource Lang.Mods.Welcome.Text3}" />
                                                 </StackPanel>
@@ -185,7 +185,7 @@
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Button Margin="5" Style="{StaticResource AccentButton}" HorizontalAlignment="Right" Click="StartGame">
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="/resources/textures/Icons/Icon_Add.png" Margin="0,0,5,0" />
+                                                <TextBlock Text="&#xE768;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" />
                                                 <TextBlock Text="{DynamicResource Lang.Mods.Buttons.StartGame}" />
                                             </StackPanel>
                                         </Button>
@@ -238,7 +238,7 @@
                                             <Button x:Name="DownloadRefreshButton" Grid.Column="1" 
                                                     Style="{StaticResource NormalButton}" Click="DownloadRefresh_Click">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="/resources/textures/Icons/Icon_Refresh.png" Margin="0,0,5,0" />
+                                                    <TextBlock Text="&#xE72C;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" />
                                                     <TextBlock Text="{DynamicResource Lang.Downloads.Buttons.Refresh}" />
                                                 </StackPanel>
                                             </Button>
@@ -249,13 +249,13 @@
                                     <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="4,2,4,2">
                                         <WrapPanel x:Name="GameFilterPanel" Orientation="Horizontal">
                                             <RadioButton x:Name="GameAll" Content="{DynamicResource Lang.Downloads.Game.All}" 
-                                                         GroupName="GameFilter" IsChecked="True" Checked="GameFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                                         GroupName="GameFilter" IsChecked="True" Checked="GameFilter_Checked" Margin="2,2" Foreground="{DynamicResource FluentTextPrimaryBrush}" FontFamily="{StaticResource NormalFont}" FontSize="12" />
                                             <RadioButton x:Name="GameTheForest" Content="{DynamicResource Lang.Downloads.Game.TheForest}" 
-                                                         GroupName="GameFilter" Checked="GameFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                                         GroupName="GameFilter" Checked="GameFilter_Checked" Margin="2,2" Foreground="{DynamicResource FluentTextPrimaryBrush}" FontFamily="{StaticResource NormalFont}" FontSize="12" />
                                             <RadioButton x:Name="GameDedicatedServer" Content="{DynamicResource Lang.Downloads.Game.DedicatedServer}" 
-                                                         GroupName="GameFilter" Checked="GameFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                                         GroupName="GameFilter" Checked="GameFilter_Checked" Margin="2,2" Foreground="{DynamicResource FluentTextPrimaryBrush}" FontFamily="{StaticResource NormalFont}" FontSize="12" />
                                             <RadioButton x:Name="GameVR" Content="{DynamicResource Lang.Downloads.Game.VR}" 
-                                                         GroupName="GameFilter" Checked="GameFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                                         GroupName="GameFilter" Checked="GameFilter_Checked" Margin="2,2" Foreground="{DynamicResource FluentTextPrimaryBrush}" FontFamily="{StaticResource NormalFont}" FontSize="12" />
                                         </WrapPanel>
                                     </ScrollViewer>
 
@@ -263,29 +263,29 @@
                                     <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="4,2,4,2">
                                         <WrapPanel x:Name="CategoryFilterPanel" Orientation="Horizontal">
                                             <RadioButton x:Name="CatAll" Content="{DynamicResource Lang.Downloads.Category.All}" 
-                                                         GroupName="CategoryFilter" IsChecked="True" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                                         GroupName="CategoryFilter" IsChecked="True" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="{DynamicResource FluentTextPrimaryBrush}" FontFamily="{StaticResource NormalFont}" FontSize="12" />
                                             <RadioButton x:Name="CatBugfixes" Content="{DynamicResource Lang.Downloads.Category.Bugfixes}" 
-                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="{DynamicResource FluentTextPrimaryBrush}" FontFamily="{StaticResource NormalFont}" FontSize="12" />
                                             <RadioButton x:Name="CatBalancing" Content="{DynamicResource Lang.Downloads.Category.Balancing}" 
-                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="{DynamicResource FluentTextPrimaryBrush}" FontFamily="{StaticResource NormalFont}" FontSize="12" />
                                             <RadioButton x:Name="CatCheats" Content="{DynamicResource Lang.Downloads.Category.Cheats}" 
-                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="{DynamicResource FluentTextPrimaryBrush}" FontFamily="{StaticResource NormalFont}" FontSize="12" />
                                             <RadioButton x:Name="CatBuildings" Content="{DynamicResource Lang.Downloads.Category.Buildings}" 
-                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="{DynamicResource FluentTextPrimaryBrush}" FontFamily="{StaticResource NormalFont}" FontSize="12" />
                                             <RadioButton x:Name="CatGraphical" Content="{DynamicResource Lang.Downloads.Category.Graphical}" 
-                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="{DynamicResource FluentTextPrimaryBrush}" FontFamily="{StaticResource NormalFont}" FontSize="12" />
                                             <RadioButton x:Name="CatChanges" Content="{DynamicResource Lang.Downloads.Category.Changes}" 
-                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="{DynamicResource FluentTextPrimaryBrush}" FontFamily="{StaticResource NormalFont}" FontSize="12" />
                                             <RadioButton x:Name="CatItems" Content="{DynamicResource Lang.Downloads.Category.Items}" 
-                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="{DynamicResource FluentTextPrimaryBrush}" FontFamily="{StaticResource NormalFont}" FontSize="12" />
                                             <RadioButton x:Name="CatEnemies" Content="{DynamicResource Lang.Downloads.Category.Enemies}" 
-                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="{DynamicResource FluentTextPrimaryBrush}" FontFamily="{StaticResource NormalFont}" FontSize="12" />
                                             <RadioButton x:Name="CatMultiplayer" Content="{DynamicResource Lang.Downloads.Category.Multiplayer}" 
-                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="{DynamicResource FluentTextPrimaryBrush}" FontFamily="{StaticResource NormalFont}" FontSize="12" />
                                             <RadioButton x:Name="CatWorldchanges" Content="{DynamicResource Lang.Downloads.Category.Worldchanges}" 
-                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="{DynamicResource FluentTextPrimaryBrush}" FontFamily="{StaticResource NormalFont}" FontSize="12" />
                                             <RadioButton x:Name="CatOther" Content="{DynamicResource Lang.Downloads.Category.Other}" 
-                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="#FFFFFF" FontFamily="{StaticResource NormalFont}" FontSize="12" />
+                                                         GroupName="CategoryFilter" Checked="CategoryFilter_Checked" Margin="2,2" Foreground="{DynamicResource FluentTextPrimaryBrush}" FontFamily="{StaticResource NormalFont}" FontSize="12" />
                                         </WrapPanel>
                                     </ScrollViewer>
 
@@ -351,7 +351,7 @@
                                                         <Button x:Name="DownloadInfoButton" Grid.Column="1"
                                                                 Style="{StaticResource NormalButton}" Click="DownloadInfo_Click">
                                                             <StackPanel Orientation="Horizontal">
-                                                                <Image Source="/resources/textures/Icons/Icon_Information.png" Margin="0,0,5,0" />
+                                                                <TextBlock Text="&#xE946;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" />
                                                                 <TextBlock Text="{DynamicResource Lang.Downloads.Buttons.Info}" />
                                                             </StackPanel>
                                                         </Button>
@@ -394,7 +394,7 @@
                                             <Button x:Name="DownloadButton" Grid.Column="1" IsEnabled="False"
                                                     Style="{StaticResource AccentButton}" Click="DownloadMod_Click">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="/resources/textures/Icons/Icon_Download.png" Margin="0,0,5,0" />
+                                                    <TextBlock Text="&#xE896;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" />
                                                     <TextBlock Text="{DynamicResource Lang.Downloads.Buttons.Download}" />
                                                 </StackPanel>
                                             </Button>
@@ -405,8 +405,9 @@
                                 <!-- Offline Notice -->
                                 <Grid x:Name="DownloadOfflinePanel" Visibility="Collapsed">
                                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="40">
-                                        <Image Source="/resources/textures/Icons/Icon_Warning.png" 
-                                               Width="48" Height="48" HorizontalAlignment="Center" Margin="0,0,0,16" />
+                                        <TextBlock Text="&#xE7BA;" FontFamily="Segoe MDL2 Assets" FontSize="48" 
+                                               Foreground="{DynamicResource FluentWarningBrush}"
+                                               HorizontalAlignment="Center" Margin="0,0,0,16" />
                                         <TextBlock Style="{StaticResource HeaderLabel}" 
                                                    HorizontalAlignment="Center" Margin="0,0,0,12"
                                                    Text="{DynamicResource Lang.Downloads.Offline.Title}" />
@@ -416,7 +417,7 @@
                                         <TextBlock HorizontalAlignment="Center" Margin="0,8,0,16">
                                             <Hyperlink NavigateUri="https://modapi.survivetheforest.net/mods/" 
                                                        RequestNavigate="Hyperlink_RequestNavigate"
-                                                       Foreground="#FFD700" TextDecorations="None">
+                                                       Foreground="{DynamicResource FluentLinkBrush}" TextDecorations="None">
                                                 <TextBlock Text="modapi.survivetheforest.net/mods/" />
                                             </Hyperlink>
                                         </TextBlock>
@@ -426,7 +427,7 @@
                                         <Button Style="{StaticResource NormalButton}" HorizontalAlignment="Center"
                                                 Click="DownloadRetryConnection_Click">
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="/resources/textures/Icons/Icon_Refresh.png" Margin="0,0,5,0" />
+                                                <TextBlock Text="&#xE72C;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" />
                                                 <TextBlock Text="{DynamicResource Lang.Downloads.Offline.Retry}" />
                                             </StackPanel>
                                         </Button>
@@ -469,7 +470,7 @@
                                     <StackPanel Orientation="Vertical">
                                         <Button Style="{StaticResource NormalButton}" HorizontalAlignment="Right" Click="CreateProject" Margin="5">
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="/resources/textures/Icons/Icon_Add.png" Margin="0,0,5,0" />
+                                                <TextBlock Text="&#xE710;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" />
                                                 <TextBlock Text="{DynamicResource Lang.Development.Buttons.CreateProject}" />
                                             </StackPanel>
                                         </Button>
@@ -526,7 +527,7 @@
                                                                     <ColumnDefinition Width="Auto" />
                                                                     <ColumnDefinition Width="*" />
                                                                 </Grid.ColumnDefinitions>
-                                                                <Image VerticalAlignment="Top" Grid.Column="0" Height="15" Source="/resources/textures/Icons/Icon_Error.png" />
+                                                                <TextBlock VerticalAlignment="Top" Grid.Column="0" Text="&#xEA39;" FontFamily="Segoe MDL2 Assets" FontSize="15" Foreground="{DynamicResource FluentDangerBrush}" />
                                                                 <TextBlock Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" Style="{StaticResource NormalLabel}" TextWrapping="Wrap" Text="{DynamicResource Lang.Development.Errors.Save}" />
                                                             </Grid>
                                                             <TextBlock Margin="0,5,5,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="1" Style="{StaticResource NormalLabel}" Text="{DynamicResource Lang.Development.Labels.ID}" />
@@ -536,7 +537,7 @@
                                                                     <ColumnDefinition Width="Auto" />
                                                                     <ColumnDefinition Width="*" />
                                                                 </Grid.ColumnDefinitions>
-                                                                <Image VerticalAlignment="Top" Grid.Column="0" Height="15" Source="/resources/textures/Icons/Icon_Information.png" />
+                                                                <TextBlock VerticalAlignment="Top" Grid.Column="0" Text="&#xE946;" FontFamily="Segoe MDL2 Assets" FontSize="15" Foreground="{DynamicResource FluentAccentBrush}" />
                                                                 <TextBlock Grid.Column="1" Margin="5,0,0,0" FontSize="11" VerticalAlignment="Top" Style="{StaticResource NormalLabel}" TextWrapping="Wrap" Text="{DynamicResource Lang.Development.Errors.InvalidID}" />
                                                             </Grid>
                                                             <TextBlock Margin="0,5,5,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="2" Style="{StaticResource NormalLabel}" Text="{DynamicResource Lang.Development.Labels.Version}" />
@@ -546,7 +547,7 @@
                                                                     <ColumnDefinition Width="Auto" />
                                                                     <ColumnDefinition Width="*" />
                                                                 </Grid.ColumnDefinitions>
-                                                                <Image VerticalAlignment="Top" Grid.Column="0" Height="15" Source="/resources/textures/Icons/Icon_Warning.png" />
+                                                                <TextBlock VerticalAlignment="Top" Grid.Column="0" Text="&#xE7BA;" FontFamily="Segoe MDL2 Assets" FontSize="15" Foreground="{DynamicResource FluentWarningBrush}" />
                                                                 <TextBlock Grid.Column="1" Margin="5,0,0,0" FontSize="11" VerticalAlignment="Top" Style="{StaticResource NormalLabel}" TextWrapping="Wrap" Text="{DynamicResource Lang.Development.Errors.InvalidVersion}" />
                                                             </Grid>
                                                             <TextBlock Margin="0,5,5,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="3" Style="{StaticResource NormalLabel}" Text="{DynamicResource Lang.Development.Labels.Name}" />
@@ -556,7 +557,7 @@
                                                                     <ColumnDefinition Width="Auto" />
                                                                     <ColumnDefinition Width="*" />
                                                                 </Grid.ColumnDefinitions>
-                                                                <Image VerticalAlignment="Top" Grid.Column="0" Height="15" Source="/resources/textures/Icons/Icon_Warning.png" />
+                                                                <TextBlock VerticalAlignment="Top" Grid.Column="0" Text="&#xE7BA;" FontFamily="Segoe MDL2 Assets" FontSize="15" Foreground="{DynamicResource FluentWarningBrush}" />
                                                                 <TextBlock Grid.Column="1" Margin="5,0,0,0" FontSize="11" VerticalAlignment="Top" Style="{StaticResource NormalLabel}" TextWrapping="Wrap" Text="{DynamicResource Lang.Development.Errors.InvalidName}" />
                                                             </Grid>
                                                             <TextBlock Margin="0,5,5,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="4" Style="{StaticResource NormalLabel}" Text="{DynamicResource Lang.Development.Labels.Description}" />
@@ -628,7 +629,7 @@
                                                                     <ColumnDefinition Width="Auto" />
                                                                     <ColumnDefinition Width="*" />
                                                                 </Grid.ColumnDefinitions>
-                                                                <Image Margin="0,0,5,0" VerticalAlignment="Center" Source="/resources/textures/Icons/Icon_Warning.png" Grid.Column="0" />
+                                                                <TextBlock Margin="0,0,5,0" VerticalAlignment="Center" Grid.Column="0" Text="&#xE7BA;" FontFamily="Segoe MDL2 Assets" FontSize="15" Foreground="{DynamicResource FluentWarningBrush}" />
                                                                 <TextBlock VerticalAlignment="Center" Grid.Column="1" Text="{DynamicResource Lang.Development.Errors.NoLanguageSelected}" Style="{StaticResource NormalLabel}" />
                                                             </Grid>
                                                             <TextBlock Margin="0,0,0,5" Style="{StaticResource HeaderLabel}" Grid.Row="2" Grid.ColumnSpan="2" Text="{DynamicResource Lang.Development.Languages.AddLanguage}" />
@@ -637,7 +638,7 @@
                                                                       Style="{StaticResource ComboBox}" Height="32" HorizontalAlignment="Left" VerticalAlignment="Top" />
                                                             <Button Grid.Row="3" HorizontalAlignment="Left" Grid.Column="1" Style="{StaticResource NormalButton}" Click="AddProjectLanguage">
                                                                 <StackPanel Orientation="Horizontal">
-                                                                    <Image Source="/resources/textures/Icons/Icon_Add.png" Margin="0,0,5,0" />
+                                                                    <TextBlock Text="&#xE710;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" />
                                                                     <TextBlock VerticalAlignment="Center" Text="{DynamicResource Lang.Development.Languages.Buttons.AddLanguage}" />
                                                                 </StackPanel>
                                                             </Button>
@@ -652,13 +653,13 @@
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                             <Button Margin="5" Style="{StaticResource NormalButton}" Click="RemoveModProjectButton">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="/resources/textures/Icons/Icon_Delete.png" Margin="0,0,5,0" />
+                                                    <TextBlock Text="&#xE74D;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" />
                                                     <TextBlock Text="{DynamicResource Lang.Development.Buttons.RemoveProject}" />
                                                 </StackPanel>
                                             </Button>
                                             <Button Margin="5" Style="{StaticResource AccentButton}" Click="CreateMod">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="/resources/textures/Icons/Icon_CreateMod.png" Margin="0,0,5,0" />
+                                                    <TextBlock Text="&#xE713;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" Margin="0,0,5,0" />
                                                     <TextBlock Text="{DynamicResource Lang.Development.Buttons.CreateMod}" />
                                                 </StackPanel>
                                             </Button>
@@ -737,12 +738,12 @@
                                     <Grid Margin="0,0,0,12" Grid.Column="1" Grid.Row="0">
                                         <ComboBox SelectedIndex="{Binding Language,Mode=TwoWay}" 
                                                   Components:ComboBoxWidthFromItemsBehavior.ComboBoxWidthFromItems="True" 
-                                                  x:Name="LanguageSelector" Style="{StaticResource ComboBox}" Height="32" 
+                                                  x:Name="LanguageSelector" Style="{StaticResource ComboBox}" Height="40" MinWidth="200"
                                                   HorizontalAlignment="Left" VerticalAlignment="Top" />
                                     </Grid>
                                     <TextBlock Margin="0,0,0,12" Padding="0,0,10,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Text="{DynamicResource Lang.Options.Labels.Theme}" Style="{StaticResource NormalLabel}" />
                                     <Grid Margin="0,0,0,12" Grid.Column="1" Grid.Row="1">
-                                        <ComboBox x:Name="ThemeSelector" Style="{StaticResource ComboBox}" Height="32" 
+                                        <ComboBox x:Name="ThemeSelector" Style="{StaticResource ComboBox}" Height="40" MinWidth="200"
                                                   Components:ComboBoxWidthFromItemsBehavior.ComboBoxWidthFromItems="True"
                                                   HorizontalAlignment="Left" VerticalAlignment="Top"
                                                   SelectionChanged="ThemeSelector_SelectionChanged" />

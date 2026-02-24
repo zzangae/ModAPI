@@ -41,6 +41,7 @@
     <SolidColorBrush x:Key="FluentDangerBrush" Color="{StaticResource FluentDangerColor}" />
     <SolidColorBrush x:Key="FluentSuccessBrush" Color="{StaticResource FluentSuccessColor}" />
     <SolidColorBrush x:Key="FluentWarningBrush" Color="{StaticResource FluentWarningColor}" />
+    <SolidColorBrush x:Key="FluentLinkBrush" Color="#FFD700" />
     <SolidColorBrush x:Key="FluentTabBarBrush" Color="{StaticResource FluentTabBarColor}" />
 
     <!-- ===== Fluent Typography ===== -->
@@ -839,8 +840,176 @@
         </Setter>
     </Style>
 
+    <!-- ===== Override: RadioButton (Fluent Dark) ===== -->
+    <Style TargetType="{x:Type RadioButton}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Foreground" Value="{StaticResource FluentTextPrimaryBrush}" />
+        <Setter Property="FontFamily" Value="{StaticResource NormalFont}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Grid Width="16" Height="16" Margin="0,0,5,0" VerticalAlignment="Center">
+                            <Ellipse x:Name="OuterCircle" Width="16" Height="16" 
+                                     Stroke="{StaticResource FluentTextTertiaryBrush}" StrokeThickness="1.5" Fill="Transparent" />
+                            <Ellipse x:Name="InnerDot" Width="8" Height="8" 
+                                     Fill="{StaticResource FluentAccentBrush}" Visibility="Collapsed" />
+                        </Grid>
+                        <ContentPresenter VerticalAlignment="Center" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="OuterCircle" Property="Stroke" Value="{StaticResource FluentAccentBrush}" />
+                            <Setter TargetName="InnerDot" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="OuterCircle" Property="Stroke" Value="{StaticResource FluentTextSecondaryBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Override: CheckBox (Fluent Dark Toggle Switch) ===== -->
+    <Style TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground" Value="{StaticResource FluentTextPrimaryBrush}" />
+        <Setter Property="FontFamily" Value="{StaticResource NormalFont}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Height" Value="24" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid x:Name="Root" HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="Track" Grid.Column="0" Width="40" Height="20" 
+                                CornerRadius="10" Background="#555555" BorderBrush="#666666" 
+                                BorderThickness="1" VerticalAlignment="Center">
+                            <Border x:Name="Thumb" Width="14" Height="14" CornerRadius="7" 
+                                    Background="#CCCCCC" HorizontalAlignment="Left" Margin="2,0,0,0" />
+                        </Border>
+                        <ContentPresenter Grid.Column="1" VerticalAlignment="Center" Margin="8,0,0,0" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Track" Property="Background" Value="{StaticResource FluentAccentBrush}" />
+                            <Setter TargetName="Track" Property="BorderBrush" Value="{StaticResource FluentAccentBrush}" />
+                            <Setter TargetName="Thumb" Property="Background" Value="White" />
+                            <Setter TargetName="Thumb" Property="HorizontalAlignment" Value="Right" />
+                            <Setter TargetName="Thumb" Property="Margin" Value="0,0,2,0" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Track" Property="BorderBrush" Value="{StaticResource FluentAccentLightBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="{x:Type GridSplitter}">
         <Setter Property="Background" Value="{StaticResource FluentBorderBrush}" />
+    </Style>
+
+    <!-- ===== Override: ComboBoxItem (Fluent Dark) ===== -->
+    <Style TargetType="{x:Type ComboBoxItem}" x:Key="ComboBoxItem">
+        <Setter Property="Foreground" Value="{StaticResource FluentTextPrimaryBrush}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="8,6" />
+        <Setter Property="FontFamily" Value="{StaticResource NormalFont}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                    <Border x:Name="Bg" Background="{TemplateBinding Background}" 
+                            Padding="{TemplateBinding Padding}" CornerRadius="4" Margin="2,1">
+                        <ContentPresenter VerticalAlignment="Center"
+                                          TextElement.Foreground="{TemplateBinding Foreground}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="#20FFFFFF" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="{StaticResource FluentAccentBrush}" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===== Override: ComboBox (Fluent Dark) ===== -->
+    <Style TargetType="{x:Type ComboBox}" x:Key="ComboBox">
+        <Setter Property="Foreground" Value="{StaticResource FluentTextPrimaryBrush}" />
+        <Setter Property="Background" Value="{StaticResource FluentSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource FluentBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontFamily" Value="{StaticResource NormalFont}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Padding" Value="8,6" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource ComboBoxItem}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBox}">
+                    <Grid>
+                        <Border x:Name="Bg" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="4" SnapsToDevicePixels="True">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="32" />
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" Padding="{TemplateBinding Padding}"
+                                        TextElement.Foreground="{StaticResource FluentTextPrimaryBrush}">
+                                    <ContentPresenter Content="{TemplateBinding SelectionBoxItem}"
+                                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                      ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                      HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                      TextElement.Foreground="{StaticResource FluentTextPrimaryBrush}" />
+                                </Border>
+                                <TextBlock Grid.Column="1" Text="&#xE70D;" FontFamily="Segoe MDL2 Assets"
+                                           FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           Foreground="{StaticResource FluentTextSecondaryBrush}" />
+                            </Grid>
+                        </Border>
+                        <ToggleButton HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                      Focusable="False" ClickMode="Press" Opacity="0"
+                                      IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                        <Popup Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}"
+                               AllowsTransparency="True" Focusable="False" PopupAnimation="Slide"
+                               VerticalOffset="2">
+                            <Border x:Name="DropDownBorder" MinWidth="{TemplateBinding ActualWidth}"
+                                    MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                    Background="{StaticResource FluentSurfaceBrush}"
+                                    BorderBrush="{StaticResource FluentBorderBrush}"
+                                    BorderThickness="1" CornerRadius="4" Padding="0,4"
+                                    SnapsToDevicePixels="True">
+                                <ScrollViewer SnapsToDevicePixels="True">
+                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                </ScrollViewer>
+                            </Border>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="BorderBrush" Value="{StaticResource FluentTextTertiaryBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsDropDownOpen" Value="True">
+                            <Setter TargetName="Bg" Property="BorderBrush" Value="{StaticResource FluentAccentBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

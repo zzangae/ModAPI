@@ -937,7 +937,7 @@
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="Bg" Property="Background" Value="{StaticResource FluentAccentBrush}" />
-                            <Setter Property="Foreground" Value="White" />
+                            <Setter TargetName="Bg" Property="TextElement.Foreground" Value="White" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

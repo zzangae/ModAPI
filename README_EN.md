@@ -1,4 +1,4 @@
-# ModAPI(v1) v2.0.9550 - 20260223
+# ModAPI(v1) v2.0.9552 - 20260225
 
 **The Forest Mod Management Tool — Upgraded Edition**
 
@@ -9,7 +9,7 @@
 
 ## Overview
 
-ModAPI is a desktop application for managing mods for The Forest. This upgraded edition includes .NET Framework 4.8 migration, Windows 11 Fluent Design UI, a 3-theme system, 13-language support, Downloads tab, and more.
+ModAPI is a desktop application for managing mods for The Forest. This upgraded edition includes .NET Framework 4.8 migration, Windows 11 Fluent Design UI, a 3-theme system, enhanced multilingual support, and a full Downloads tab implementation.
 
 ---
 
@@ -19,7 +19,7 @@ ModAPI is a desktop application for managing mods for The Forest. This upgraded 
 
 - Migrated all projects (5) from `.NET Framework 4.5` → `4.8`
 - Updated `TargetFrameworkVersion`, `App.config`, `packages.config` across all projects
-- Unified assembly version to `v2.0.0.0`
+- Unified assembly version
 
 ### Phase 2 — Build Environment & Fluent Design Foundation
 
@@ -29,13 +29,12 @@ ModAPI is a desktop application for managing mods for The Forest. This upgraded 
   - Window, SubWindow, SplashScreen templates
 - Compiled **UnityEngine stub DLL**
   - Added missing types: `WWW`, `Event`, `TextEditor`, `Physics`, etc.
-  - Added `TextEditor.pos`/`selectPos` properties
 - Fixed dependency references and confirmed successful build
 
 ### Phase 3 — UI Redesign & Theme System
 
 #### Fluent UI Redesign
-- Complete **MainWindow.xaml** restructuring (545→565 lines)
+- Complete **MainWindow.xaml** restructuring
   - Fluent Design-based layout, colors, typography
   - Redesigned tab controls, status bar, caption buttons
 - Runtime fixes: SplashScreen freezing, tab switching, icon states, window dragging
@@ -52,85 +51,73 @@ ModAPI is a desktop application for managing mods for The Forest. This upgraded 
 - Theme change triggers **confirmation popup** → **auto restart**
 - Theme setting saved/loaded via `theme.cfg` file
 
-#### Hyperlink & URL Update
-- Added clickable gold (`#FFD700`) hyperlink in Welcome text
-- Unified all URLs to `modapi.survivetheforest.net`
-
-#### Window Drag
+#### Window Drag / SubWindows / Hyperlinks
 - Root Grid `MouseLeftButtonDown` event for direct drag handling
-- Calls `DragMove()` within top 48px area
-- Drag guaranteed across all themes regardless of `AllowsTransparency` value
+- ThemeConfirm, ThemeRestartNotice, NoProjectWarning, DeleteModConfirm popups
+- Theme-specific link colors: Dark/Classic (`#FFD700`), Light (`#0078D4`)
 
-#### SubWindow System
-- **ThemeConfirm** — Theme change confirmation popup (Yes/No)
-- **ThemeRestartNotice** — Restart notice popup
-- **NoProjectWarning** — No project selected warning popup
-- All popups use ModAPI's own styling (no system MessageBox)
+### Phase 4 — Code Cleanup & Legacy Removal
 
-#### Caption Buttons
-- Adjusted spacing and wall distance for Min/Max/Close buttons
+- Removed login system (server no longer operational)
+- Modernized update mechanism
+- Cleaned up unused code
+- Fixed SubWindow UI (game path dialogs, etc.)
 
-#### Status Bar
-```
-Made with ♥ in Engelskirchen, Germany | upgrade by zzangae, Republic of Korea
-```
+### Phase 5 — Multilingual Support Expansion (13 Languages)
 
-### Phase 4 — Feature Improvements & Dead Code Cleanup
+| Language | File | Language | File |
+|----------|------|----------|------|
+| Korean | Language.KR.xaml | Italian | Language.IT.xaml |
+| English | Language.EN.xaml | Japanese | Language.JA.xaml |
+| German | Language.DE.xaml | Portuguese | Language.PT.xaml |
+| Spanish | Language.ES.xaml | Vietnamese | Language.VI.xaml |
+| French | Language.FR.xaml | Chinese (Simplified) | Language.ZH.xaml |
+| Polish | Language.PL.xaml | Chinese (Traditional) | Language.ZH-TW.xaml |
+| Russian | Language.RU.xaml | | |
 
-#### 4-1. Login System Cleanup
-- Removed dead backend (`modapi.cc`) connection code
-- `WebService.Initialize()` → no-op
-- Removed 5 commented-out login handlers (ShowLoginLoader, ShowLoginUser, etc.)
-- Removed active `Login()`, `DoLogout()` methods
+### Phase 5-1 — Downloads Tab & Theme Completion
 
-#### 4-2. Update System Modernization
-- Download URL: `modapi.cc/app/archives/` → `github.com/zzangae/ModAPI/releases/download/`
-- Added GitHub redirect support (`AllowAutoRedirect` + `UserAgent`)
+#### Downloads Tab
+- Loads mod list from 3 sources (`mods.json`, `versions.xml`, HTML parsing)
+- Search functionality (filter by mod name/description/author)
+- **Game filter** (All / The Forest / Dedicated Server / VR)
+- **Category filter** (All / Bugfixes / Balancing / Cheats, etc. — 12 categories)
+- Version selection split-panel UI
+- Direct `.mod` file download → game folder installation
+- Column sorting (click name/category/author) and resizing
+- Mod deletion (DLL + staging file cleanup)
 
-#### 4-3. Dead Social Links Removal
-- Removed 4 SouldrinkerLP social links (Facebook, Twitter, YouTube, Twitch)
+#### Icon Modernization (All Themes)
+- All button PNG icons → **Segoe MDL2 Assets** font icons
+- Applied across MainWindow.xaml + 14 SubWindow files
+- Font icons inherit Foreground color, ensuring visibility across all themes
 
-#### 4-4. Dead Code Cleanup
-- Removed 6 dead Building-related methods
-- Removed unused fields and using statements
-- Marked `OldConfiguration`, `LanguageList` classes as `[Obsolete]`
-- **MainWindow.xaml.cs**: 1127 lines → 905 lines (**-222 lines**)
+| Original PNG | Font Icon | Usage |
+|---|---|---|
+| Icon_Add | &#xE710; / &#xE768; | Add / Start Game |
+| Icon_Delete | &#xE74D; | Delete |
+| Icon_Refresh | &#xE72C; | Refresh |
+| Icon_Download | &#xE896; | Download |
+| Icon_Continue/Accept | &#xE8FB; | Confirm/Continue |
+| Icon_Decline | &#xE711; | Cancel/Close |
+| Icon_Information | &#xE946; | Information |
+| Icon_Warning | &#xE7BA; | Warning |
+| Icon_Error | &#xEA39; | Error |
+| Icon_Browse | &#xED25; | Browse |
+| Icon_CreateMod | &#xE713; | Create Mod |
 
-#### 4-5. Developer Mode Bypass
-- `--dev` command-line argument to skip game/Steam path validation
-- Enables UI development without game installation
+#### Unified Controls Across All Themes
 
-### Phase 5 — Downloads Tab & Multilingual Expansion
+| Control | Classic | Dark | Light |
+|---------|---------|------|-------|
+| CheckBox | Toggle (Gold) | Toggle (AccentBrush) | Toggle (AccentBrush) |
+| RadioButton | Circle (Gold) | Circle (AccentBrush) | Circle (AccentBrush) |
+| ComboBox | Scale9 original | Fluent custom | Fluent custom |
 
-#### 5-1. Downloads Tab UI Framework
-- Added Downloads tab to **MainWindow.xaml** (between Mods and Development)
-- Internet connectivity check (`modapi.survivetheforest.net` ping)
-- **Online mode**: Mod list ListView (name, author, category, download count)
-- **Offline mode**: Manual download instructions + website link + retry button
-- 17 Downloads-related UI string keys (all 13 languages supported)
-
-#### 5-2. Multilingual Support Expansion (6 → 13 Languages)
-
-| # | Code | Language | File | New |
-|---|------|----------|------|-----|
-| 1 | EN | English | Language.EN.xaml | |
-| 2 | DE | Deutsch | Language.DE.xaml | |
-| 3 | ES | Español | Language.ES.xaml | |
-| 4 | FR | Français | Language.FR.xaml | |
-| 5 | KO | 한국어 | Language.KR.xaml | |
-| 6 | IT | Italiano | Language.IT.xaml | ✅ |
-| 7 | JA | 日本語 | Language.JA.xaml | ✅ |
-| 8 | PL | Polski | Language.PL.xaml | |
-| 9 | PT | Português | Language.PT.xaml | ✅ |
-| 10 | RU | Русский | Language.RU.xaml | ✅ |
-| 11 | VI | Tiếng Việt | Language.VI.xaml | ✅ |
-| 12 | ZH | 简体中文 | Language.ZH.xaml | ✅ |
-| 13 | ZH-TW | 繁體中文 | Language.ZH-TW.xaml | ✅ |
-
-- Flag icon PNGs (36×24) included for each language
-- Settings language selector **custom sort order** (Korean fixed at 5th position)
-- `SettingsViewModel` index mapping fix (`MainWindow.LanguageOrder`-based)
-- Development selector icon loading with exception handling
+#### Theme Visibility Fixes
+- Light: AccentButton text forced White, tab icon Opacity adjustment
+- Dark/Light: ComboBoxItem `TextElement.Foreground` approach for selected text visibility
+- Classic: Fluent fallback resources added to Dictionary.xaml
 
 ---
 
@@ -138,37 +125,16 @@ Made with ♥ in Engelskirchen, Germany | upgrade by zzangae, Republic of Korea
 
 ```
 ModAPI/
-├── App.xaml / App.xaml.cs          # Theme load/save/apply, --dev mode
-├── Dictionary.xaml                  # Original styles + Fluent fallback resources
-├── FluentStyles.xaml                # Dark theme (default)
-├── FluentStylesLight.xaml           # Light theme
-├── ModAPI.csproj                    # Project configuration
-├── Data/
-│   └── ViewModels/
-│       └── SettingsViewModel.cs     # Language/theme/settings binding
+├── App.xaml / App.xaml.cs          # Theme load/save/apply
+├── Dictionary.xaml                  # Original styles + toggle/radio/fallback resources
+├── FluentStyles.xaml                # Dark theme + ComboBox/CheckBox/RadioButton
+├── FluentStylesLight.xaml           # Light theme + ComboBox/CheckBox/RadioButton
 ├── Windows/
-│   ├── MainWindow.xaml / .cs        # Main UI + theme + drag + Downloads tab
-│   ├── SplashScreen.xaml / .cs      # Splash screen
-│   └── SubWindows/
-│       ├── BaseSubWindow.cs         # SubWindow base class
-│       ├── ThemeConfirm.xaml / .cs
-│       ├── ThemeRestartNotice.xaml / .cs
-│       └── NoProjectWarning.xaml / .cs
+│   ├── MainWindow.xaml / .cs        # Main UI + Downloads tab + theme selector
+│   └── SubWindows/                  # 16 SubWindows (all with font icons)
 ├── resources/
-│   └── langs/
-│       ├── Language.EN.xaml + .png
-│       ├── Language.DE.xaml + .png
-│       ├── Language.ES.xaml + .png
-│       ├── Language.FR.xaml + .png
-│       ├── Language.KR.xaml + .png
-│       ├── Language.IT.xaml + .png   # New
-│       ├── Language.JA.xaml + .png   # New
-│       ├── Language.PL.xaml + .png
-│       ├── Language.PT.xaml + .png   # New
-│       ├── Language.RU.xaml + .png   # New
-│       ├── Language.VI.xaml + .png   # New
-│       ├── Language.ZH.xaml + .png   # New
-│       └── Language.ZH-TW.xaml + .png # New
+│   ├── langs/                       # 13 language files
+│   └── textures/Icons/flags/        # Flag icons (16x11 PNG)
 └── libs/
     └── UnityEngine.dll              # Stub DLL
 ```
